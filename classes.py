@@ -5,6 +5,7 @@ from datetime import datetime as dt
 from functools import reduce
 from operator import add
 from math import floor
+from .lexer import get_todos
 
 ORG_TIME_FORMAT = '%Y-%m-%d %a %H:%M'
 
@@ -105,22 +106,25 @@ class Priority:
     
             
 class Headline:
-    _kw_todo = ""
-    _kw_next = ""
-    _kw_wait = ""
-    _kw_cncl = ""
-    _kw_done = ""
-    _todo_states = {_kw_todo, _kw_next, _kw_wait}
-    _done_states = {_kw_cncl, _kw_done}
+    _todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
+    _todo_states = list(get_todos()['todo_states'].values())
+    _done_states = list(get_todos()['done_states'].values())
     def __init__(self, level, comment=False, todo=None, priority=None, title="", cookie=None, tags=None):
         self._level = len(re.sub(r'\s+', '', level))
         self._comment = comment
         self._todo = todo
-        self.done = self.is_done()
         self._priority = Priority(priority) if priority else None
         self.title = title
         self._cookie = cookie if cookie is None else Cookie(cookie)
         self.tags = tags
+
+    @property
+    def done(self):
+        return self.is_done()
+
+    @done.setter
+    def done(self, _):
+        raise AttributeError("Can't set the 'done' attribute")
 
     def is_done(self):
         if self.todo in self._done_states:

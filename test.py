@@ -8,9 +8,9 @@ s1 = '''#+title: Hello
 #+options: blah
 #+options: flah
 
-* Heading 1
+* TODO Heading 1
  Something 
-** subheading 1
+** NEXT subheading 1
 '''
 
 root = Org(s1, from_file=False)

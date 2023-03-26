@@ -1,0 +1,13 @@
+{
+    "todo_states":
+    {
+        "todo": "",
+        "next": "",
+        "wait": ""
+    },
+    "done_states":
+    {
+        "cncl": "",
+        "done": ""
+    }
+}
