@@ -1,0 +1,61 @@
+#+title: Test
+#+author: Joe
+#+options: ^:nil 
+#+OPTIONS: <:nil
+#+PROPERTY: header-args :tangle "foobar"
+
+This is an org file
+* This is a heading
+some contents
+*  This is a heading
+some contents
+*  [#B] This is a heading
+SCHEDULED: <2023-04-06 Thu>
+some contents
+
+*  [#B] This is a heading [/]
+DEADLINE: <2023-04-06 Thu> SCHEDULED: <2023-04-06 Thu>
+some contents
+*  [#B] This is a heading [/]
+DEADLINE: <2023-04-06 Thu> SCHEDULED: <2023-04-06 Thu>
+:PROPERTIES:
+:Effort:   0:05
+:END:
+some contents
+*  [#B] This is a heading [0/2]
+some contents
+- [ ] xyz
+- [ ] abc
+*  [#B] This is a heading [0/2]
+DEADLINE: <2023-04-06 Thu> SCHEDULED: <2023-04-06 Thu>
+:PROPERTIES:
+:Effort:   0:05
+:END:
+- [ ] xyz
+- [ ] abc
+*  [#B] This is a heading [1/3]
+some contents
+- [ ] xyz
+- [X] xyz
+- [ ] xyz
+*  [#B] This is a heading [33%]
+some contents
+- [ ] xyz
+- [X] xyz
+- [ ] xyz
+*  [#B] This is a heading [0/0]                               :@dog:
+some contents
+
+
+** This is a child
+SCHEDULED: <2023-03-29 Wed>
+| a | b |
+|---+---|
+| 1 | 2 |
+* COMMENT  [#B] This is a heading [0/0]                       :@dog:
+some contents
+
+
+
+
+

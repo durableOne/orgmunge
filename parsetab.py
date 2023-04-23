@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COLON COMMENT COOKIE DASH DATE DAYOFWEEK DEADWARN DRAWER LBRACK LSQUARE METADATA NEWLINE PRIORITY RBRACK REPEATER RSQUARE SCHEDULING SEPARATOR SPACE STARS TEXT TIME TODOorg_file : metadata org_tree\n                | org_treemetadata : METADATA NEWLINE\n                  | METADATA SEPARATOR\n                  | metadata METADATA NEWLINE\n                  | metadata METADATA SEPARATORorg_tree : heading\n                | heading SEPARATOR\n                | org_tree heading SEPARATOR\n                | org_tree heading\n                | emptyheading : headline NEWLINE contents\n               | headline SEPARATORheadline : STARS SPACE comment todo priority title cookie tagscomment : COMMENT SPACE\n               | emptytodo : TODO SPACE\n            | emptypriority : PRIORITY SPACE\n                | emptytitle : TEXT \n             | title SPACE TEXT\n             | title SPACEcookie : COOKIE SPACE\n              | COOKIE\n              | emptytags : COLON TEXT\n            | COLON TEXT SPACE\n            | emptycontents : scheduling drawers bodyscheduling : SCHEDULING SPACE any_timestamp NEWLINE\n                  | SCHEDULING SPACE any_timestamp SPACE scheduling\n                  | emptyany_timestamp : atimestamp\n                     | itimestampatimestamp : LBRACK timestamp RBRACKitimestamp : LSQUARE timestamp RSQUAREtimestamp : DATE SPACE DAYOFWEEK SPACE TIME end_time repeater deadline_warnend_time : DASH TIME\n                | emptyrepeater : SPACE REPEATER\n                | emptydeadline_warn : SPACE DEADWARN\n                     | emptydrawers : DRAWER NEWLINE\n               | drawers DRAWER NEWLINE\n               | emptybody : body_text\n            | emptybody_text : TEXT\n                 | SPACE\n                 | body_text TEXT\n                 | body_text SPACE\n                 | body_text NEWLINE body_textempty :'
+_lr_signature = 'ATIMESTAMP COLON COMMENT COOKIE DRAWER ITIMESTAMP METADATA NEWLINE PRIORITY SCHEDULING SEPARATOR SPACE STARS TEXT TODOorg_file : metadata org_tree\n                | body_text SEPARATOR org_tree\n                | metadata body_text SEPARATOR org_tree\n                | org_tree\n                | emptymetadata : METADATA NEWLINE\n                  | METADATA SEPARATOR\n                  | metadata METADATA NEWLINE\n                  | metadata METADATA SEPARATORorg_tree : heading\n                | heading SEPARATOR\n                | org_tree heading SEPARATOR\n                | org_tree heading\n                | emptyheading : headline NEWLINE contents\n               | headline SEPARATORheadline : STARS SPACE comment todo priority title cookie tagscomment : COMMENT SPACE\n               | emptytodo : TODO SPACE\n            | emptypriority : PRIORITY SPACE\n                | emptytitle : TEXT \n             | title SPACE TEXT\n             | title SPACEcookie : COOKIE SPACE\n              | COOKIE\n              | emptytags : COLON TEXT\n            | COLON TEXT SPACE\n            | emptycontents : scheduling drawers bodyscheduling : SCHEDULING SPACE any_timestamp \n                  | SCHEDULING SPACE any_timestamp NEWLINE\n                  | SCHEDULING SPACE any_timestamp SPACE scheduling\n                  | emptyany_timestamp : ATIMESTAMP\n                     | ITIMESTAMPdrawers : DRAWER\n               | DRAWER NEWLINE\n               | drawers DRAWER \n               | drawers DRAWER NEWLINE\n               | emptybody : body_text\n            | emptybody_text : TEXT\n                 | SPACE\n                 | body_text TEXT\n                 | body_text SPACE\n                 | body_text NEWLINE body_textempty :'
     
-_lr_action_items = {'METADATA':([0,2,12,13,18,19,],[4,10,-3,-4,-5,-6,]),'STARS':([0,2,3,5,6,9,11,12,13,14,15,16,18,19,20,21,22,24,28,30,36,38,39,40,41,42,52,53,54,56,57,64,65,],[8,8,8,-7,-11,8,-10,-3,-4,-8,-55,-13,-5,-6,-9,-12,-55,-33,-55,-47,-30,-48,-49,-50,-51,-45,-46,-52,-53,-55,-31,-54,-32,]),'$end':([0,1,2,3,5,6,9,11,12,13,14,15,16,18,19,20,21,22,24,28,30,36,38,39,40,41,42,52,53,54,56,57,64,65,],[-55,0,-55,-2,-7,-11,-1,-10,-3,-4,-8,-55,-13,-5,-6,-9,-12,-55,-33,-55,-47,-30,-48,-49,-50,-51,-45,-46,-52,-53,-55,-31,-54,-32,]),'NEWLINE':([4,7,10,29,37,38,40,41,43,44,45,53,54,61,62,64,66,68,69,70,71,72,74,75,77,78,80,82,],[12,15,18,42,52,55,-50,-51,57,-34,-35,-52,-53,-55,-21,55,-36,-37,-23,-55,-25,-26,-22,-14,-29,-24,-27,-28,]),'SEPARATOR':([4,5,7,10,11,15,16,21,22,24,28,30,36,38,39,40,41,42,52,53,54,56,57,61,62,64,65,69,70,71,72,74,75,77,78,80,82,],[13,14,16,19,20,-55,-13,-12,-55,-33,-55,-47,-30,-48,-49,-50,-51,-45,-46,-52,-53,-55,-31,-55,-21,-54,-32,-23,-55,-25,-26,-22,-14,-29,-24,-27,-28,]),'SPACE':([8,15,22,23,24,26,28,30,33,38,40,41,42,43,44,45,49,52,53,54,55,56,57,59,61,62,64,65,66,68,69,71,73,74,80,81,83,85,87,88,89,90,],[17,-55,-55,31,-33,35,41,-47,51,54,-50,-51,-45,56,-34,-35,63,-46,-52,-53,41,-55,-31,67,69,-21,54,-32,-36,-37,-23,78,79,-22,82,-55,86,-40,91,-42,-39,-41,]),'SCHEDULING':([15,56,],[23,23,]),'DRAWER':([15,22,24,28,30,42,52,56,57,65,],[-55,29,-33,37,-47,-45,-46,-55,-31,-32,]),'TEXT':([15,17,22,24,25,27,28,30,32,34,35,38,40,41,42,48,50,51,52,53,54,55,56,57,63,64,65,69,76,],[-55,-55,-55,-33,-55,-16,40,-47,-55,-18,-15,53,-50,-51,-45,62,-20,-17,-46,-52,-53,40,-55,-31,-19,53,-32,74,80,]),'COMMENT':([17,],[26,]),'TODO':([17,25,27,35,],[-55,33,-16,-15,]),'PRIORITY':([17,25,27,32,34,35,51,],[-55,-55,-16,49,-18,-15,-17,]),'LBRACK':([31,],[46,]),'LSQUARE':([31,],[47,]),'DATE':([46,47,],[59,59,]),'RBRACK':([58,81,83,85,87,88,89,90,92,93,94,],[66,-55,-55,-40,-55,-42,-39,-41,-38,-44,-43,]),'RSQUARE':([60,81,83,85,87,88,89,90,92,93,94,],[68,-55,-55,-40,-55,-42,-39,-41,-38,-44,-43,]),'COOKIE':([61,62,69,74,],[71,-21,-23,-22,]),'COLON':([61,62,69,70,71,72,74,78,],[-55,-21,-23,76,-25,-26,-22,-24,]),'DAYOFWEEK':([67,],[73,]),'TIME':([79,84,],[81,89,]),'DASH':([81,],[84,]),'REPEATER':([86,],[90,]),'DEADWARN':([91,],[94,]),}
+_lr_action_items = {'METADATA':([0,2,21,22,28,29,],[6,14,-6,-7,-8,-9,]),'TEXT':([0,2,4,7,8,13,18,19,20,21,22,24,26,28,29,32,34,36,37,39,41,42,43,45,47,48,50,51,53,54,55,56,57,59,60,61,62,63,66,67,68,74,],[7,7,18,-47,-48,18,-49,-50,7,-6,-7,-52,-52,-8,-9,18,-52,-37,-52,-19,7,-40,-44,-52,-21,-18,-42,18,-41,-34,-38,-39,65,-23,-20,-43,-52,-35,-22,-36,72,77,]),'SPACE':([0,2,4,7,8,11,13,18,19,20,21,22,24,28,29,32,34,35,36,38,41,42,43,46,50,51,53,54,55,56,58,61,62,63,64,65,67,68,70,72,77,],[8,8,19,-47,-48,26,19,-49,-50,8,-6,-7,-52,-8,-9,19,-52,44,-37,48,8,-40,-44,60,-42,19,-41,62,-38,-39,66,-43,-52,-35,68,-24,-36,-26,76,-25,78,]),'$end':([0,1,2,3,5,7,8,9,12,15,16,17,18,19,21,22,23,24,25,27,28,29,30,31,32,33,34,36,40,41,42,43,49,50,51,52,53,54,55,56,61,62,63,67,],[-52,0,-52,-4,-5,-47,-48,-10,-1,-14,-13,-52,-49,-50,-6,-7,-11,-52,-16,-52,-8,-9,-12,-2,-51,-15,-52,-37,-3,-52,-40,-44,-33,-42,-45,-46,-41,-34,-38,-39,-43,-52,-35,-36,]),'STARS':([0,2,3,5,7,8,9,12,15,16,17,18,19,21,22,23,24,25,27,28,29,30,31,32,33,34,36,40,41,42,43,49,50,51,52,53,54,55,56,61,62,63,67,],[11,11,11,-14,-47,-48,-10,11,-14,-13,11,-49,-50,-6,-7,-11,-52,-16,11,-8,-9,-12,11,-51,-15,-52,-37,11,-52,-40,-44,-33,-42,-45,-46,-41,-34,-38,-39,-43,-52,-35,-36,]),'SEPARATOR':([4,6,7,8,9,10,13,14,16,18,19,24,25,32,33,34,36,41,42,43,49,50,51,52,53,54,55,56,61,62,63,64,65,67,68,69,70,71,72,73,75,76,77,78,],[17,22,-47,-48,23,25,27,29,30,-49,-50,-52,-16,-51,-15,-52,-37,-52,-40,-44,-33,-42,-45,-46,-41,-34,-38,-39,-43,-52,-35,-52,-24,-36,-26,-52,-28,-29,-25,-17,-32,-27,-30,-31,]),'NEWLINE':([4,6,7,8,10,13,14,18,19,32,42,50,51,54,55,56,64,65,68,69,70,71,72,73,75,76,77,78,],[20,21,-47,-48,24,20,28,-49,-50,20,53,61,20,63,-38,-39,-52,-24,-26,-52,-28,-29,-25,-17,-32,-27,-30,-31,]),'SCHEDULING':([24,62,],[35,35,]),'DRAWER':([24,34,36,41,42,43,50,53,54,55,56,61,62,63,67,],[-52,42,-37,50,-40,-44,-42,-41,-34,-38,-39,-43,-52,-35,-36,]),'COMMENT':([26,],[38,]),'TODO':([26,37,39,48,],[-52,46,-19,-18,]),'PRIORITY':([26,37,39,45,47,48,60,],[-52,-52,-19,58,-21,-18,-20,]),'ATIMESTAMP':([44,],[55,]),'ITIMESTAMP':([44,],[56,]),'COOKIE':([64,65,68,72,],[70,-24,-26,-25,]),'COLON':([64,65,68,69,70,71,72,76,],[-52,-24,-26,74,-28,-29,-25,-27,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'org_file':([0,],[1,]),'metadata':([0,],[2,]),'org_tree':([0,2,],[3,9,]),'heading':([0,2,3,9,],[5,5,11,11,]),'empty':([0,2,15,17,22,25,28,32,56,61,70,81,83,87,],[6,6,24,27,30,34,39,50,24,72,77,85,88,93,]),'headline':([0,2,3,9,],[7,7,7,7,]),'contents':([15,],[21,]),'scheduling':([15,56,],[22,65,]),'comment':([17,],[25,]),'drawers':([22,],[28,]),'todo':([25,],[32,]),'body':([28,],[36,]),'body_text':([28,55,],[38,64,]),'any_timestamp':([31,],[43,]),'atimestamp':([31,],[44,]),'itimestamp':([31,],[45,]),'priority':([32,],[48,]),'timestamp':([46,47,],[58,60,]),'title':([48,],[61,]),'cookie':([61,],[70,]),'tags':([70,],[75,]),'end_time':([81,],[83,]),'repeater':([83,],[87,]),'deadline_warn':([87,],[92,]),}
+_lr_goto_items = {'org_file':([0,],[1,]),'metadata':([0,],[2,]),'org_tree':([0,2,17,27,],[3,12,31,40,]),'body_text':([0,2,20,41,],[4,13,32,51,]),'empty':([0,2,17,24,26,27,34,37,41,45,62,64,69,],[5,15,15,36,39,15,43,47,52,59,36,71,75,]),'heading':([0,2,3,12,17,27,31,40,],[9,9,16,16,9,9,16,16,]),'headline':([0,2,3,12,17,27,31,40,],[10,10,10,10,10,10,10,10,]),'contents':([24,],[33,]),'scheduling':([24,62,],[34,67,]),'comment':([26,],[37,]),'drawers':([34,],[41,]),'todo':([37,],[45,]),'body':([41,],[49,]),'any_timestamp':([44,],[54,]),'priority':([45,],[57,]),'title':([57,],[64,]),'cookie':([64,],[69,]),'tags':([69,],[73,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,53 +27,50 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> org_file","S'",1,None,None,None),
-  ('org_file -> metadata org_tree','org_file',2,'p_org_file','parser.py',85),
-  ('org_file -> org_tree','org_file',1,'p_org_file','parser.py',86),
-  ('metadata -> METADATA NEWLINE','metadata',2,'p_metadata','parser.py',93),
-  ('metadata -> METADATA SEPARATOR','metadata',2,'p_metadata','parser.py',94),
-  ('metadata -> metadata METADATA NEWLINE','metadata',3,'p_metadata','parser.py',95),
-  ('metadata -> metadata METADATA SEPARATOR','metadata',3,'p_metadata','parser.py',96),
-  ('org_tree -> heading','org_tree',1,'p_org_tree','parser.py',101),
-  ('org_tree -> heading SEPARATOR','org_tree',2,'p_org_tree','parser.py',102),
-  ('org_tree -> org_tree heading SEPARATOR','org_tree',3,'p_org_tree','parser.py',103),
-  ('org_tree -> org_tree heading','org_tree',2,'p_org_tree','parser.py',104),
-  ('org_tree -> empty','org_tree',1,'p_org_tree','parser.py',105),
-  ('heading -> headline NEWLINE contents','heading',3,'p_heading','parser.py',117),
-  ('heading -> headline SEPARATOR','heading',2,'p_heading','parser.py',118),
-  ('headline -> STARS SPACE comment todo priority title cookie tags','headline',8,'p_headline','parser.py',126),
-  ('comment -> COMMENT SPACE','comment',2,'p_comment','parser.py',130),
-  ('comment -> empty','comment',1,'p_comment','parser.py',131),
-  ('todo -> TODO SPACE','todo',2,'p_todo','parser.py',135),
-  ('todo -> empty','todo',1,'p_todo','parser.py',136),
-  ('priority -> PRIORITY SPACE','priority',2,'p_priority','parser.py',140),
-  ('priority -> empty','priority',1,'p_priority','parser.py',141),
-  ('title -> TEXT','title',1,'p_title','parser.py',145),
-  ('title -> title SPACE TEXT','title',3,'p_title','parser.py',146),
-  ('title -> title SPACE','title',2,'p_title','parser.py',147),
-  ('cookie -> COOKIE SPACE','cookie',2,'p_cookie','parser.py',151),
-  ('cookie -> COOKIE','cookie',1,'p_cookie','parser.py',152),
-  ('cookie -> empty','cookie',1,'p_cookie','parser.py',153),
-  ('tags -> COLON TEXT','tags',2,'p_tags','parser.py',157),
-  ('tags -> COLON TEXT SPACE','tags',3,'p_tags','parser.py',158),
-  ('tags -> empty','tags',1,'p_tags','parser.py',159),
-  ('contents -> scheduling drawers body','contents',3,'p_contents','parser.py',166),
-  ('scheduling -> SCHEDULING SPACE any_timestamp NEWLINE','scheduling',4,'p_scheduling','parser.py',170),
-  ('scheduling -> SCHEDULING SPACE any_timestamp SPACE scheduling','scheduling',5,'p_scheduling','parser.py',171),
-  ('scheduling -> empty','scheduling',1,'p_scheduling','parser.py',172),
-  ('any_timestamp -> atimestamp','any_timestamp',1,'p_any_timestamp','parser.py',181),
-  ('any_timestamp -> itimestamp','any_timestamp',1,'p_any_timestamp','parser.py',182),
-  ('atimestamp -> LBRACK timestamp RBRACK','atimestamp',3,'p_atimestamp','parser.py',186),
-  ('itimestamp -> LSQUARE timestamp RSQUARE','itimestamp',3,'p_itimestamp','parser.py',190),
-  ('timestamp -> DATE SPACE DAYOFWEEK SPACE TIME end_time repeater deadline_warn','timestamp',8,'p_timestamp','parser.py',194),
-  ('end_time -> DASH TIME','end_time',2,'p_end_time','parser.py',198),
-  ('end_time -> empty','end_time',1,'p_end_time','parser.py',199),
-  ('repeater -> SPACE REPEATER','repeater',2,'p_repeater','parser.py',203),
-  ('repeater -> empty','repeater',1,'p_repeater','parser.py',204),
-  ('deadline_warn -> SPACE DEADWARN','deadline_warn',2,'p_deadline_warn','parser.py',208),
-  ('deadline_warn -> empty','deadline_warn',1,'p_deadline_warn','parser.py',209),
-  ('drawers -> DRAWER NEWLINE','drawers',2,'p_drawers','parser.py',213),
-  ('drawers -> drawers DRAWER NEWLINE','drawers',3,'p_drawers','parser.py',214),
-  ('drawers -> empty','drawers',1,'p_drawers','parser.py',215),
+  ('org_file -> metadata org_tree','org_file',2,'p_org_file','parser.py',96),
+  ('org_file -> body_text SEPARATOR org_tree','org_file',3,'p_org_file','parser.py',97),
+  ('org_file -> metadata body_text SEPARATOR org_tree','org_file',4,'p_org_file','parser.py',98),
+  ('org_file -> org_tree','org_file',1,'p_org_file','parser.py',99),
+  ('org_file -> empty','org_file',1,'p_org_file','parser.py',100),
+  ('metadata -> METADATA NEWLINE','metadata',2,'p_metadata','parser.py',111),
+  ('metadata -> METADATA SEPARATOR','metadata',2,'p_metadata','parser.py',112),
+  ('metadata -> metadata METADATA NEWLINE','metadata',3,'p_metadata','parser.py',113),
+  ('metadata -> metadata METADATA SEPARATOR','metadata',3,'p_metadata','parser.py',114),
+  ('org_tree -> heading','org_tree',1,'p_org_tree','parser.py',119),
+  ('org_tree -> heading SEPARATOR','org_tree',2,'p_org_tree','parser.py',120),
+  ('org_tree -> org_tree heading SEPARATOR','org_tree',3,'p_org_tree','parser.py',121),
+  ('org_tree -> org_tree heading','org_tree',2,'p_org_tree','parser.py',122),
+  ('org_tree -> empty','org_tree',1,'p_org_tree','parser.py',123),
+  ('heading -> headline NEWLINE contents','heading',3,'p_heading','parser.py',135),
+  ('heading -> headline SEPARATOR','heading',2,'p_heading','parser.py',136),
+  ('headline -> STARS SPACE comment todo priority title cookie tags','headline',8,'p_headline','parser.py',144),
+  ('comment -> COMMENT SPACE','comment',2,'p_comment','parser.py',148),
+  ('comment -> empty','comment',1,'p_comment','parser.py',149),
+  ('todo -> TODO SPACE','todo',2,'p_todo','parser.py',153),
+  ('todo -> empty','todo',1,'p_todo','parser.py',154),
+  ('priority -> PRIORITY SPACE','priority',2,'p_priority','parser.py',158),
+  ('priority -> empty','priority',1,'p_priority','parser.py',159),
+  ('title -> TEXT','title',1,'p_title','parser.py',163),
+  ('title -> title SPACE TEXT','title',3,'p_title','parser.py',164),
+  ('title -> title SPACE','title',2,'p_title','parser.py',165),
+  ('cookie -> COOKIE SPACE','cookie',2,'p_cookie','parser.py',169),
+  ('cookie -> COOKIE','cookie',1,'p_cookie','parser.py',170),
+  ('cookie -> empty','cookie',1,'p_cookie','parser.py',171),
+  ('tags -> COLON TEXT','tags',2,'p_tags','parser.py',175),
+  ('tags -> COLON TEXT SPACE','tags',3,'p_tags','parser.py',176),
+  ('tags -> empty','tags',1,'p_tags','parser.py',177),
+  ('contents -> scheduling drawers body','contents',3,'p_contents','parser.py',184),
+  ('scheduling -> SCHEDULING SPACE any_timestamp','scheduling',3,'p_scheduling','parser.py',188),
+  ('scheduling -> SCHEDULING SPACE any_timestamp NEWLINE','scheduling',4,'p_scheduling','parser.py',189),
+  ('scheduling -> SCHEDULING SPACE any_timestamp SPACE scheduling','scheduling',5,'p_scheduling','parser.py',190),
+  ('scheduling -> empty','scheduling',1,'p_scheduling','parser.py',191),
+  ('any_timestamp -> ATIMESTAMP','any_timestamp',1,'p_any_timestamp','parser.py',200),
+  ('any_timestamp -> ITIMESTAMP','any_timestamp',1,'p_any_timestamp','parser.py',201),
+  ('drawers -> DRAWER','drawers',1,'p_drawers','parser.py',205),
+  ('drawers -> DRAWER NEWLINE','drawers',2,'p_drawers','parser.py',206),
+  ('drawers -> drawers DRAWER','drawers',2,'p_drawers','parser.py',207),
+  ('drawers -> drawers DRAWER NEWLINE','drawers',3,'p_drawers','parser.py',208),
+  ('drawers -> empty','drawers',1,'p_drawers','parser.py',209),
   ('body -> body_text','body',1,'p_body','parser.py',224),
   ('body -> empty','body',1,'p_body','parser.py',225),
   ('body_text -> TEXT','body_text',1,'p_body_text','parser.py',229),

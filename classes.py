@@ -5,7 +5,7 @@ from datetime import datetime as dt
 from functools import reduce
 from operator import add
 from math import floor
-from .lexer import get_todos
+from .lexer import get_todos, ATIMESTAMP, ITIMESTAMP
 
 ORG_TIME_FORMAT = '%Y-%m-%d %a %H:%M'
 
@@ -13,12 +13,18 @@ class Cookie:
     def __init__(self, text):
         if re.search(r'%', text):
             self._cookie_type = 'percent'
-            self._m = int(re.search(r'\[(.+)%\]', text).group(1))
+            match = re.search(r'\[(.+)%\]', text)
+            if match:
+                self._m = int(match.group(1))
+            else:
+                self._m = 0
             self._n = 100
         elif re.search(r'/', text):
             self._cookie_type = 'progress'
-            match = re.search(r'\[(.+)/(.+)\]', text)
-            self._m, self._n = int(match.group(1)), int(match.group(2))
+            match = re.search(r'\[(.*)/(.*)\]', text)
+            m = int(match.group(1)) if match.group(1) != '' else 0
+            n = int(match.group(2)) if match.group(2) != '' else 0
+            self._m, self._n = m, n
         else:
             self._cookie_type = None
             self._m = 0
@@ -274,19 +280,27 @@ class Scheduling:
         
 
 class TimeStamp:
-    def __init__(self, date, day_of_week, start_time, end_time, repeater, deadline_warn, active):
-        if isinstance(active, bool):
-            self._active = active
-        else:
-            raise TypeError("The active property of timestamps needs to be a Boolean")
-        self._start_time = dt.strptime(' '.join([date, day_of_week, start_time]), ORG_TIME_FORMAT)
+    def __init__(self, timestamp_str):
+        is_active = re.search(ATIMESTAMP, timestamp_str)
+        is_inactive = re.search(ITIMESTAMP, timestamp_str)
+        self._active = True if is_active else False
+        match = is_active if self._active else is_inactive
+        date, day_of_week, start_time, end_time, repeater, deadline_warn = match.groups()
+        self._start_time = self._to_datetime([date, day_of_week, start_time])
         if end_time:
-            self._end_time = dt.strptime(' '.join([date, day_of_week, end_time]), ORG_TIME_FORMAT)
+            self._end_time = self._to_datetime([date, day_of_week, end_time]) 
         else:
             self._end_time = None
         self._repeater = repeater
         self._deadline_warn = deadline_warn
 
+    def _to_datetime(self, date_components):
+        if date_components[-1] is None:
+            dt_format = ' '.join(ORG_TIME_FORMAT.split(' ')[:-1])
+            date_components = date_components[:-1]
+        else:
+            dt_format = ORG_TIME_FORMAT
+        return dt.strptime(' '.join(date_components), dt_format)
     @property
     def start_time(self):
         return self._start_time

@@ -1,30 +1,12 @@
 #!/usr/bin/env python3
 
-import re
 import ply.lex as lex
-from itertools import chain
 import json
 import os
+import re
 
-def elapsed_time_regex():
-    hours_regex = r'(?:0[1-9]|1[0-9]|2[0-3])'
-    minutes_regex = r'[0-5][0-9]'
-    return fr'{hours_regex}:{minutes_regex}'
-def timestamp_regex():
-    elapsed_time = elapsed_time_regex()
-    return fr'\s+(?:\s+{elapsed_time}(?:-{elapsed_time})?)?(?:\s+[.+]?\+[0-9]+[hdwmy])?'
-
-def active_timestamp_regex():
-    return fr'<{timestamp_regex()}>'
-
-def inactive_timestamp_regex():
-    return fr'\[{timestamp_regex()}\]'
-
-tokens = ('DATE',
-          'TIME',
-          'REPEATER',
-          'DEADWARN',
-          'DAYOFWEEK',
+tokens = ('ATIMESTAMP',
+          'ITIMESTAMP',
           'DRAWER',
           'SCHEDULING',
           'COOKIE',
@@ -33,12 +15,7 @@ tokens = ('DATE',
           'STARS',
           'COMMENT',
           'SPACE',
-          'DASH',
           'NEWLINE',
-          'LBRACK',
-          'RBRACK',
-          'LSQUARE',
-          'RSQUARE',
           'COLON',
           'TEXT',
           'SEPARATOR',
@@ -65,28 +42,78 @@ def get_todos():
 
 all_todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
 
-t_DATE = r'[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])'
-t_TIME = elapsed_time_regex() 
-t_REPEATER = '[.+]?\+[0-9]+[hdwmy]'
-t_DEADWARN = '-[0-9]+[hdwmy]'
-t_DAYOFWEEK = r'(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)'
-t_DRAWER = r'(?ism)^\s*:[^:]+:.+?:end:'
-t_SCHEDULING = r'(?:CLOSED|SCHEDULED|DEADLINE):'
-t_COOKIE = r'\[(?:[0-9]+/[1-9][0-9]*|[0-9]%)\]'
-t_PRIORITY = r'\[\#(?:A|B|C)\]'
-t_TODO = fr'(?:{"|".join(all_todo_keywords)})'
-t_STARS = r'^\*+'
-t_COMMENT = r'COMMENT'
-t_NEWLINE = r'\n+'
-t_SPACE = r"\s+"
-t_DASH = r"(?<=\d)[-](?=\d)"
-t_LBRACK = '[<]'
-t_RBRACK = '[>]'
-t_LSQUARE = r'[\[]'
-t_RSQUARE = r'[\]]'
-t_COLON = r'[:]'
-t_TEXT = r'\S+'
-t_SEPARATOR = r'\n+(?=\*|\Z)'
-t_METADATA = r'^\#(?-s:.*)'
+DATE = r'[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])'
+hours_regex = r'(?:0[1-9]|1[0-9]|2[0-3])'
+minutes_regex = r'[0-5][0-9]'
+TIME = fr'{hours_regex}:{minutes_regex}'
+REPEATER = '[.+]?\+[0-9]+[hdwmy]'
+DEADWARN = '-[0-9]+[hdwmy]'
+DAYOFWEEK = r'(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)'
+TIMESTAMP = fr'({DATE})\s({DAYOFWEEK})(\s{TIME})?(-{TIME})?(\s{REPEATER})?(\s{DEADWARN})?' 
+ATIMESTAMP = fr'<{TIMESTAMP}>'
+ITIMESTAMP = fr'\[{TIMESTAMP}\]'
 
-lexer = lex.lex(optimize=False)
+TODO = fr'(?:{"|".join(list(all_todo_keywords.values()))})'
+
+
+
+def t_METADATA(t):
+    r'^\#(?-s:.*)'
+    return t
+
+@lex.TOKEN(ATIMESTAMP)
+def t_ATIMESTAMP(t):
+    return t
+    
+@lex.TOKEN(ITIMESTAMP)
+def t_ITIMESTAMP(t):
+    return t
+
+def t_DRAWER(t):
+    r'^\s*:[^:]+:.+?:end:'
+    return t
+    
+def t_SCHEDULING(t):
+    r'(?:CLOSED|SCHEDULED|DEADLINE):'
+    return t
+
+def t_COOKIE(t):
+    r'\[(?:[0-9]*/[0-9]*|[0-9]*%)\]'
+    return t
+
+def t_PRIORITY(t):
+    r'\[\#(?:A|B|C)\]'
+    return t
+
+@lex.TOKEN(TODO)
+def t_TODO(t):
+    return t
+
+def t_STARS(t):
+    r'^\*+'
+    return t
+
+def t_COMMENT(t):
+    r'COMMENT'
+    return t
+
+def t_SEPARATOR(t):
+    r'\n+(?=\*|\Z)'
+    return t
+
+def t_NEWLINE(t):
+    r'\n+'
+    return t
+
+def t_COLON(t):
+    r':'
+    return t
+
+def t_SPACE(t):
+    r'\s+'
+    return t
+
+def t_TEXT(t):
+    r'\S+'
+    return t
+lexer = lex.lex(optimize=False, reflags=re.DOTALL|re.MULTILINE)

@@ -6,88 +6,21 @@ from .classes import *
 from functools import reduce
 from operator import add
 import ply.yacc as yacc
-import re
-
-'''Grammar:
-org_file := metadata org_tree
-            | org_tree
-
-org_tree   := heading SEPARATOR
-              | org_tree heading SEPARATOR
-              | org_tree heading
-              | empty
-
-heading    := headline NEWLINE contents
-              | headline SEPARATOR
-
-headline   := STARS SPACE comment todo priority title cookie tags
-
-comment    := COMMENT SPACE
-              | empty
-
-todo       := TODO SPACE
-              | empty
-
-priority   := PRIORITY SPACE
-              | empty
-
-title      := TEXT 
-              | title SPACE TEXT
-              | title SPACE
-
-cookie     := COOKIE SPACE
-              | COOKIE
-              | empty
-
-tags       := COLON TEXT
-              | COLON TEXT SPACE
-              | empty
-
-contents   := scheduling drawers body
-
-scheduling := SCHEDULING SPACE any_timestamp NEWLINE
-              | SCHEDULING SPACE any_timestamp SPACE scheduling
-              | empty
-
-any_timestamp :=  atimestamp
-                  | itimestamp
-
-atimestamp := LBRACK timestamp RBRACK
-
-itimestamp := LSQUARE timestamp RSQUARE
-
-timestamp := DATE SPACE DAYOFWEEK SPACE TIME end_time repeater deadline_warn
-
-end_time := DASH TIME
-            | empty
-
-repeater := SPACE REPEATER
-            | empty
-
-deadline_warn := SPACE DEADWARN
-                 | empty
-
-drawers := DRAWER NEWLINE
-           | drawers DRAWER NEWLINE
-           | empty
-
-body := body_text
-        | empty
-
-body_text := TEXT
-             | SPACE
-             | body_text TEXT
-             | body_text SPACE
-             | body_text NEWLINE body_text
-'''
 
 def p_org_file(p):
     '''org_file : metadata org_tree
-                | org_tree'''
-    if len(p) > 2:
-        p[0] = (p[1], p[2])
+                | body_text SEPARATOR org_tree
+                | metadata body_text SEPARATOR org_tree
+                | org_tree
+                | empty'''
+    if len(p) == 5:
+        p[0] = (p[1], p[2], p[4])
+    elif len(p) == 4:
+        p[0] = ('', p[1], p[3])
+    elif len(p) == 3:
+        p[0] = (p[1], '', p[2])
     else:
-        p[0] = ('', p[1])
+        p[0] = ('', '', p[1])
           
 def p_metadata(p):
     '''metadata : METADATA NEWLINE
@@ -167,58 +100,40 @@ def p_contents(p):
    p[0] = (p[1], p[2], p[3])
 
 def p_scheduling(p):
-    '''scheduling : SCHEDULING SPACE any_timestamp NEWLINE
+    '''scheduling : SCHEDULING SPACE any_timestamp 
+                  | SCHEDULING SPACE any_timestamp NEWLINE
                   | SCHEDULING SPACE any_timestamp SPACE scheduling
                   | empty'''
-    if len(p) == 5:
-        p[0] = Scheduling(p[1], timestamp=p[3])
-    elif len(p) == 6:
+    if len(p) == 6:
         p[0] = reduce(add, [Scheduling(p[1], timestamp=p[3]), *p[5]])
+    elif len(p) > 2:
+        p[0] = [Scheduling(p[1], timestamp=p[3])]
     else:
         p[0] = None
 
 def p_any_timestamp(p):
-    '''any_timestamp : atimestamp
-                     | itimestamp'''
-    p[0] = p[1]
-
-def p_atimestamp(p):
-    '''atimestamp : LBRACK timestamp RBRACK'''
-    p[0] = TimeStamp(*p[2], active=True)
-
-def p_itimestamp(p):
-    '''itimestamp : LSQUARE timestamp RSQUARE'''
-    p[0] = TimeStamp(*p[2], active=False)
-
-def p_timestamp(p):
-    '''timestamp : DATE SPACE DAYOFWEEK SPACE TIME end_time repeater deadline_warn'''
-    p[0] = (p[1], p[3], p[5], p[6], p[7], p[8])
-
-def p_end_time(p):
-    '''end_time : DASH TIME
-                | empty'''
-    p[0] = p[2] if len(p) >=3 else None
-
-def p_repeater(p):
-    '''repeater : SPACE REPEATER
-                | empty'''
-    p[0] = p[2] if len(p) >= 3 else None
-
-def p_deadline_warn(p):
-    '''deadline_warn : SPACE DEADWARN
-                     | empty'''
-    p[0] = p[2] if len(p) >= 3 else None
+    '''any_timestamp : ATIMESTAMP
+                     | ITIMESTAMP'''
+    p[0] = TimeStamp(p[1])
 
 def p_drawers(p):
-    '''drawers : DRAWER NEWLINE
+    '''drawers : DRAWER
+               | DRAWER NEWLINE
+               | drawers DRAWER 
                | drawers DRAWER NEWLINE
                | empty'''
     if len(p) == 4:
         p[0] = ([d for d in p[1] if d is not None]) + ([Drawer(p[2])])
     elif len(p) == 3:
-        p[0] = ([Drawer(p[1])])
+        if type(p[1]) is list:
+            p[0] = ([d for d in p[1] if d is not None]) + ([Drawer(p[2])])
+        else:
+            p[0] = ([Drawer(p[1])])
     else:
-        p[0] = ([])
+        if type(p[1]) is str:
+            p[0] = ([Drawer(p[1])])
+        else:
+            p[0] = ([])
 
 def p_body(p):
     '''body : body_text

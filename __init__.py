@@ -5,27 +5,26 @@ from .parser import parser as p
 from .classes import *
 
 class Org:
-    def __init__(self, input_string, from_file=True):
+    def __init__(self, input_string, from_file=True, debug=False):
         if from_file:
             with open(input_string, 'r') as IN:
                 string = IN.read()
         else:
             string = input_string
-        metadata, headings = p.parse(string)
+        metadata, initial_body, headings = p.parse(string, debug=debug)
         self.metadata = self._read_metadata(metadata)
+        self.initial_body = initial_body
         self.root = self._classify_headings(headings)
 
         
     def _classify_headings(self, lst):
         ROOT = Heading(Headline(' ', title='ROOT'), (None, None, None))
-        if len(lst) == 1:
-            ROOT.add_child(lst[0], new=True)
-        else:
+        ROOT.add_child(lst[0], new=True)
+        if len(lst) > 1:
             for elem1, elem2 in zip(lst[:-1], lst[1:]):
-                for elem in (elem1, elem2):
-                    if elem.level == 1:
-                        elem.parent = ROOT
-                        ROOT.add_child(elem, new=True)
+                if elem2.level == 1:
+                    elem2.parent = ROOT
+                    ROOT.add_child(elem2, new=True)
                 if elem2.level > elem1.level:
                     if elem1.children:
                         elem1.children.append(elem2)
@@ -57,12 +56,10 @@ class Org:
 
     def __repr__(self):
         result = ''
-        if 'title' in self.metadata:
-            result += self._metadata_values_to_string('title')
         for keyword in self.metadata:
-            if keyword != 'title':
-                result += self._metadata_values_to_string(keyword)
+            result += self._metadata_values_to_string(keyword)
         result += '\n'
+        result += self.initial_body + '\n'
         result += ''.join([c.__repr__() for c in self.root.children])
         return result
                                 
