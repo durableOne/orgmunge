@@ -16,7 +16,7 @@ tokens = ('ATIMESTAMP',
           'COMMENT',
           'SPACE',
           'NEWLINE',
-          'COLON',
+          'TAGS',
           'TEXT',
           'SEPARATOR',
           'METADATA',)
@@ -43,7 +43,7 @@ def get_todos():
 all_todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
 
 DATE = r'[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])'
-hours_regex = r'(?:0[1-9]|1[0-9]|2[0-3])'
+hours_regex = r'(?:0[0-9]|1[0-9]|2[0-3])'
 minutes_regex = r'[0-5][0-9]'
 TIME = fr'{hours_regex}:{minutes_regex}'
 REPEATER = '[.+]?\+[0-9]+[hdwmy]'
@@ -58,7 +58,7 @@ TODO = fr'(?:{"|".join(list(all_todo_keywords.values()))})'
 
 
 def t_METADATA(t):
-    r'^\#(?-s:.*)'
+    r'^\#\+:(?-s:.*)'
     return t
 
 @lex.TOKEN(ATIMESTAMP)
@@ -70,7 +70,7 @@ def t_ITIMESTAMP(t):
     return t
 
 def t_DRAWER(t):
-    r'^\s*:[^:]+:.+?:end:'
+    r'^\s*:[^:]+:.+?:(?:end|END):'
     return t
     
 def t_SCHEDULING(t):
@@ -90,7 +90,7 @@ def t_TODO(t):
     return t
 
 def t_STARS(t):
-    r'^\*+'
+    r'^\*+(?=\s)'
     return t
 
 def t_COMMENT(t):
@@ -98,19 +98,19 @@ def t_COMMENT(t):
     return t
 
 def t_SEPARATOR(t):
-    r'\n+(?=\*|\Z)'
+    r'\n+(?=\*+\s|\Z)'
     return t
 
 def t_NEWLINE(t):
     r'\n+'
     return t
 
-def t_COLON(t):
-    r':'
+def t_TAGS(t):
+    r'(?::\S+)+:'
     return t
 
 def t_SPACE(t):
-    r'\s+'
+    r'[ \t]+'
     return t
 
 def t_TEXT(t):

@@ -29,7 +29,6 @@ def p_metadata(p):
                   | metadata METADATA SEPARATOR'''
     p[0] = reduce(add, p[1:])
     
-
 def p_org_tree(p):
     '''org_tree : heading
                 | heading SEPARATOR
@@ -54,7 +53,6 @@ def p_heading(p):
     else:
         p[0] = Heading(p[1], contents=(None, None, None))
     
-
 def p_headline(p):
     '''headline : STARS SPACE comment todo priority title cookie tags'''
     p[0] = Headline(level=p[1], comment=bool(p[3]), todo=p[4], priority=p[5], title=p[6], cookie=p[7], tags=p[8])
@@ -87,11 +85,10 @@ def p_cookie(p):
     p[0] = p[1] if len(p) > 1 else None
 
 def p_tags(p):
-    '''tags : COLON TEXT
-            | COLON TEXT SPACE
+    '''tags : TAGS
             | empty''' # Everything after the leading colon gets parsed as TEXT
-    if len(p) > 2:
-        p[0] = [x for x in p[2].split(':') if x != '']
+    if p[1] is not None:
+        p[0] = [x for x in p[1].split(':') if x != '']
     else:
         p[0] = None
 
@@ -100,12 +97,13 @@ def p_contents(p):
    p[0] = (p[1], p[2], p[3])
 
 def p_scheduling(p):
-    '''scheduling : SCHEDULING SPACE any_timestamp 
-                  | SCHEDULING SPACE any_timestamp NEWLINE
-                  | SCHEDULING SPACE any_timestamp SPACE scheduling
+    '''scheduling : SCHEDULING SPACE any_timestamp NEWLINE
+                  | SCHEDULING SPACE any_timestamp SPACE
+                  | scheduling SCHEDULING SPACE any_timestamp SPACE
+                  | scheduling SCHEDULING SPACE any_timestamp NEWLINE
                   | empty'''
-    if len(p) == 6:
-        p[0] = reduce(add, [Scheduling(p[1], timestamp=p[3]), *p[5]])
+    if len(p) > 5:
+        p[0] = [reduce(add, [*p[1], Scheduling(p[2], timestamp=p[4])])]
     elif len(p) > 2:
         p[0] = [Scheduling(p[1], timestamp=p[3])]
     else:
@@ -143,13 +141,20 @@ def p_body(p):
 def p_body_text(p):
     '''body_text : TEXT
                  | SPACE
+                 | any_timestamp
                  | body_text TEXT
                  | body_text SPACE
+                 | body_text any_timestamp
                  | body_text NEWLINE body_text'''
-    p[0] = reduce(add, p[1:])
+    p[0] = reduce(add, map(str, p[1:]))
 
 def p_empty(p):
     'empty :' 
     pass
+
+def p_error(p):
+    if p is not None:
+        print(p)
+        exit(1)
 
 parser = yacc.yacc(write_tables=True)

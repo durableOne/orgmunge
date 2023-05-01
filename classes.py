@@ -288,6 +288,7 @@ class TimeStamp:
         date, day_of_week, start_time, end_time, repeater, deadline_warn = match.groups()
         self._start_time = self._to_datetime([date, day_of_week, start_time])
         if end_time:
+            end_time = re.sub(r'^-', '', end_time)
             self._end_time = self._to_datetime([date, day_of_week, end_time]) 
         else:
             self._end_time = None
@@ -410,6 +411,8 @@ class Heading:
         self._children = None
         self._parent = None
         self._sibling = None
+        if self.body:
+            self.timestamps = [TimeStamp(t[0]) for t in re.findall(fr'({ATIMESTAMP}|{ITIMESTAMP})', self.body)]
         if self._drawers:
             properties_drawer = [d for d in self._drawers if d.name == 'PROPERTIES']
             if properties_drawer:
