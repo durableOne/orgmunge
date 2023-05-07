@@ -58,7 +58,7 @@ TODO = fr'(?:{"|".join(list(all_todo_keywords.values()))})'
 
 
 def t_METADATA(t):
-    r'^\#\+:(?-s:.*)'
+    r'^\#\+\S+:(?-s:.*)'
     return t
 
 @lex.TOKEN(ATIMESTAMP)

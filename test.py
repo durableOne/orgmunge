@@ -3,5 +3,5 @@
 from orgmunge import Org
 import os
 
-root = Org(f'{os.environ["HOME"]}/Dropbox/org/agenda.org', from_file=True, debug=True)
-print(root)
+cal_inbox = Org(f'{os.environ["HOME"]}/Dropbox/org/cal-inbox.org', from_file=True, debug=True)
+cal_inbox.write('/tmp/inbox_reconstructed.org')

@@ -108,8 +108,6 @@ class Priority:
 
     def __repr__(self):
         return f'[#{self.priority}]'
-        
-    
             
 class Headline:
     _todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
@@ -224,7 +222,6 @@ class Headline:
         tags = f"    :{':'.join(self.tags)}:" if self.tags else ""
         return f"{'*' * self.level} {todo}{comment}{priority}{self.title} {cookie}{tags}"
 
-
 class Scheduling:
     _closed = None
     _scheduled = None
@@ -278,7 +275,6 @@ class Scheduling:
         data = [f'{keyword.upper()}: {getattr(self, keyword)}' for keyword in self.valid_keywords if getattr(self, keyword) is not None]
         return ' '.join(data)
         
-
 class TimeStamp:
     def __init__(self, timestamp_str):
         is_active = re.search(ATIMESTAMP, timestamp_str)
@@ -301,6 +297,7 @@ class TimeStamp:
             date_components = date_components[:-1]
         else:
             dt_format = ORG_TIME_FORMAT
+        self._dt_format = dt_format
         return dt.strptime(' '.join(date_components), dt_format)
     @property
     def start_time(self):
@@ -384,7 +381,7 @@ class TimeStamp:
     def __repr__(self):
         ldelim = '<' if self.active else '['
         rdelim = '>' if self.active else ']'
-        timestamp = self.start_time.strftime(ORG_TIME_FORMAT)
+        timestamp = self.start_time.strftime(self._dt_format)
         if self.end_time:
             timestamp += f'-{self.end_time.strftime("%H-%M")}'
         if self.repeater:
@@ -645,10 +642,9 @@ class Heading:
             for child in children:
                 child.demote_tree()
 
-        
     def __repr__(self):
         scheduling = str(self.scheduling) + "\n" if self.scheduling else ""
-        drawers = str(self.drawers) + "\n" if self.drawers else ""
+        drawers = "".join(str(d) for d in self.drawers) if self.drawers else ""
         body = (str(self.body) + "\n" if self.body else "")
         if len(body) > 80:
             body = body[:77].strip() + "...\n"

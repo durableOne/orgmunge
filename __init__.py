@@ -54,6 +54,10 @@ class Org:
     def _metadata_values_to_string(self, keyword):
         return "\n".join([f"#+{keyword}: {v}" for v in self.metadata[keyword]]) + '\n'
 
+    def write(self, out_file):
+        with open(out_file, 'w') as OUT:
+            OUT.write(str(self))
+
     def __repr__(self):
         result = ''
         for keyword in self.metadata:
