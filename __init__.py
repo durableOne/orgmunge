@@ -1,11 +1,11 @@
-#!/usr/bin/evn python3
+#!/usr/bin/env python3
 
-__package__ = 'orgmunge'
 from .parser import parser as p
 from .classes import *
+from typing import List, Dict
 
 class Org:
-    def __init__(self, input_string, from_file=True, debug=False):
+    def __init__(self, input_string: str, from_file: bool = True, debug: bool = False):
         if from_file:
             with open(input_string, 'r') as IN:
                 string = IN.read()
@@ -16,31 +16,45 @@ class Org:
         self.initial_body = initial_body
         self.root = self._classify_headings(headings)
 
-        
-    def _classify_headings(self, lst):
+    def _classify_headings(self, lst: List[Heading]) -> Heading:
+        """Takes a list of headings and classifies them according to their
+        parent and sibling relationships. It creates an empty top-level heading
+        named ROOT and returns it, with all the other level-1 headings in the
+        tree as its children.
+        """
+        if lst[0].level !=1:
+            raise ValueError("Org tree can't start with a heading of level > 1")
         ROOT = Heading(Headline(' ', title='ROOT'), (None, None, None))
         ROOT.add_child(lst[0], new=True)
         if len(lst) > 1:
             for elem1, elem2 in zip(lst[:-1], lst[1:]):
                 if elem2.level == 1:
-                    elem2.parent = ROOT
+                    if ROOT.children:
+                        elem2.sibling = ROOT.children[-1]
                     ROOT.add_child(elem2, new=True)
-                if elem2.level > elem1.level:
+                elif elem2.level > elem1.level:
                     if elem1.children:
-                        elem1.children.append(elem2)
-                    else:
-                        elem1.children = [elem2]
-                    elem2.parent = elem1
+                        elem2.sibling = elem1.children[-1]
+                    elem1.add_child(elem2, new=True)
                 elif elem2.level < elem1.level:
-                    elem2.sibling = elem1.parent
+                    levels_to_climb = elem1.level - elem2.level
+                    sibling = elem1.parent
+                    for _ in range(levels_to_climb-1):
+                        sibling = sibling.parent
+                    elem2.sibling = sibling
+                    elem2.sibling.parent.add_child(elem2, new=True)
                 else:
                     elem2.sibling = elem1
-                    elem2.parent = elem1.parent
-                    if elem1.parent:
-                        elem1.parent.children.append(elem2)
+                    elem1.parent.add_child(elem2, new=True)
         return ROOT
 
-    def _read_metadata(self, metadata):
+    def _read_metadata(self, metadata: str) -> Dict[str, List[str]]:
+        """Reads the metadata string into a dictionary mapping
+        each metadata keyword to a list of values assigned to it.
+        This allows for cumulative metadata assignments (e.g. multiple
+        #+options lines). The metadata keywords are all converted to
+        lower case and that's how they will be written out to file.
+        """
         metadata_lines = [l for l in metadata.split('\n') if l != '']
         result = dict()
         for line in metadata_lines:
@@ -51,10 +65,11 @@ class Org:
                 result[keyword.lower()] = [value]
         return result
 
-    def _metadata_values_to_string(self, keyword):
+    def _metadata_values_to_string(self, keyword: str) -> str:
         return "\n".join([f"#+{keyword}: {v}" for v in self.metadata[keyword]]) + '\n'
 
-    def write(self, out_file):
+    def write(self, out_file: str):
+        "Writes out the org tree into a file."
         with open(out_file, 'w') as OUT:
             OUT.write(str(self))
 

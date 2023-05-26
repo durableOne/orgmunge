@@ -32,15 +32,15 @@ def get_todos():
             return json.load(JSON)
     else:
         return {'todo_states':
-                {'todo': '',
-                 'next': '',
-                 'wait': '',},
+                {'todo': 'TODO',
+                 'next': 'NEXT',
+                 'wait': 'WAIT',},
                 'done_states': 
-                {'cncl': '',
-                 'done': '',}}
+                {'cncl': 'CNCL',
+                 'done': 'DONE',}}
 
-
-all_todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
+todos_dict = get_todos()
+all_todo_keywords = {**todos_dict['todo_states'], **todos_dict['done_states']}
 
 DATE = r'[1-9][0-9]{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])'
 hours_regex = r'(?:0[0-9]|1[0-9]|2[0-3])'
@@ -58,7 +58,7 @@ TODO = fr'(?:{"|".join(list(all_todo_keywords.values()))})'
 
 
 def t_METADATA(t):
-    r'^\#\+\S+:(?-s:.*)'
+    r'(?:^\#\+[^:\n]+:[^\n]*\n)*^\#\+[^:\n]+:[^\n]*'
     return t
 
 @lex.TOKEN(ATIMESTAMP)
@@ -97,6 +97,7 @@ def t_COMMENT(t):
     r'COMMENT'
     return t
 
+# Needed to distinguish a regular newline from one that starts a new heading or ends the file
 def t_SEPARATOR(t):
     r'\n+(?=\*+\s|\Z)'
     return t
@@ -116,4 +117,5 @@ def t_SPACE(t):
 def t_TEXT(t):
     r'\S+'
     return t
+
 lexer = lex.lex(optimize=False, reflags=re.DOTALL|re.MULTILINE)

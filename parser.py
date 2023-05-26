@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-__package__ = 'orgmunge'
 from .lexer import tokens
 from .classes import *
 from functools import reduce
@@ -9,8 +8,8 @@ import ply.yacc as yacc
 
 def p_org_file(p):
     '''org_file : metadata org_tree
-                | body_text SEPARATOR org_tree
-                | metadata body_text SEPARATOR org_tree
+                | non_metadata_body_text SEPARATOR org_tree
+                | metadata non_metadata_body_text SEPARATOR org_tree
                 | org_tree
                 | empty'''
     if len(p) == 5:
@@ -23,18 +22,14 @@ def p_org_file(p):
         p[0] = ('', '', p[1])
           
 def p_metadata(p):
-    '''metadata : METADATA NEWLINE
-                  | METADATA SEPARATOR
-                  | metadata METADATA NEWLINE
-                  | metadata METADATA SEPARATOR'''
+    '''metadata : METADATA SEPARATOR'''
     p[0] = reduce(add, p[1:])
     
 def p_org_tree(p):
     '''org_tree : heading
                 | heading SEPARATOR
                 | org_tree heading SEPARATOR
-                | org_tree heading
-                | empty'''
+                | org_tree heading'''
     if len(p) == 2:
         p[0] = [p[1]]
     elif len(p) == 3:
@@ -86,7 +81,7 @@ def p_cookie(p):
 
 def p_tags(p):
     '''tags : TAGS
-            | empty''' # Everything after the leading colon gets parsed as TEXT
+            | empty''' 
     if p[1] is not None:
         p[0] = [x for x in p[1].split(':') if x != '']
     else:
@@ -96,12 +91,13 @@ def p_contents(p):
    '''contents : scheduling drawers body'''
    p[0] = (p[1], p[2], p[3])
 
-def p_scheduling(p):
-    '''scheduling : SCHEDULING SPACE any_timestamp NEWLINE
-                  | SCHEDULING SPACE any_timestamp SPACE
-                  | scheduling SCHEDULING SPACE any_timestamp SPACE
-                  | scheduling SCHEDULING SPACE any_timestamp NEWLINE
-                  | empty'''
+def p_scheduling_data(p):
+    '''scheduling_data : SCHEDULING SPACE any_timestamp NEWLINE
+                       | SCHEDULING SPACE any_timestamp SEPARATOR
+                       | SCHEDULING SPACE any_timestamp SPACE
+                       | scheduling_data SCHEDULING SPACE any_timestamp NEWLINE
+                       | scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR
+                       | scheduling_data SCHEDULING SPACE any_timestamp SPACE'''
     if len(p) > 5:
         p[0] = [reduce(add, [*p[1], Scheduling(p[2], timestamp=p[4])])]
     elif len(p) > 2:
@@ -109,17 +105,21 @@ def p_scheduling(p):
     else:
         p[0] = None
 
+def p_scheduling(p):
+    '''scheduling : scheduling_data
+                  | empty'''
+    p[0] = p[1]
+
 def p_any_timestamp(p):
     '''any_timestamp : ATIMESTAMP
                      | ITIMESTAMP'''
     p[0] = TimeStamp(p[1])
 
-def p_drawers(p):
-    '''drawers : DRAWER
-               | DRAWER NEWLINE
-               | drawers DRAWER 
-               | drawers DRAWER NEWLINE
-               | empty'''
+def p_drawer_data(p):
+    '''drawer_data : DRAWER NEWLINE
+                   | DRAWER SEPARATOR
+                   | drawer_data DRAWER NEWLINE
+                   | drawer_data DRAWER SEPARATOR'''
     if len(p) == 4:
         p[0] = ([d for d in p[1] if d is not None]) + ([Drawer(p[2])])
     elif len(p) == 3:
@@ -133,19 +133,36 @@ def p_drawers(p):
         else:
             p[0] = ([])
 
+def p_drawers(p):
+    '''drawers : drawer_data
+               | empty'''
+    p[0] = p[1]
+
 def p_body(p):
     '''body : body_text
             | empty'''
     p[0] = p[1]
 
+def p_non_metadata_body_text(p):
+    '''non_metadata_body_text : TEXT
+                              | SPACE
+                              | any_timestamp
+                              | non_metadata_body_text TEXT
+                              | non_metadata_body_text SPACE
+                              | non_metadata_body_text any_timestamp
+                              | non_metadata_body_text NEWLINE''' 
+    p[0] = reduce(add, map(str, p[1:]))
+    
 def p_body_text(p):
     '''body_text : TEXT
                  | SPACE
+                 | METADATA
                  | any_timestamp
                  | body_text TEXT
                  | body_text SPACE
+                 | body_text METADATA
                  | body_text any_timestamp
-                 | body_text NEWLINE body_text'''
+                 | body_text NEWLINE'''
     p[0] = reduce(add, map(str, p[1:]))
 
 def p_empty(p):
