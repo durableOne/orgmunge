@@ -1,0 +1,90 @@
+#+title:Orgmunge
+
+* Motivation and scope
+Orgmunge was born out of the desire to modify Org documents
+programmatically from within Python. The wonderful [[https://github.com/karlicoss/orgparse][orgparse]] can read
+an Org document into a tree object but doesn't offer an interface to
+modify the tree and write it back to file.
+
+The original use case was trying to sync Outlook calendar items with
+Org: whenever someone rescheduled a meeting, my Python script was
+unable to reschedule the Org heading it had originally
+created. Instead of forking =orgparse=, I decided to write an actual
+grammar for an Org document and use [[https://github.com/dabeaz/ply][PLY]] to generate a parser for it.
+
+Now Org syntax is too sophisticated for me to claim that this first
+attempt can parse everything. In fact, some folks way smarter than I
+am (and with more formal training), have hinted that Org
+syntax can't be properly parsed with a context-free grammar. For such
+reasons (and for my own lack of experience with writing grammars), I
+have restricted the scope of this module to the features I care about:
+for each heading, the headline components (the =COMMENT= keyword, the
+todo state, priority, cookies, and tags) are all parsed, as well as
+any scheduling timestamps and all the drawers. The heading contents
+are treated as a blob of text and the only thing the parser extracts
+from the contents are the timestamps. No attempts are made at parsing
+things like tables or source code blocks further. =orgmunge= can also
+parse out the document's metadata and export options but the major
+assumption it makes is that the document starts out with some optional
+metadata and export options, followed by some optional initial body
+text (not falling under any heading), and then a tree of headings. Any
+export options or metadata that come later within the document are
+treated as text (some heading's content).
+* Installation
+- The only dependency of =orgmunge= is =PLY=. So you need =PLY= installed.
+- Clone this repo
+- Add the directory where you cloned this repo to your =PYTHONPATH=
+- You will need to customize the file =todos.json= with your preferred
+  todo keywords. =orgmunge= doesn't currently support reading todo
+  states defined with =#+TODO= in the file it's reading.
+- Here's an example:
+  #+begin_src javascript
+    {
+        "todo_states":
+        {
+            "my_todo": "TODO",
+            "my_next": "NEXT",
+            "my_wait": "WAIT"
+        },
+        "done_states":
+        {
+            "my_cncl": "CNCL",
+            "my_done": "DONE"
+        }
+    }
+  #+end_src
+  The dict keys can be any names meaningful to you and will be exposed
+  as keys to the =_todo_keywords=, =_todo_states=, and =_done_states= slots
+  of the =Headline= class. The dict values are the actual todo keywords
+  that will be in the Org file you're reading.
+
+  The file in the repo has a different example with Font Awesome
+  characters as the todo keywords.
+* Usage
+** Reading an Org tree
+- The =Org= class in =__init__.py= is the main entry point to =orgmunge=.
+  It can be used to read an Org tree either from a string or from a
+  file:
+  #+begin_src python
+    from orgmunge import Org
+
+    org_1 = Org('* TODO Something important\n', from_file=False) # \n needed to signify end of document
+    org_2 = Org('/path/to/my/file.org')
+    org_3 = Org('/path/to/my/file.org', debug=True) # Print PLY debugging info
+  #+end_src
+- The =Org= object has 3 main slots you should care about:
+  1. =Org.metadata= stores the metadata and export options found at the
+     beginning of the file. This is a dict mapping the option/keyword
+     name to a list of its values (to allow for cumulative keywords
+     such as =#+OPTION=). Example:
+     #+begin_src python
+       org_1 = Org('#+title: Test\n') 
+       assert(org_1.metadata['title'] == ['Test'])
+     #+end_src
+  2. =Org.initial_body= stores any text between the metadata and the
+     first heading.
+  3. =Org.root= stores the root of the Org tree. This is a heading with
+     the headline =ROOT= whose only useful slot is =children=, which is a
+     list of all the headings in the given document.
+** Modifying an Org tree
+** Writing an Org tree
