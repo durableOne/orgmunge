@@ -2,7 +2,7 @@
 
 from .parser import parser as p
 from .classes import *
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 class Org:
     def __init__(self, input_string: str, from_file: bool = True, debug: bool = False):
@@ -16,36 +16,37 @@ class Org:
         self.initial_body = initial_body
         self.root = self._classify_headings(headings)
 
-    def _classify_headings(self, lst: List[Heading]) -> Heading:
+    def _classify_headings(self, lst: Optional[List[Heading]]) -> Heading:
         """Takes a list of headings and classifies them according to their
         parent and sibling relationships. It creates an empty top-level heading
         named ROOT and returns it, with all the other level-1 headings in the
         tree as its children.
         """
-        if lst[0].level !=1:
-            raise ValueError("Org tree can't start with a heading of level > 1")
         ROOT = Heading(Headline(' ', title='ROOT'), (None, None, None))
-        ROOT.add_child(lst[0], new=True)
-        if len(lst) > 1:
-            for elem1, elem2 in zip(lst[:-1], lst[1:]):
-                if elem2.level == 1:
-                    if ROOT.children:
-                        elem2.sibling = ROOT.children[-1]
-                    ROOT.add_child(elem2, new=True)
-                elif elem2.level > elem1.level:
-                    if elem1.children:
-                        elem2.sibling = elem1.children[-1]
-                    elem1.add_child(elem2, new=True)
-                elif elem2.level < elem1.level:
-                    levels_to_climb = elem1.level - elem2.level
-                    sibling = elem1.parent
-                    for _ in range(levels_to_climb-1):
-                        sibling = sibling.parent
-                    elem2.sibling = sibling
-                    elem2.sibling.parent.add_child(elem2, new=True)
-                else:
-                    elem2.sibling = elem1
-                    elem1.parent.add_child(elem2, new=True)
+        if lst is not None:
+            ROOT.add_child(lst[0], new=True)
+            if lst[0].level !=1:
+                raise ValueError("Org tree can't start with a heading of level > 1")
+            if len(lst) > 1:
+                for elem1, elem2 in zip(lst[:-1], lst[1:]):
+                    if elem2.level == 1:
+                        if ROOT.children:
+                            elem2.sibling = ROOT.children[-1]
+                        ROOT.add_child(elem2, new=True)
+                    elif elem2.level > elem1.level:
+                        if elem1.children:
+                            elem2.sibling = elem1.children[-1]
+                        elem1.add_child(elem2, new=True)
+                    elif elem2.level < elem1.level:
+                        levels_to_climb = elem1.level - elem2.level
+                        sibling = elem1.parent
+                        for _ in range(levels_to_climb-1):
+                            sibling = sibling.parent
+                        elem2.sibling = sibling
+                        elem2.sibling.parent.add_child(elem2, new=True)
+                    else:
+                        elem2.sibling = elem1
+                        elem1.parent.add_child(elem2, new=True)
         return ROOT
 
     def _read_metadata(self, metadata: str) -> Dict[str, List[str]]:

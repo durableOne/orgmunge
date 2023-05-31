@@ -10,6 +10,7 @@ def p_org_file(p):
     '''org_file : metadata org_tree
                 | non_metadata_body_text SEPARATOR org_tree
                 | metadata non_metadata_body_text SEPARATOR org_tree
+                | metadata
                 | org_tree
                 | empty'''
     if len(p) == 5:
@@ -19,7 +20,10 @@ def p_org_file(p):
     elif len(p) == 3:
         p[0] = (p[1], '', p[2])
     else:
-        p[0] = ('', '', p[1])
+        if type(p[1]) is str:
+            p[0] = (p[1], '', None)
+        else:
+            p[0] = ('', '', p[1])
           
 def p_metadata(p):
     '''metadata : METADATA SEPARATOR'''
@@ -172,6 +176,5 @@ def p_empty(p):
 def p_error(p):
     if p is not None:
         print(p)
-        exit(1)
 
 parser = yacc.yacc(write_tables=True)
