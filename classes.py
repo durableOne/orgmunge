@@ -141,20 +141,19 @@ class Headline:
         self.tags = tags
     @property
     def done(self):
-        return self.is_done()
+        return self._is_done()
 
     @done.setter
     def done(self, _):
         raise AttributeError("Can't set the 'done' attribute")
 
-    def is_done(self):
+    def _is_done(self):
         if self.todo in self._done_states:
             return True
         elif self.todo is None or self.todo in self._todo_states:
             return False
         else:
             raise ValueError(f"Uncategorized todo state {self.todo}")
-
 
     @property
     def level(self):
@@ -680,7 +679,7 @@ class Heading:
 
     def promote(self):
         if self.children:
-            raise TypeError('Incorrect promotion: heading has children that would be orphaned. Did you mean promote_tree?')
+            raise ValueError('Incorrect promotion: heading has children that would be orphaned. Did you mean promote_tree?')
         self.headline.promote()
         self.sibling = self.parent
         idx = self.sibling.children.index(self)
