@@ -26,7 +26,8 @@ def t_error(t):
     t.lexer.skip(1)
 
 def get_todos():
-    input_file_name = 'todos.json'
+    package_dir = os.path.dirname(__file__)
+    input_file_name = os.path.join(package_dir, 'todos.json')
     if os.path.isfile(input_file_name):
         with open(input_file_name, 'rb') as JSON:
             return json.load(JSON)
@@ -38,7 +39,6 @@ def get_todos():
                 'done_states': 
                 {'cncl': 'CNCL',
                  'done': 'DONE',}}
-
 todos_dict = get_todos()
 all_todo_keywords = {**todos_dict['todo_states'], **todos_dict['done_states']}
 
@@ -54,7 +54,6 @@ ATIMESTAMP = fr'<{TIMESTAMP}>'
 ITIMESTAMP = fr'\[{TIMESTAMP}\]'
 
 TODO = fr'(?:{"|".join(list(all_todo_keywords.values()))})'
-
 
 
 def t_METADATA(t):

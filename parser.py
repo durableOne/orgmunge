@@ -175,6 +175,6 @@ def p_empty(p):
 
 def p_error(p):
     if p is not None:
-        print(p)
+        print(f'Syntax error: {p}')
 
 parser = yacc.yacc(write_tables=True)
