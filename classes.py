@@ -467,7 +467,7 @@ class Clocking:
         m, s = total_seconds/60, total_seconds%60
         if s > 30: m += 1 # Round minutes up
         h, m = m/60, m%60
-        hours, minutes = [floor(x) for x in (d, h, m)]
+        hours, minutes = [floor(x) for x in (h, m)]
         return f'{hours}:{minutes:02d}'
 
     @property
@@ -491,7 +491,7 @@ class Heading:
     def __init__(self, headline: Headline, contents: Tuple[Scheduling, List[Drawer], str]):
         self._headline = headline
         self._scheduling, self._drawers, self.body = contents
-        self._children = None
+        self._children = []
         self._parent = None
         self._sibling = None
         if self.body:
@@ -506,11 +506,11 @@ class Heading:
             self._properties = dict()
 
     def _parse_clock_line(self, line: str) -> Clocking:
-        m = re.search(fr'CLOCK:\s*({ITIMESTAMP})(?:--({ITIMESTAMP}))?', line)
+        m = re.search(fr'CLOCK:\s*(?P<start>{ITIMESTAMP})(?:--(?P<end>{ITIMESTAMP}))?', line)
         if m is not None:
-            start_time = re.sub(r'[\[\]]', '', m.group(1))
-            if m.group(2):
-                end_time = re.sub(r'[\[\]]', '', m.group(2))
+            start_time = re.sub(r'[\[\]]', '', m.group("start"))
+            if m.group("end"):
+                end_time = re.sub(r'[\[\]]', '', m.group("end"))
             else:
                 end_time = None
         else:
@@ -550,7 +550,7 @@ class Heading:
         "Return the clocking information of the given headline and possibly its children."
         own_clocking = self._get_clocking_info()
         if include_children and self.children != []:
-            return own_clocking + reduce(add, [c._get_clocking_info() for c in self.children])
+            return own_clocking + reduce(add, [c.clocking(include_children=True) for c in self.children])
         else:
             return own_clocking
 
