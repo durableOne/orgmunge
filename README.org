@@ -225,7 +225,7 @@ treated as text (some heading's content).
      deadline.
   4. =active= is a boolean property and decides whether the time stamp
      will be printed with =[]= or =<>= delimiters. Can be set directly by
-     thew user.
+     the user.
 ** Modifying an Org tree
 - The ability to modify the tree was the main reason I wrote this
   package. Most of the attributes of the tree objects can be modified
@@ -241,4 +241,13 @@ treated as text (some heading's content).
   headings' =sibling= attributes appropriately.
 ** Writing an Org tree
 - You can use the =Org= object's =write= method to write out the tree to a
-  file whose name you supply to the method.
+  file whose name you supply to the method:
+  #+begin_src python
+    from orgmunge import Org
+
+    agenda = Org('/path/to/agenda.org')
+
+    # Do something with agenda...
+
+    agenda.write('/path/to/modified_agenda.org')
+  #+end_src
