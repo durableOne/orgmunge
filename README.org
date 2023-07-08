@@ -356,5 +356,10 @@ I can't get it to happen otherwise
 
 
 * Contributors
-Thanks to these wonderful people for contributing time and code
-[[https://github.com/Nalisarc.png?size=50]]
+Thanks to these wonderful people for contributing time and code:
+
+#+begin_export html
+<a href="https://github.com/Nalisarc">
+<img src="https://github.com/Nalisarc.png?size=50">
+</a>
+#+end_export
