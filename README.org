@@ -356,10 +356,12 @@ I can't get it to happen otherwise
 
 
 * Contributors
+:PROPERTIES:
+:ID:       d27f8cd9-4be9-4fa3-b54a-40b9d3807e90
+:END:
+:LOGBOOK:
+CLOCK: [2023-07-08 Sat 15:54]--[2023-07-08 Sat 15:54] =>  0:00
+:END:
 Thanks to these wonderful people for contributing time and code:
 
-#+begin_export html
-<a href="https://github.com/Nalisarc">
-<img src="https://github.com/Nalisarc.png?size=50">
-</a>
-#+end_export
+- [[https://github.com/Nalisarc][Nalisarc]]
