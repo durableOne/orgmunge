@@ -103,9 +103,9 @@ def p_scheduling_data(p):
                        | scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR
                        | scheduling_data SCHEDULING SPACE any_timestamp SPACE'''
     if len(p) > 5:
-        p[0] = [reduce(add, [*p[1], Scheduling(p[2], timestamp=p[4])])]
+        p[0] = reduce(add, [p[1], Scheduling(p[2], timestamp=p[4])])
     elif len(p) > 2:
-        p[0] = [Scheduling(p[1], timestamp=p[3])]
+        p[0] = Scheduling(p[1], timestamp=p[3])
     else:
         p[0] = None
 
@@ -153,10 +153,20 @@ def p_non_metadata_body_text(p):
                               | any_timestamp
                               | non_metadata_body_text TEXT
                               | non_metadata_body_text SPACE
+                              | non_metadata_body_text special_token
                               | non_metadata_body_text any_timestamp
                               | non_metadata_body_text NEWLINE''' 
     p[0] = reduce(add, map(str, p[1:]))
     
+def p_special_token(p):
+    '''special_token : SCHEDULING
+                     | COOKIE
+                     | PRIORITY
+                     | TODO
+                     | COMMENT
+                     | TAGS'''
+    p[0] = p[1]
+
 def p_body_text(p):
     '''body_text : TEXT
                  | SPACE
@@ -164,6 +174,7 @@ def p_body_text(p):
                  | any_timestamp
                  | body_text TEXT
                  | body_text SPACE
+                 | body_text special_token
                  | body_text METADATA
                  | body_text any_timestamp
                  | body_text NEWLINE'''

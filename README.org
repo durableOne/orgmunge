@@ -192,7 +192,7 @@ treated as text (some heading's content).
      the user.
 *** Cookie Objects
 - =Cookie= objects represent progress on the current =Heading=.
-- They can be of type 'percent' (e.g. 50%) or of type 'progress' (e.g. 2/4).
+- They can be of type 'percent' (e.g. [50%]) or of type 'progress' (e.g. [2/4]).
   
 - Important attributes:
   1. =cookie_type=: can only be one of 'percent' or 'progress'. Can be
@@ -288,68 +288,6 @@ def test_can_read_org():
     test = Org("./README.org", debug=True)
     assert test
 #+end_src
-
-** Bug?
-#+begin_example
-____________________________________________________________________ test_can_read_org ____________________________________________________________________
-
-    def test_can_read_org():
->       test = Org("./README.org")
-
-tests/test_save_org.py:4: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-orgmunge/__init__.py:17: in __init__
-    self.root = self._classify_headings(headings)
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-self = <[AttributeError("'Org' object has no attribute 'root'") raised in repr()] Org object at 0x7f696975d7b0>
-lst = [** Modifying an Org tree 
-- The ability to modify the tree was the main reason I wrote this
-  package....
-, ** Writing an Org tree 
-- You can use the =Org= object's =write= method to write out the tree to a...
-]
-
-    def _classify_headings(self, lst: Optional[List[Heading]]) -> Heading:
-        """Takes a list of headings and classifies them according to their
-        parent and sibling relationships. It creates an empty top-level heading
-        named ROOT and returns it, with all the other level-1 headings in the
-        tree as its children.
-        """
-        ROOT = Heading(Headline(' ', title='ROOT'), (None, None, None))
-        if lst is not None:
-            ROOT.add_child(lst[0], new=True)
-            if lst[0].level !=1:
->               raise ValueError("Org tree can't start with a heading of level > 1")
-E               ValueError: Org tree can't start with a heading of level > 1
-
-orgmunge/__init__.py:29: ValueError
------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
-Syntax error: LexToken(COOKIE,'[50%]',1,3543)
-Syntax error: LexToken(COOKIE,'[50%]',1,3591)
-Syntax error: LexToken(COOKIE,'[2/4]',1,3626)
-Syntax error: LexToken(COOKIE,'[50%]',1,12290)
-==================================================================== warnings summary =====================================================================
-orgmunge/lexer.py:49
-  /home/delta/experiments/orgmunge/orgmunge/lexer.py:49: DeprecationWarning: invalid escape sequence '\+'
-    REPEATER = '[.+]?\+[0-9]+[hdwmy]'
-
-orgmunge/classes.py:95
-  /home/delta/experiments/orgmunge/orgmunge/classes.py:95: DeprecationWarning: invalid escape sequence '\['
-    match = re.search("^\[#(.)\]", p)
-
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================================================================= short test summary info =================================================================
-FAILED tests/test_debug_ply.py::test_can_read_org - ValueError: Org tree can't start with a heading of level > 1
-FAILED tests/test_save_org.py::test_can_read_org - ValueError: Org tree can't start with a heading of level > 1
-========================================================= 2 failed, 5 passed, 2 warnings in 0.50s =========================================================
-
-#+end_example
-
-seems to happen only when the [[*Cookie Objects]] section of this document 
-actually uses square brackets.
-
-I can't get it to happen otherwise
 * License
 #+INCLUDE: ./LICENSE
 
