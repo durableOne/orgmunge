@@ -89,6 +89,11 @@ class Cookie:
     def __repr__(self):
         return f'[{self.m}/{self.n}]' if self.cookie_type == 'progress' else f'[{self.m}%]'
             
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
 class Priority:
     allowed_values = ['A', 'B', 'C']
     def _parse_priority(self, p: str):
@@ -125,6 +130,12 @@ class Priority:
     def __repr__(self):
         return f'[#{self.priority}]' if self.priority is not None else ''
             
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
+
 class Headline:
     _todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
     _todo_states = list(get_todos()['todo_states'].values())
@@ -237,7 +248,7 @@ class Headline:
         return f"{'*' * self.level} {todo}{comment}{priority}{self.title} {cookie}{tags}"
 
     def __eq__(self, other):
-        if not isinstance(other, Headline):
+        if not isinstance(other, self.__class__):
             return False
         else:
             return str(self) == str(other)
@@ -360,6 +371,12 @@ class TimeStamp:
             timestamp += f' {self.deadline_warn}'
         return ldelim + timestamp + rdelim
 
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
+
 class Scheduling:
     _closed = None
     _scheduled = None
@@ -420,6 +437,12 @@ class Scheduling:
         data = [f'{keyword.upper()}: {getattr(self, keyword)}' for keyword in self.valid_keywords if getattr(self, keyword) is not None]
         return ' '.join(data)
         
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
+
 class Drawer:
     def __init__(self, drawer_string: str):
         self.name = re.sub(r':', '', drawer_string.split('\n')[0])
@@ -430,6 +453,11 @@ class Drawer:
 {contents}
 :END:
 '''    
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
         
 class Clocking:
     def __init__(self, start_time: str, end_time: Optional[str] = None):
@@ -493,7 +521,13 @@ class Clocking:
         else:
             return f'[{self.start_time.strftime(ORG_TIME_FORMAT)}]--[{self.end_time.strftime(ORG_TIME_FORMAT)}] =>  {self.duration}'
 
-class Heading:
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
+
+class Heading():
     def __init__(self, headline: Headline, contents: Tuple[Scheduling, List[Drawer], str]):
         self._headline = headline
         self._scheduling, self._drawers, self.body = contents
@@ -510,6 +544,10 @@ class Heading:
                 self._properties = dict()
         else:
             self._properties = dict()
+
+    def __getattr__(self, attr):
+        # So that things like self.todo and self.title, etc... will work
+        return getattr(self.headline, attr)
 
     def _parse_clock_line(self, line: str) -> Clocking:
         m = re.search(fr'CLOCK:\s*(?P<start>{ITIMESTAMP})(?:--(?P<end>{ITIMESTAMP}))?', line)
@@ -747,3 +785,9 @@ class Heading:
         children = ''.join([c.__repr__() for c in self.children]) if self.children else ''
 
         return f'{self.headline}{newline}{scheduling}{drawers}{body}{children}'
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)

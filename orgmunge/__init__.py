@@ -82,4 +82,11 @@ class Org:
         result += self.initial_body + '\n'
         result += ''.join([c.__repr__() for c in self.root.children])
         return result
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        else:
+            return str(self) == str(other)
+    
                                 
