@@ -92,7 +92,7 @@ class Cookie:
 class Priority:
     allowed_values = ['A', 'B', 'C']
     def _parse_priority(self, p: str):
-        match = re.search("^\[#(.)\]", p)
+        match = re.search(r"^\[#(.)\]", p)
         return match.group(1) if match else p
 
     def __init__(self, priority_text: Optional[str]):
@@ -131,7 +131,7 @@ class Headline:
     _done_states = list(get_todos()['done_states'].values())
     def __init__(self, level: str, comment: bool = False,
                todo: Optional[str] = None, priority: Optional[str] = None,
-               title: str = "", cookie: Optional[str] = None, tags: Optional[str] = None):
+               title: str = "", cookie: Optional[str] = None, tags: Optional[List[str]] = None):
         self._level = len(re.sub(r'\s+', '', level)) # Number of leading asterisks
         self._comment = comment
         self._todo = todo
@@ -229,12 +229,18 @@ class Headline:
         self._priority = Priority(value)
 
     def __repr__(self):
-        priority = f'{self.priority}' 
+        priority = f'{self.priority}' + (' ' if str(self.priority) != '' else '')
         comment = "COMMENT " if self.comment else ""
         todo = f"{self.todo} " if self.todo else ""
         cookie = str(self.cookie) if self.cookie else ""
         tags = f"    :{':'.join(self.tags)}:" if self.tags else ""
         return f"{'*' * self.level} {todo}{comment}{priority}{self.title} {cookie}{tags}"
+
+    def __eq__(self, other):
+        if not isinstance(other, Headline):
+            return False
+        else:
+            return str(self) == str(other)
 
 class TimeStamp:
     def __init__(self, timestamp_str: str):
