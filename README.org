@@ -34,9 +34,17 @@ treated as text (some heading's content).
 - The only dependency of =orgmunge= is =PLY=. So you need =PLY= installed.
 - Clone this repo
 - Add the directory where you cloned this repo to your =PYTHONPATH=
-- You will need to customize the file =todos.json= with your preferred
-  todo keywords. =orgmunge= doesn't currently support reading todo
-  states defined with =#+TODO= in the file it's reading.
+- The parser recognizes todo keywords by looking for a file named
+  =todos.json= in one of 3 places:
+  1. The current directory
+  2. The user's home directory
+  3. The package directory
+- You can look at the file =todos.json= shipped with this package for
+  the expected syntax and customize it with your preferred todo
+  keywords (or make a copy in your home directory). =orgmunge= doesn't
+  currently support reading todo states defined with =#+TODO= in the
+  file it's reading, and there are no plans to do so in the near
+  future (see [[https://github.com/durableOne/orgmunge/issues/3][this issue]]).
 - Here's an example:
   #+begin_src javascript
     {
