@@ -781,7 +781,7 @@ class Heading():
         body = str(self.body) + "\n" if self.body else ""
         if len(body) > 80:
             body = body[:77].strip() + "...\n"
-        newline = '\n' if scheduling or drawers or body else ''
+        newline = '\n' if scheduling or drawers or body or self.children else ''
         children = ''.join([c.__repr__() for c in self.children]) if self.children else ''
 
         return f'{self.headline}{newline}{scheduling}{drawers}{body}{children}'

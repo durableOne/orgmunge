@@ -154,7 +154,6 @@ def p_non_metadata_body_text(p):
                               | non_metadata_body_text TEXT
                               | non_metadata_body_text SPACE
                               | non_metadata_body_text special_token
-                              | non_metadata_body_text any_timestamp
                               | non_metadata_body_text NEWLINE''' 
     p[0] = reduce(add, map(str, p[1:]))
     
@@ -163,6 +162,7 @@ def p_special_token(p):
                      | COOKIE
                      | PRIORITY
                      | TODO
+                     | any_timestamp
                      | COMMENT
                      | TAGS'''
     p[0] = p[1]
@@ -171,12 +171,11 @@ def p_body_text(p):
     '''body_text : TEXT
                  | SPACE
                  | METADATA
-                 | any_timestamp
+                 | special_token
                  | body_text TEXT
                  | body_text SPACE
                  | body_text special_token
                  | body_text METADATA
-                 | body_text any_timestamp
                  | body_text NEWLINE'''
     p[0] = reduce(add, map(str, p[1:]))
 

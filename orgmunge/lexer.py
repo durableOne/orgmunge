@@ -26,19 +26,30 @@ def t_error(t):
     t.lexer.skip(1)
 
 def get_todos():
-    package_dir = os.path.dirname(__file__)
-    input_file_name = os.path.join(package_dir, 'todos.json')
+    base_file_name = 'todos.json'
+    current_dir_file = os.path.join(os.getcwd(), base_file_name)
+    home_dir_file = os.path.join(os.environ['HOME'], base_file_name)
+    package_dir_file = os.path.join(os.path.dirname(__file__), base_file_name)
+    # First try the current directory, then the user's home directory then finally the package directory
+    # to find the todos.json file.
+    if os.path.isfile(current_dir_file):
+        input_file_name = current_dir_file
+    elif os.path.isfile(home_dir_file):
+        input_file_name = home_dir_file
+    else:
+        input_file_name = package_dir_file
     if os.path.isfile(input_file_name):
         with open(input_file_name, 'rb') as JSON:
             return json.load(JSON)
     else:
         return {'todo_states':
                 {'todo': 'TODO',
-                 'next': 'NEXT',
-                 'wait': 'WAIT',},
+                'next': 'NEXT',
+                'wait': 'WAIT',},
                 'done_states': 
                 {'cncl': 'CNCL',
-                 'done': 'DONE',}}
+                'done': 'DONE',}}
+
 todos_dict = get_todos()
 all_todo_keywords = {**todos_dict['todo_states'], **todos_dict['done_states']}
 
@@ -54,7 +65,6 @@ ATIMESTAMP = fr'<{TIMESTAMP}>'
 ITIMESTAMP = fr'\[{TIMESTAMP}\]'
 
 TODO = fr'(?:{"|".join(list(all_todo_keywords.values()))})'
-
 
 def t_METADATA(t):
     r'(?:^\#\+[^:\n]+:[^\n]*\n)*^\#\+[^:\n]+:[^\n]*'
