@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "orgmunge"
+version = "0.1.0"
+description = "Programmatically modify Orgmode documents"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.org"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ply = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
