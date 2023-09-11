@@ -1,0 +1,281 @@
+#+title:Orgmunge
+* Motivation and scope
+Orgmunge was born out of the desire to modify Org documents
+programmatically from within Python. The wonderful [[https://github.com/karlicoss/orgparse][orgparse]] can read
+an Org document into a tree object but doesn't offer an interface to
+modify the tree and write it back to file.
+
+The original use case was trying to sync Outlook calendar items with
+Org: whenever someone rescheduled a meeting, my Python script was
+unable to reschedule the Org heading it had originally
+created. Instead of forking =orgparse=, I decided to write an actual
+grammar for an Org document and use [[https://github.com/dabeaz/ply][PLY]] to generate a parser for it.
+
+Now Org syntax is too sophisticated for me to claim that this first
+attempt can parse everything. In fact, some folks way smarter than I
+am (and with more formal training), have hinted that Org
+syntax can't be properly parsed with a context-free grammar. For such
+reasons (and for my own lack of experience with writing grammars), I
+have restricted the scope of this module to the features I care about:
+for each heading, the headline components (the =COMMENT= keyword, the
+todo state, priority, cookies, and tags) are all parsed, as well as
+any scheduling timestamps and all the drawers. The heading contents
+are treated as a blob of text and the only thing the parser extracts
+from the contents are the timestamps. No attempts are made at parsing
+things like tables or source code blocks further. =orgmunge= can also
+parse out the document's metadata and export options but the major
+assumption it makes is that the document starts out with some optional
+metadata and export options, followed by some optional initial body
+text (not falling under any heading), and then a tree of headings. Any
+export options or metadata that come later within the document are
+treated as text (some heading's content).
+
+* Installation
+- The only dependency of =orgmunge= is =PLY=. So you need =PLY= installed.
+- Clone this repo
+- Add the directory where you cloned this repo to your =PYTHONPATH=
+- The parser recognizes todo keywords by looking for a file named
+  =todos.json= in one of 3 places:
+  1. The current directory
+  2. The user's home directory
+  3. The package directory
+- You can look at the file =todos.json= shipped with this package for
+  the expected syntax and customize it with your preferred todo
+  keywords (or make a copy in your home directory). =orgmunge= doesn't
+  currently support reading todo states defined with =#+TODO= in the
+  file it's reading, and there are no plans to do so in the near
+  future (see [[https://github.com/durableOne/orgmunge/issues/3][this issue]]).
+- Here's an example:
+  #+begin_src javascript
+    {
+        "todo_states":
+        {
+            "my_todo": "TODO",
+            "my_next": "NEXT",
+            "my_wait": "WAIT"
+        },
+        "done_states":
+        {
+            "my_cncl": "CNCL",
+            "my_done": "DONE"
+        }
+    }
+  #+end_src
+  The dict keys can be any names meaningful to you and will be exposed
+  as keys to the =_todo_keywords=, =_todo_states=, and =_done_states= attributes
+  of the =Headline= class. The dict values are the actual todo keywords
+  that will be in the Org file you're reading.
+
+  The file in the repo has a different example with Font Awesome
+  characters as the todo keywords.
+* Usage
+** Reading an Org tree
+
+- The =Org= class in =__init__.py= is the main entry point to =orgmunge=.
+  It can be used to read an Org tree either from a string or from a
+  file:
+  #+begin_src python
+    from orgmunge import Org
+
+    org_1 = Org('* TODO Something important\n', from_file=False) # \n needed to signify end of document
+    org_2 = Org('/path/to/my/file.org')
+    org_3 = Org('/path/to/my/file.org', debug=True) # Print PLY debugging info
+  #+end_src
+- The =Org= object has 3 main attributes you should care about:
+  1. =Org.metadata= stores the metadata and export options found at the
+     beginning of the file. This is a dict mapping the option/keyword
+     name to a list of its values (to allow for cumulative keywords
+     such as =#+OPTION=). Example:
+     #+begin_src python
+       org_1 = Org('#+title: Test\n') 
+       assert(org_1.metadata['title'] == ['Test'])
+     #+end_src
+  2. =Org.initial_body= stores any text between the metadata and the
+     first heading.
+  3. =Org.root= stores the root of the Org tree. This is a [[*Heading Objects][heading]] with
+     the [[*Headline Objects][headline]] =ROOT= whose only useful attribute is =children=, which is a
+     list of all the [[*Heading Objects][headings]] in the given document.
+- The Org tree is a list of [[file:__init__.py::def _classify_headings(self, lst):][headings]] with parent, child and sibling relationships.
+
+  
+*** Heading Objects
+- A heading object consists of:
+  1. A [[*Headline Objects][headline]] 
+  2. Contents:
+     1) [[*Scheduling Objects][Scheduling]], if any
+     2) A list of [[*Drawer Objects][Drawers]], if any
+     3) Body text, if any
+- Important attributes:
+  1. =properties=. This is a dict mapping property names to their
+     values. The properties are parsed from the =PROPERTIES= drawer if
+     it exists. This attribute can also be set by the user (the value
+     supplied must be a dict).
+  2. =headline= returns the heading's headline. This attribute can also
+     be set by a user (the value must be a [[*Headline Objects][Headline]] instance).
+  3. =scheduling= is a [[*Scheduling Objects][Scheduling]] object containing information about
+     =SCHEDULED/DEADLINE/CLOSED= timestamps of the heading, if any. Can
+     also be set by the user (the value must be a Scheduling instance).
+  4. =drawers= is a list of [[*Drawer Objects][Drawer]] objects containing the drawers
+     associated with this heading. When you update the heading's
+     =properties= attribute, the =PROPERTIES= drawer is updated the next
+     time you access it.
+  5. =children= returns a list of Heading objects that are the direct
+     children of this heading.
+  6. =parent= returns the parent heading of the current one. If the
+     current heading is a top-level heading, the root heading will be
+     returned.
+  7. =sibling= returns the sibling heading of the current one that comes
+     before it in the tree, if any. The reason this is the sibling
+     heading that is formally tracked is because it's the one that
+     would adopt the current heading whenever the current heading is
+     demoted. If you want a list of all siblings of the current
+     heading, you can do this:
+     #+begin_src python
+       siblings = [c for c in current_heading.parent.children if c is not current_heading]
+     #+end_src
+  8. =level= is the heading's level, with 1 being the top level and each
+     sub-level after that being incremented by 1 (the heading's level
+     is the number of "stars" before its headline).
+- Important methods:
+  1. =clocking=. This returns a list of [[*Clocking Objects][Clocking]] objects, parsed
+     from the heading's =LOGBOOK= drawer, if any. You can also pass the
+     optional boolean parameter =include_children=, which, when True,
+     includes clocking information of this heading's children as well.
+  2. =add_child= accepts a Heading object to add as a child to the
+     current heading. The optional boolean parameter =new= should be set
+     to =True= when this is a new heading that was created and needs to
+     be assigned a parent. It should be set to =False= (default) when
+     the addition of a child is due to a promotion/demotion operation.
+  3. =remove_child= accepts a heading object and deletes it from the
+     current heading's children if it's a child of the current
+     heading.
+  4. =promote= promotes the current heading one level. If the heading has
+     children, they would be orphaned so this raises a
+     =ValueError=. Technically, Org allows you to have, say, level 3
+     headings under a level 1 heading, but =orgmunge= does not allow
+     this to make parsing the tree easier.
+  5. =promote_tree= promotes the current heading and all its
+     descendants. Use this if the heading you want to promote has
+     children.
+  6. =demote= demotes the current heading one level. If the current
+     heading has no sibling to adopt it, the demotion attempt fails
+     and raises a =ValueError=.
+  7. =demote_tree= is the equivalent of =promote_tree= for demotion.
+*** Headline Objects
+- Important attributes:
+  1. =done= is a boolean attribute that determines whether the headline
+     is in one of the done states. You can't set this attribute directly.
+  2. =level= is the headline's level (the number of "stars" before the
+     title)
+  3. =comment= is a boolean attribute that determines whether a headline
+     is commented out (by having the keyword =COMMENT= inserted before
+     the title).
+  4. =todo= returns/sets the headline's todo state. You can set it
+     yourself but it has to be one of the values of =self._todo_states=
+     or =self._done_states=.
+  5. =cookie= returns/sets the headline's cookie. See [[*Cookie Objects][Cookie Objects]].
+  6. =priority= returns/sets the headline's priority
+- Important methods:
+  1. =promote= decreases the level by the number given by the parameter
+     =n= (default 1).
+  2. =demote= acts like =promote= but increases the level by =n= instead.
+  3. =toggle_comment= toggles the state of whether or not a headline is
+     commented out using the =COMMENT= keyword.
+     1. =comment_out= ensures the headline is commented out using
+        =COMMENT=
+     2. =uncomment= ensures the headline is not commented out using the
+        =COMMENT= keyword.
+     3. =raise_priority= increases the headline's priority by 1
+     4. =lower_priority= decreases the headline's priority by 1
+*** Scheduling Objects
+- Has 6 attributes for the 3 possible scheduling keywords (3 are aliases of the other 3):
+  1. CLOSED, closed
+  2. SCHEDULED, scheduled
+  3. DEADLINE, deadline
+- Each attribute, when queried will return either =None= or a =TimeStamp=
+  object representing the timestamp associated with this particular
+  scheduling keyword. You can set the attributes directly but they
+  have to be set to a =TimeStamp= object. 
+*** Drawer Objects
+- A =Drawer= object has only 2 attributes: =name= and =contents=. The
+  =contents= attribute is simply a list of lines making up the drawer
+  contents. When you modify a heading's =properties= attribute, its
+  =PROPERTIES= drawer gets updated accordingly.
+*** Clocking Objects
+- The =Clocking= objects have 3 attributes: =start_time=, =end_time= and
+  =duration=. Only the first 2 can be set. When setting either, you
+  should pass a string following the Org time format; namely,
+  '%Y-%m-%d %a %H:%M' (see the [[https://man7.org/linux/man-pages/man3/strftime.3.html][strftime(3)]] man page for an explanation
+  of the format codes).
+- If =end_time= is =None=, the duration is calculated from the =start_time=
+  up to the current moment.
+*** Priority Objects
+- The only attribute, =priority= can be set directly by the user and can
+  be one of only 3 strings: 'A', 'B' or 'C'. Set to =None= to remove it
+  from the =Heading=.
+- The methods =_raise= and =_lower= will raise or lower the priority.
+- If the priority is =None=, raising it, sets it to 'A' and lowering it
+  sets it to 'C'.
+*** TimeStamp Objects
+- Important attributes:
+  1. =start_time= and =end_time= can be queried and set by the user. You
+     can set them by supplying a string, a =datetime= object or =None=.
+  2. =repeater= returns a timestamp repeater string such as '+1w'. Can
+     also be set by the user.
+  3. =deadline_warn= acts similarly to =repeater= and represents the
+     number of days before a deadline to warn the user of an upcoming
+     deadline.
+  4. =active= is a boolean property and decides whether the time stamp
+     will be printed with =[]= or =<>= delimiters. Can be set directly by
+     the user.
+*** Cookie Objects
+- =Cookie= objects represent progress on the current =Heading=.
+- They can be of type 'percent' (e.g. [50%]) or of type 'progress' (e.g. [2/4]).
+  
+- Important attributes:
+  1. =cookie_type=: can only be one of 'percent' or 'progress'. Can be
+     set directly by the user.
+  2. =m= and =n= represent the progress as the ratio =m/n=. If the cookie
+     type is 'percent', =n= is 100. When changing =cookie_type=, =m= and =n=
+     are converted accordingly.
+** Modifying an Org tree
+- The ability to modify the tree was the main reason I wrote this
+  package. Most of the attributes of the tree objects can be modified
+  directly by the user.
+- Use the =promote*= and =demote*= methods of the =Heading= objects to
+  change =Heading= levels.
+- To rearrange headings, note that a =Heading's= =children=
+  attribute is a list whose ordering is important: in other words, the
+  tree will be written back to a file with the order each =Heading='s
+  children are in. So the user can rearrange the headings of the same level
+  by assigning the =children= attribute of their parent to a different
+  order of child headings. It's up to the user to update the child
+  headings' =sibling= attributes appropriately.
+** Writing an Org tree
+- You can use the =Org= object's =write= method to write out the tree to a
+  file whose name you supply to the method:
+  #+begin_src python
+    from orgmunge import Org
+
+    agenda = Org('/path/to/agenda.org')
+
+    # Do something with agenda...
+
+    agenda.write('/path/to/modified_agenda.org')
+  #+end_src
+  
+* License
+#+INCLUDE: ./LICENSE
+
+
+
+* Contributors
+:PROPERTIES:
+:ID:       d27f8cd9-4be9-4fa3-b54a-40b9d3807e90
+:END:
+:LOGBOOK:
+CLOCK: [2023-07-08 Sat 15:54]--[2023-07-08 Sat 15:54] =>  0:00
+:END:
+Thanks to these wonderful people for contributing time and code:
+
+- [[https://github.com/Nalisarc][Nalisarc]]
