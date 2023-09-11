@@ -1,0 +1,46 @@
+
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "orgmunge"
+version = "1.0.0"
+description = "Use org files in python."
+readme = "README.md"
+authors = [{name = "D Sharp", email="nalisarc@gmail.com"}]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["org", "emacs", "literate programming"]
+dependencies = [
+    "ply"
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = ["black", "build", "twine", "pip-tools", "pytest", "bumpver",]
+
+[project.urls]
+Homepage = "https://github.com/nalisarc/orgmunge"
+
+[tool.bumpver]
+current_version = "2023.1001-alpha"
+version_pattern = "YYYY.BUILD[-TAG]"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+pre_commit_hook = ""
+post_commit_hook = ""
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+]
