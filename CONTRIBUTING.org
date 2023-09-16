@@ -1,3 +1,29 @@
-**/.*.~undo-tree~
-**/__pycache__
-**/.mypy_pycache
+#+Title: Contributing
+
+Thanks for considering contributing! Please read this document to learn the various ways you can contribute to this project and how to go about doing it.
+
+* Bug reports and feature requests
+
+** Did you find a bug?
+First, do a quick search to see whether your issue has already been reported.
+If your issue has already been reported, please comment on the existing issue.
+
+Otherwise, open a new GitHub issue. Be sure to include a clear title and description.
+The description should include as much relevant information as possible.
+The description should explain how to reproduce the erroneous behavior as well as the behavior you expect to see.
+Ideally you would include a code sample or an executable test case demonstrating the expected behavior.
+
+** Do you have a suggestion for an enhancement or new feature?
+We use GitHub issues to track feature requests. Before you create an feature request:
+ * Make sure you have a clear idea of the enhancement you would like.
+    - If you have a vague idea, consider discussing it first on a GitHub issue.
+ * Check the documentation to make sure your feature does not already exist.
+ * Do a quick search to see whether your feature has already been suggested.
+
+When creating your request, please:
+ * Provide a clear title and description.
+ * Explain why the enhancement would be useful.
+   - It may be helpful to highlight the feature in other libraries.
+ * Include code examples to demonstrate how the enhancement would be used.
+
+** TODO Making a pull request

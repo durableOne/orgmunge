@@ -10,13 +10,17 @@ def p_org_file(p):
     '''org_file : metadata org_tree
                 | non_metadata_body_text SEPARATOR org_tree
                 | metadata non_metadata_body_text SEPARATOR org_tree
+                | metadata non_metadata_body_text SEPARATOR 
                 | metadata
                 | org_tree
                 | empty'''
     if len(p) == 5:
         p[0] = (p[1], p[2], p[4])
     elif len(p) == 4:
-        p[0] = ('', p[1], p[3])
+        if p[3] != '\n': 
+            p[0] = ('', p[1], p[3])
+        else:
+            p[0] = (p[1], p[2], None)
     elif len(p) == 3:
         p[0] = (p[1], '', p[2])
     else:
@@ -26,7 +30,8 @@ def p_org_file(p):
             p[0] = ('', '', p[1])
           
 def p_metadata(p):
-    '''metadata : METADATA SEPARATOR'''
+    '''metadata : METADATA SEPARATOR
+                | METADATA NEWLINE'''
     p[0] = reduce(add, p[1:])
     
 def p_org_tree(p):
@@ -187,4 +192,4 @@ def p_error(p):
     if p is not None:
         print(f'Syntax error: {p}')
 
-parser = yacc.yacc(write_tables=True)
+parser = yacc.yacc()
