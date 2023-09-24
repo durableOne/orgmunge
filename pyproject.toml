@@ -2,7 +2,7 @@
 name = "orgmunge"
 version = "0.1.0"
 description = "Programmatically modify Orgmode documents"
-authors = ["Your Name <you@example.com>"]
+authors = ["Joseph Riad <era31asj@gmail.com>"]
 license = "MIT"
 readme = "README.org"
 
