@@ -1,6 +1,5 @@
 [tool.poetry]
 name = "orgmunge"
-<<<<<<< HEAD
 version = "0.1.0"
 description = "Programmatically modify Orgmode documents"
 authors = ["Joseph Riad <era31asj@gmail.com>"]
