@@ -9,8 +9,6 @@ readme = "README.org"
 [tool.poetry.dependencies]
 python = "^3.11"
 ply = "^3.11"
-
-=======
 version = "0.1.1"
 description = "Access org files inside python"
 authors = ["Delta Sharp <nalisarc@gmail.com>"]
@@ -28,7 +26,6 @@ black = "^23.9.1"
 pip-tools = "^7.3.0"
 pytest = "^7.4.2"
 bumpver = "^2023.1126"
->>>>>>> 86a39fbf61be72b2757a46a223707d4730b8368b
 
 [build-system]
 requires = ["poetry-core"]
