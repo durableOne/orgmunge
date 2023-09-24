@@ -4,6 +4,7 @@ import ply.lex as lex
 import json
 import os
 import re
+import platform
 
 tokens = ('ATIMESTAMP',
           'ITIMESTAMP',
@@ -28,7 +29,8 @@ def t_error(t):
 def get_todos():
     base_file_name = 'todos.json'
     current_dir_file = os.path.join(os.getcwd(), base_file_name)
-    home_dir_file = os.path.join(os.environ['HOME'], base_file_name)
+    home_dir = os.environ['HOMEPATH'] if platform.system() == 'Windows' else os.environ['Home']
+    home_dir_file = os.path.join(home_dir, base_file_name)
     package_dir_file = os.path.join(os.path.dirname(__file__), base_file_name)
     # First try the current directory, then the user's home directory then finally the package directory
     # to find the todos.json file.

@@ -78,8 +78,10 @@ class Org:
         result = ''
         for keyword in self.metadata:
             result += self._metadata_values_to_string(keyword)
-        result += '\n'
-        result += self.initial_body + '\n'
+        if self.metadata:
+            result += '\n'
+        if self.initial_body:
+            result += self.initial_body + '\n'
         result += ''.join([c.__repr__() for c in self.root.children])
         return result
 
