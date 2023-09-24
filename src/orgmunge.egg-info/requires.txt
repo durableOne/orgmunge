@@ -1,0 +1,9 @@
+ply
+
+[dev]
+black
+build
+twine
+pip-tools
+pytest
+bumpver
