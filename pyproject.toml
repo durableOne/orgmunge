@@ -7,15 +7,6 @@ license = "MIT"
 readme = "README.org"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-ply = "^3.11"
-version = "0.1.1"
-description = "Access org files inside python"
-authors = ["Delta Sharp <nalisarc@gmail.com>"]
-license = "LICENSE"
-readme = "README"
-
-[tool.poetry.dependencies]
 python = "^3.10"
 ply = "^3.11"
 
