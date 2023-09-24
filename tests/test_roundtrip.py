@@ -8,7 +8,7 @@ import pytest
 
 
 EXAMPLE_1 = """\
-* Calculation TODO 
+* Calculation TODO
 ** Input
 3+4+5+6
 ** Evaluation

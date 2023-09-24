@@ -243,9 +243,9 @@ class Headline:
         priority = f'{self.priority}' + (' ' if str(self.priority) != '' else '')
         comment = "COMMENT " if self.comment else ""
         todo = f"{self.todo} " if self.todo else ""
-        cookie = str(self.cookie) if self.cookie else ""
+        cookie = ' ' + str(self.cookie) if self.cookie else ""
         tags = f"    :{':'.join(self.tags)}:" if self.tags else ""
-        return f"{'*' * self.level} {todo}{comment}{priority}{self.title} {cookie}{tags}"
+        return f"{'*' * self.level} {todo}{comment}{priority}{self.title}{cookie}{tags}"
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
