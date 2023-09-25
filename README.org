@@ -279,3 +279,5 @@ CLOCK: [2023-07-08 Sat 15:54]--[2023-07-08 Sat 15:54] =>  0:00
 Thanks to these wonderful people for contributing time and code:
 
 - [[https://github.com/Nalisarc][Nalisarc]]
+- [[https://github.com/ispringle][ispringle]]
+- [[https://github.com/crdoconnor][crdoconnor]]
