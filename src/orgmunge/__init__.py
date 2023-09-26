@@ -75,17 +75,17 @@ class Org:
         with open(out_file, 'w') as OUT:
             OUT.write(str(self))
 
-    def get_all_nodes(self) -> Generator[Heading, None, None]:
-        """Generator function to recursively return all nodes in the Org tree.
-        The nodes are returned in the order they're encountered in the file
+    def get_all_headings(self) -> Generator[Heading, None, None]:
+        """Generator function to recursively return all headings in the Org tree.
+        The headings are returned in the order they're encountered in the file
         (so the tree is searched depth-first)."""
         def _helper(tree: List[Heading]) -> Generator[Heading, None, None]:
-            for node in tree:
-                yield node
-                yield from _helper(node.children)
+            for heading in tree:
+                yield heading
+                yield from _helper(heading.children)
         yield from _helper(self.root.children)
 
-    def get_headings_by_headline(self, search_string: str, exact: bool = False,
+    def get_headings_by_title(self, search_string: str, exact: bool = False,
                                  re_flags: int = 0) -> List[Heading]:
         """Return a heading whose headline matches the given string.
         If exact is True, get the heading whose headline is exactly
@@ -97,7 +97,7 @@ class Org:
             condition = lambda n: n.title == search_string
         else:
             condition = lambda n: re.search(fr'{search_string}', n.title, flags=re_flags)
-        return [node for node in self.get_all_nodes()
+        return [node for node in self.get_all_headings()
                 if condition(node)]
 
     def __repr__(self):

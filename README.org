@@ -264,6 +264,22 @@ treated as text (some heading's content).
     agenda.write('/path/to/modified_agenda.org')
   #+end_src
   
+** Convenience Methods
+*** Getting All Headings
+The convenience method =Org.get_all_headings= walks the Org tree
+depth-first and returns a generator of all the headings in the tree in
+the order in which they occur.
+*** Search for Headings by Title
+Use =Org.get_headings_by_title= to search for a heading with the given title:
+#+begin_src python
+  Org.get_headings_by_title(search_string, exact=False, re_flags=0)
+#+end_src
+=search_string= is what's searched in the title. It's interpreted as a
+regex unless =exact= is set to =True=, in which case, the function will
+return headings whose title matches the search string
+exactly. =re_flags= are flags passed to =re.search=. This argument is
+ignored if =exact= is =True=.
+
 * License
 #+INCLUDE: ./LICENSE
 
