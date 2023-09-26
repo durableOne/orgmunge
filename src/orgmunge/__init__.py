@@ -97,8 +97,7 @@ class Org:
             condition = lambda n: n.title == search_string
         else:
             condition = lambda n: re.search(fr'{search_string}', n.title, flags=re_flags)
-        return [node for node in self.get_all_headings()
-                if condition(node)]
+        return [heading for heading in self.get_all_headings() if condition(heading)]
 
     def __repr__(self):
         result = ''
