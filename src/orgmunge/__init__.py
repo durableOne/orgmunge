@@ -3,7 +3,7 @@
 import re
 from .parser import parser as p
 from .classes import *
-from typing import List, Dict, Optional, Generator
+from typing import List, Dict, Optional, Generator, Callable
 
 class Org:
     def __init__(self, input_string: str, from_file: bool = True, debug: bool = False):
@@ -85,8 +85,13 @@ class Org:
                 yield from _helper(heading.children)
         yield from _helper(self.root.children)
 
+    def filter_headings(self, func: Callable[..., bool]) -> Generator[Heading, None, None]:
+        """Takes a predicate function and returns all headings in the tree
+        that return True when passed through that function."""
+        return (heading for heading in self.get_all_headings() if func(heading))
+        
     def get_headings_by_title(self, search_string: str, exact: bool = False,
-                                 re_flags: int = 0) -> List[Heading]:
+                              re_flags: int = 0) -> Generator[Heading, None, None]:
         """Return a heading whose headline matches the given string.
         If exact is True, get the heading whose headline is exactly
         the given string. If not, the given string is interpreted
@@ -94,10 +99,10 @@ class Org:
         Matching is only done on headline title, no cookies,
         todo keywords or tags are considered."""
         if exact:
-            condition = lambda n: n.title == search_string
+            condition = lambda h: h.title == search_string
         else:
-            condition = lambda n: re.search(fr'{search_string}', n.title, flags=re_flags)
-        return [heading for heading in self.get_all_headings() if condition(heading)]
+            condition = lambda h: bool(re.search(fr'{search_string}', h.title, flags=re_flags))
+        return self.filter_headings(condition)
 
     def __repr__(self):
         result = ''

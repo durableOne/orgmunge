@@ -269,6 +269,9 @@ treated as text (some heading's content).
 The convenience method =Org.get_all_headings= walks the Org tree
 depth-first and returns a generator of all the headings in the tree in
 the order in which they occur.
+*** Filtering Headings
+You can use =Org.filter_headings(func)= where =func= is any arbitrary
+[[https://en.wikipedia.org/wiki/Boolean-valued_function][predicate]] and get a generator of all headings satisfying the predicate.
 *** Search for Headings by Title
 Use =Org.get_headings_by_title= to search for a heading with the given title:
 #+begin_src python
@@ -279,6 +282,8 @@ regex unless =exact= is set to =True=, in which case, the function will
 return headings whose title matches the search string
 exactly. =re_flags= are flags passed to =re.search=. This argument is
 ignored if =exact= is =True=.
+Uses =filter_headings= under the hood so will return a generator of
+matching headings.
 
 * License
 #+INCLUDE: ./LICENSE

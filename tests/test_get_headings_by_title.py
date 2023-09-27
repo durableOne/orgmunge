@@ -1,7 +1,7 @@
 from orgmunge import Org
 import re
 
-def test_get_headings():
+def test_get_headings_by_title():
     test_file = '''* My first node
 ** My first sub node
 * My first Node
@@ -14,5 +14,5 @@ def test_get_headings():
     search_4 = parsed.get_headings_by_title('My first node', exact=True)
     assert [n.title for n in search_1] == ['My first node', 'My first sub node', 'My second sub node']
     assert [n.title for n in search_2] == ['My first node', 'My first sub node', 'My first Node', 'My second sub node']
-    assert search_3 == []
+    assert list(search_3) == []
     assert [n.title for n in search_4] == ['My first node']
