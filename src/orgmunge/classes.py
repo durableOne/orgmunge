@@ -587,6 +587,7 @@ class Heading():
             raise TypeError("Heading properties must be given in the form of a dict")
         else:
             for key in val:
+                self._properties = dict()
                 self._properties[key] = val[key]
 
 
