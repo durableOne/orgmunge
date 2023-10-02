@@ -366,9 +366,9 @@ class TimeStamp:
         if self.end_time:
             timestamp += f'-{self.end_time.strftime("%H-%M")}'
         if self.repeater:
-            timestamp += f' {self.repeater}'    
+            timestamp += f'{self.repeater}'    
         if self.deadline_warn:
-            timestamp += f' {self.deadline_warn}'
+            timestamp += f'{self.deadline_warn}'
         return ldelim + timestamp + rdelim
 
     def __eq__(self, other):
@@ -586,8 +586,8 @@ class Heading():
         if type(val) is not dict:
             raise TypeError("Heading properties must be given in the form of a dict")
         else:
+            self._properties = dict()
             for key in val:
-                self._properties = dict()
                 self._properties[key] = val[key]
 
 
