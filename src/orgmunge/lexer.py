@@ -110,11 +110,11 @@ def t_COMMENT(t):
 
 # Needed to distinguish a regular newline from one that starts a new heading or ends the file
 def t_SEPARATOR(t):
-    r'\n+(?=\*+\s|\Z)'
+    r'(?:\r?\n)+(?=\*+\s|\Z)'
     return t
 
 def t_NEWLINE(t):
-    r'\n+'
+    r'\r?\n+'
     return t
 
 def t_TAGS(t):

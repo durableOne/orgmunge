@@ -364,7 +364,7 @@ class TimeStamp:
         rdelim = '>' if self.active else ']'
         timestamp = self.start_time.strftime(self._dt_format)
         if self.end_time:
-            timestamp += f'-{self.end_time.strftime("%H-%M")}'
+            timestamp += f'-{self.end_time.strftime("%H:%M")}'
         if self.repeater:
             timestamp += f'{self.repeater}'    
         if self.deadline_warn:
@@ -547,7 +547,10 @@ class Heading():
 
     def __getattr__(self, attr):
         # So that things like self.todo and self.title, etc... will work
-        return getattr(self.headline, attr)
+        if self.headline:
+            return getattr(self.headline, attr)
+        else:
+            raise AttributeError(f'Heading class has no attribute {attr}')
 
     def _parse_clock_line(self, line: str) -> Clocking:
         m = re.search(fr'CLOCK:\s*(?P<start>{ITIMESTAMP})(?:--(?P<end>{ITIMESTAMP}))?', line)
@@ -782,10 +785,9 @@ class Heading():
         body = str(self.body) + "\n" if self.body else ""
         if len(body) > 80:
             body = body[:77].strip() + "...\n"
-        newline = '\n' if scheduling or drawers or body or self.children else ''
         children = ''.join([c.__repr__() for c in self.children]) if self.children else ''
 
-        return f'{self.headline}{newline}{scheduling}{drawers}{body}{children}'
+        return f'{self.headline}\n{scheduling}{drawers}{body}{children}'
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):

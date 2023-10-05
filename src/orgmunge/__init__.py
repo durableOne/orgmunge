@@ -8,8 +8,8 @@ from typing import List, Dict, Optional, Generator, Callable
 class Org:
     def __init__(self, input_string: str, from_file: bool = True, debug: bool = False):
         if from_file:
-            with open(input_string, 'r') as IN:
-                string = IN.read()
+            with open(input_string, 'rb') as IN:
+                string = IN.read().decode('utf-8')
         else:
             string = input_string
         metadata, initial_body, headings = p.parse(string, debug=debug)
