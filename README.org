@@ -30,6 +30,13 @@ text (not falling under any heading), and then a tree of headings. Any
 export options or metadata that come later within the document are
 treated as text (some heading's content).
 
+* Use Cases
+If you have built something on top of =orgmunge=, please open an issue
+here and I'm happy to add your project to the use cases.
+** Redact an Org file
+Replace important information in an Org file with random words in
+order to share the structure of the file with someone without
+compromising your information. See [[https://github.com/durableOne/redactOrg][redactOrg]]
 * Installation
 - The only dependency of =orgmunge= is =PLY=. So you need =PLY= installed.
 - Clone this repo
