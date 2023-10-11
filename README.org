@@ -38,6 +38,13 @@ Replace important information in an Org file with random words in
 order to share the structure of the file with someone without
 compromising your information. See [[https://github.com/durableOne/redactOrg][redactOrg]]
 * Installation
+** From PyPi
+- =orgmunge= is now on PyPi
+- You can install =orgmunge= using =pip=:
+  #+begin_src shell
+  python3 -m pip install orgmunge
+  #+end_src
+** From the repo
 - The only dependency of =orgmunge= is =PLY=. So you need =PLY= installed.
 - Clone this repo
 - Add the directory where you cloned this repo to your =PYTHONPATH=
