@@ -781,18 +781,18 @@ class Heading():
 
     def __repr__(self):
         scheduling = str(self.scheduling) + "\n" if self.scheduling else ""
-        drawers = "".join(d.__repr__() for d in self.drawers) if self.drawers else ""
+        drawers = "".join(d.__str__() for d in self.drawers) if self.drawers else ""
         body = str(self.body) + "\n" if self.body else ""
         if len(body) > 80:
             body = body[:77].strip() + "...\n"
-        children = ''.join([c.__repr__() for c in self.children]) if self.children else ''
+        children = ''.join([c.__str__() for c in self.children]) if self.children else ''
         return f'{self.headline}\n{scheduling}{drawers}{body}{children}'
 
     def __str__(self):
         scheduling = str(self.scheduling) + "\n" if self.scheduling else ""
-        drawers = "".join(d.__repr__() for d in self.drawers) if self.drawers else ""
+        drawers = "".join(d.__str__() for d in self.drawers) if self.drawers else ""
         body = str(self.body) + "\n" if self.body else ""
-        children = ''.join([c.__repr__() for c in self.children]) if self.children else ''
+        children = ''.join([c.__str__() for c in self.children]) if self.children else ''
         return f'{self.headline}\n{scheduling}{drawers}{body}{children}'
 
     def __eq__(self, other):

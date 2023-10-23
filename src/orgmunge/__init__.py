@@ -112,7 +112,7 @@ class Org:
             result += '\n'
         if self.initial_body:
             result += self.initial_body + '\n'
-        result += ''.join([c.__repr__() for c in self.root.children])
+        result += ''.join([c.__str__() for c in self.root.children])
         if result[-1] != '\n':
             result += '\n'
         return result
