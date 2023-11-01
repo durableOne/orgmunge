@@ -10,14 +10,38 @@ from .classes import *
 from typing import List, Dict, Optional, Generator, Callable
 
 class Org:
-    def get_todos(self):
+    def _parse_todos(self, inp: str) -> Optional[Dict[str, Dict[str, str]]]:
+        payload = [l.strip() for l in inp.split('\n')
+                   if l.startswith('#+TODO:') \
+                   or l.startswith('#+SEQ_TODO:')\
+                   or l.startswith('#+TYP_TODO:')]
+        if not payload:
+            return None
+        todo_states = []
+        done_states = []
+        bindkey_pattern = re.compile(r'\([^)]+\)')
+        for line in payload:
+            if re.search(r'\|', line):
+                todo_, done_ = line.split('|')
+                todo = todo_.split() if todo_ else []
+                done = done_.split() if done_ else []
+            else:
+                line_lst = line.split()
+                todo, done = line_lst[:-1], [line_lst[-1]]
+            todo_states.extend([re.sub(bindkey_pattern, '', x) for x in todo])
+            done_states.extend([re.sub(bindkey_pattern, '', x) for x in done])
+        return {'todo_states': {t: t for t in todo_states},
+                'done_states': {t: t for t in done_states},}
+                   
+    def get_todos(self) -> Dict[str, Dict[str, str]]:
+
+        # First try the current directory, then the user's home directory then finally the package directory
+        # to find the todos.json file.
         base_file_name = 'todos.json'
         current_dir_file = os.path.join(os.getcwd(), base_file_name)
         home_dir = os.environ['HOMEPATH'] if platform.system() == 'Windows' else os.environ['HOME']
         home_dir_file = os.path.join(home_dir, base_file_name)
         package_dir_file = os.path.join(os.path.dirname(__file__), base_file_name)
-        # First try the current directory, then the user's home directory then finally the package directory
-        # to find the todos.json file.
         if os.path.isfile(current_dir_file):
             input_file_name = current_dir_file
         elif os.path.isfile(home_dir_file):
@@ -42,10 +66,14 @@ class Org:
                 string = IN.read().decode('utf-8')
         else:
             string = input_string
-        if todos is None:
-            todos = self.get_todos()
-        self.todos = todos
-        lexer = Lexer(todos)
+        input_todos = self._parse_todos(string)
+        if input_todos:
+            self.todos = input_todos
+        elif todos:
+            self.todos = todos
+        else:
+            self.todos = self.get_todos()
+        lexer = Lexer(self.todos)
         parser = Parser(lexer)
         metadata, initial_body, headings = parser.parser.parse(string, debug=debug)
         self.metadata = self._read_metadata(metadata)

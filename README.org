@@ -48,41 +48,39 @@ compromising your information. See [[https://github.com/durableOne/redactOrg][re
 - The only dependency of =orgmunge= is =PLY=. So you need =PLY= installed.
 - Clone this repo
 - Add the directory where you cloned this repo to your =PYTHONPATH=
-- The parser recognizes todo keywords by looking for a file named
-  =todos.json= in one of 3 places:
-  1. The current directory
-  2. The user's home directory
-  3. The package directory
-- You can look at the file =todos.json= shipped with this package for
-  the expected syntax and customize it with your preferred todo
-  keywords (or make a copy in your home directory). =orgmunge= doesn't
-  currently support reading todo states defined with =#+TODO= in the
-  file it's reading, and there are no plans to do so in the near
-  future (see [[https://github.com/durableOne/orgmunge/issues/3][this issue]]).
-- Here's an example:
-  #+begin_src javascript
+* Usage
+** Specifying TODO keywords
+- The parser needs to know the set of valid keywords before it starts
+  parsing your input. To do this, it uses the following steps 
+  1. If your input string/file contains [[https://orgmode.org/manual/Per_002dfile-keywords.html][per-file keywords]], these will
+     take precedence over anything else
+  2. Failing to find any such keywords, it looks to see if you passed
+     it the keywords using the =todos= argument
+  3. If no todo keywords were passed, the parser looks for todo keywords by looking for a file named
+     =todos.json= in one of 3 places (again in order of preference):
+     1) The current directory
+     2) The user's home directory
+     3) The package directory
+  4. Failing all the above, the keywords are assumed to be defined by:
+     #+begin_src javascript
     {
         "todo_states":
         {
-            "my_todo": "TODO",
-            "my_next": "NEXT",
-            "my_wait": "WAIT"
+            "todo": "TODO",
+            "next": "NEXT",
+            "wait": "WAIT"
         },
         "done_states":
         {
-            "my_cncl": "CNCL",
-            "my_done": "DONE"
+            "cncl": "CNCL",
+            "done": "DONE"
         }
     }
   #+end_src
-  The dict keys can be any names meaningful to you and will be exposed
-  as keys to the =_todo_keywords=, =_todo_states=, and =_done_states= attributes
-  of the =Headline= class. The dict values are the actual todo keywords
-  that will be in the Org file you're reading.
-
-  The file in the repo has a different example with Font Awesome
-  characters as the todo keywords.
-* Usage
+- If you choose to supply your own keywords as an argument to the
+  parser, you must follow the above structure: separate =todo_states=
+  and =done_states= with pairs of =keyword_nickname: keyword= specifying
+  each set of states.
 ** Reading an Org tree
 
 - The =Org= class in =__init__.py= is the main entry point to =orgmunge=.
