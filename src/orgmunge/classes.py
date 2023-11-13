@@ -7,7 +7,7 @@ from datetime import timedelta
 from functools import reduce
 from operator import add
 from math import floor
-from .lexer import get_todos, ATIMESTAMP, ITIMESTAMP
+from .lexer import Lexer 
 
 ORG_TIME_FORMAT_NO_TIME = '%Y-%m-%d %a'
 ORG_TIME_FORMAT = ORG_TIME_FORMAT_NO_TIME + ' %H:%M'
@@ -137,10 +137,7 @@ class Priority:
             return str(self) == str(other)
 
 class Headline:
-    _todo_keywords = {**get_todos()['todo_states'], **get_todos()['done_states']}
-    _todo_states = list(get_todos()['todo_states'].values())
-    _done_states = list(get_todos()['done_states'].values())
-    def __init__(self, level: str, comment: bool = False,
+    def __init__(self, todos, level: str, comment: bool = False,
                todo: Optional[str] = None, priority: Optional[str] = None,
                title: str = "", cookie: Optional[str] = None, tags: Optional[List[str]] = None):
         self._level = len(re.sub(r'\s+', '', level)) # Number of leading asterisks
@@ -150,6 +147,9 @@ class Headline:
         self.title = title
         self._cookie = cookie if cookie is None else Cookie(cookie)
         self.tags = tags
+        self._todo_states = list(todos['todo_states'].values())
+        self._done_states = list(todos['done_states'].values())
+        self._todo_keywords = {**todos['todo_states'], **todos['done_states']}
     @property
     def done(self):
         return self._is_done()
@@ -255,8 +255,8 @@ class Headline:
 
 class TimeStamp:
     def __init__(self, timestamp_str: str):
-        is_active = re.search(ATIMESTAMP, timestamp_str)
-        is_inactive = re.search(ITIMESTAMP, timestamp_str)
+        is_active = re.search(Lexer.ATIMESTAMP, timestamp_str)
+        is_inactive = re.search(Lexer.ITIMESTAMP, timestamp_str)
         self._active = True if is_active else False
         match = is_active if self._active else is_inactive
         date, day_of_week, start_time, end_time, repeater, deadline_warn = match.groups()
@@ -535,7 +535,7 @@ class Heading():
         self._parent = None
         self._sibling = None
         if self.body:
-            self.timestamps = [TimeStamp(t[0]) for t in re.findall(fr'({ATIMESTAMP}|{ITIMESTAMP})', self.body)]
+            self.timestamps = [TimeStamp(t[0]) for t in re.findall(fr'({Lexer.ATIMESTAMP}|{Lexer.ITIMESTAMP})', self.body)]
         if self._drawers:
             properties_drawer = [d for d in self._drawers if d.name == 'PROPERTIES']
             if properties_drawer:
@@ -553,7 +553,7 @@ class Heading():
             raise AttributeError(f'Heading class has no attribute {attr}')
 
     def _parse_clock_line(self, line: str) -> Clocking:
-        m = re.search(fr'CLOCK:\s*(?P<start>{ITIMESTAMP})(?:--(?P<end>{ITIMESTAMP}))?', line)
+        m = re.search(fr'CLOCK:\s*(?P<start>{Lexer.ITIMESTAMP})(?:--(?P<end>{Lexer.ITIMESTAMP}))?', line)
         if m is not None:
             start_time = re.sub(r'[\[\]]', '', m.group("start"))
             if m.group("end"):

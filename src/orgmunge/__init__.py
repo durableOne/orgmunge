@@ -1,18 +1,81 @@
 #!/usr/bin/env python3
 
 import re
-from .parser import parser as p
+import json
+import os
+import platform
+from .parser import Parser
+from .lexer import Lexer
 from .classes import *
 from typing import List, Dict, Optional, Generator, Callable
 
 class Org:
-    def __init__(self, input_string: str, from_file: bool = True, debug: bool = False):
+    def _parse_todos(self, inp: str) -> Optional[Dict[str, Dict[str, str]]]:
+        payload = [l.strip() for l in inp.split('\n')
+                   if l.startswith('#+TODO:') \
+                   or l.startswith('#+SEQ_TODO:')\
+                   or l.startswith('#+TYP_TODO:')]
+        if not payload:
+            return None
+        todo_states = []
+        done_states = []
+        bindkey_pattern = re.compile(r'\([^)]+\)')
+        for line in payload:
+            if re.search(r'\|', line):
+                todo_, done_ = line.split('|')
+                todo = todo_.split() if todo_ else []
+                done = done_.split() if done_ else []
+            else:
+                line_lst = line.split()
+                todo, done = line_lst[:-1], [line_lst[-1]]
+            todo_states.extend([re.sub(bindkey_pattern, '', x) for x in todo])
+            done_states.extend([re.sub(bindkey_pattern, '', x) for x in done])
+        return {'todo_states': {t: t for t in todo_states},
+                'done_states': {t: t for t in done_states},}
+                   
+    def get_todos(self) -> Dict[str, Dict[str, str]]:
+
+        # First try the current directory, then the user's home directory then finally the package directory
+        # to find the todos.json file.
+        base_file_name = 'todos.json'
+        current_dir_file = os.path.join(os.getcwd(), base_file_name)
+        home_dir = os.environ['HOMEPATH'] if platform.system() == 'Windows' else os.environ['HOME']
+        home_dir_file = os.path.join(home_dir, base_file_name)
+        package_dir_file = os.path.join(os.path.dirname(__file__), base_file_name)
+        if os.path.isfile(current_dir_file):
+            input_file_name = current_dir_file
+        elif os.path.isfile(home_dir_file):
+            input_file_name = home_dir_file
+        else:
+            input_file_name = package_dir_file
+        if os.path.isfile(input_file_name):
+            with open(input_file_name, 'rb') as JSON:
+                return json.load(JSON)
+        else:
+            return {'todo_states':
+                    {'todo': 'TODO',
+                    'next': 'NEXT',
+                    'wait': 'WAIT',},
+                    'done_states': 
+                    {'cncl': 'CNCL',
+                    'done': 'DONE',}}
+    def __init__(self, input_string: str, from_file: bool = True, debug: bool = False,
+               todos: Optional[Dict[str, Dict[str, str]]] = None,):
         if from_file:
             with open(input_string, 'rb') as IN:
                 string = IN.read().decode('utf-8')
         else:
             string = input_string
-        metadata, initial_body, headings = p.parse(string, debug=debug)
+        input_todos = self._parse_todos(string)
+        if input_todos:
+            self.todos = input_todos
+        elif todos:
+            self.todos = todos
+        else:
+            self.todos = self.get_todos()
+        lexer = Lexer(self.todos)
+        parser = Parser(lexer)
+        metadata, initial_body, headings = parser.parser.parse(string, debug=debug)
         self.metadata = self._read_metadata(metadata)
         self.initial_body = initial_body
         self.root = self._classify_headings(headings)
@@ -23,7 +86,7 @@ class Org:
         named ROOT and returns it, with all the other level-1 headings in the
         tree as its children.
         """
-        ROOT = Heading(Headline(' ', title='ROOT'), (None, None, None))
+        ROOT = Heading(Headline(self.todos, ' ', title='ROOT'), (None, None, None))
         if lst is not None:
             ROOT.add_child(lst[0], new=True)
             if lst[0].level !=1:
