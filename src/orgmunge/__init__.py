@@ -35,19 +35,16 @@ class Org:
                    
     def get_todos(self) -> Dict[str, Dict[str, str]]:
 
-        # First try the current directory, then the user's home directory then finally the package directory
+        # First try the current directory, then the user's home directory
         # to find the todos.json file.
         base_file_name = 'todos.json'
         current_dir_file = os.path.join(os.getcwd(), base_file_name)
         home_dir = os.environ['HOMEPATH'] if platform.system() == 'Windows' else os.environ['HOME']
         home_dir_file = os.path.join(home_dir, base_file_name)
-        package_dir_file = os.path.join(os.path.dirname(__file__), base_file_name)
         if os.path.isfile(current_dir_file):
             input_file_name = current_dir_file
-        elif os.path.isfile(home_dir_file):
-            input_file_name = home_dir_file
         else:
-            input_file_name = package_dir_file
+            input_file_name = home_dir_file
         if os.path.isfile(input_file_name):
             with open(input_file_name, 'rb') as JSON:
                 return json.load(JSON)

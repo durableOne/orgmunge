@@ -27,7 +27,6 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> org_file","S'",1,None,None,None),
-<<<<<<< HEAD
   ('org_file -> metadata org_tree','org_file',2,'p_org_file','parser.py',10),
   ('org_file -> non_metadata_body_text SEPARATOR org_tree','org_file',3,'p_org_file','parser.py',11),
   ('org_file -> metadata non_metadata_body_text SEPARATOR org_tree','org_file',4,'p_org_file','parser.py',12),
@@ -101,7 +100,6 @@ _lr_productions = [
   ('body_text -> body_text METADATA','body_text',2,'p_body_text','parser.py',183),
   ('body_text -> body_text NEWLINE','body_text',2,'p_body_text','parser.py',184),
   ('empty -> <empty>','empty',0,'p_empty','parser.py',188),
-=======
   ('org_file -> metadata org_tree','org_file',2,'p_org_file','parser.py',14),
   ('org_file -> non_metadata_body_text SEPARATOR org_tree','org_file',3,'p_org_file','parser.py',15),
   ('org_file -> metadata non_metadata_body_text SEPARATOR org_tree','org_file',4,'p_org_file','parser.py',16),
@@ -175,5 +173,4 @@ _lr_productions = [
   ('body_text -> body_text METADATA','body_text',2,'p_body_text','parser.py',188),
   ('body_text -> body_text NEWLINE','body_text',2,'p_body_text','parser.py',189),
   ('empty -> <empty>','empty',0,'p_empty','parser.py',193),
->>>>>>> origin/dev
 ]

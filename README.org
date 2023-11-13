@@ -29,7 +29,6 @@ metadata and export options, followed by some optional initial body
 text (not falling under any heading), and then a tree of headings. Any
 export options or metadata that come later within the document are
 treated as text (some heading's content).
-
 * Use Cases
 If you have built something on top of =orgmunge=, please open an issue
 here and I'm happy to add your project to the use cases.
@@ -57,10 +56,9 @@ compromising your information. See [[https://github.com/durableOne/redactOrg][re
   2. Failing to find any such keywords, it looks to see if you passed
      it the keywords using the =todos= argument
   3. If no todo keywords were passed, the parser looks for todo keywords by looking for a file named
-     =todos.json= in one of 3 places (again in order of preference):
+     =todos.json= in one of 2 places (again in order of preference):
      1) The current directory
      2) The user's home directory
-     3) The package directory
   4. Failing all the above, the keywords are assumed to be defined by:
      #+begin_src javascript
     {

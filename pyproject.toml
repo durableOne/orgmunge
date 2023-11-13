@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "orgmunge"
-version = "0.1.2"
+version = "0.2.0"
 description = "Programmatically modify Orgmode documents"
 authors = ["durableOne  <era31asj@gmail.com>"]
 license = "MIT"
