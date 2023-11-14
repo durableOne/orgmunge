@@ -15,9 +15,9 @@ EXAMPLES = (
 ** Evaluation
 """,
     """\
-* Parse weird characters
+* Parse weird characters
 
-There is a weird character between these two   words.
+There   is   a weird character between 3 of these   words.
 """,
 )
 
