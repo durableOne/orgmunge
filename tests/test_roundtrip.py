@@ -21,9 +21,12 @@ There is a weird {} character {} between 2 of these words.
 """.format(chr(160), chr(8239), chr(160)),
 """\
 * A normal title
-* TODO A title with the word TODO in the title which triggers a syntax error
+* TODO A title with the -- word TODO in the title which triggers a syntax error
 * TODO Another normal title.
 """,
+"""\
+* :atitlewithjustatag:
+"""
 )
 
 
