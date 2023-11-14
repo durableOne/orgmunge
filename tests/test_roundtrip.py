@@ -17,8 +17,8 @@ EXAMPLES = (
     """\
 * Parse weird characters
 
-There   is   a weird character between 3 of these   words.
-""",
+There   is   a weird {} character {} between 5 of these   words.
+""".format(chr(8239), chr(160)),
 )
 
 
