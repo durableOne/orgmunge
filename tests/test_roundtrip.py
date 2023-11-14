@@ -15,10 +15,10 @@ EXAMPLES = (
 ** Evaluation
 """,
     """\
-* Parse weird characters
+* Parse{}weird characters
 
-There   is   a weird {} character {} between 5 of these   words.
-""".format(chr(8239), chr(160)),
+There is a weird {} character {} between 2 of these words.
+""".format(chr(160), chr(8239), chr(160)),
 )
 
 
