@@ -14,8 +14,10 @@ def test_parsing_headlines():
     cookies = ['[1/2]', '[50%]', '']
     tags = [':tag1:', ':tag1:tag2:', '']
     for comment, todo, priority, title, cookie, tag in product(comments, TODOS, priorities, titles, cookies, tags):
-        headline_string = f'* {comment}{todo}{" " if todo != "" else ""}{priority}{title} {cookie}{10 * " " if tag != "" else ""}{tag}\n'
-        parsed = Org(headline_string, from_file=False)
+        if cookie:
+            cookie = ' ' + cookie
+        headline_string = f'* {comment}{todo}{" " if todo != "" else ""}{priority}{title}{cookie}{10 * " " if tag != "" else ""}{tag}\n'
+        parsed = Org(headline_string, from_file=False, todos=todos, debug=True)
         parsed_headline = parsed.root.children[0].headline
         assert parsed_headline == Headline(todos=todos,
                                            level='* ',

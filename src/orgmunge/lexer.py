@@ -34,7 +34,7 @@ class Lexer:
 
         def t_error(t):
             print(f"Illegal character encountered: {t.value[0]}")
-            t.lexer.skip(1)
+            raise ValueError("Lexer error!")
 
         self.todos = todos
         all_todo_keywords = {**todos['todo_states'], **todos['done_states']}
@@ -94,7 +94,7 @@ class Lexer:
             return t
 
         def t_SPACE(t):
-            r'[ \t]+'
+            r'\s+'
             return t
 
         def t_TEXT(t):

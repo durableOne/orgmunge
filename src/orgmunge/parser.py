@@ -17,6 +17,7 @@ class Parser:
                     | metadata non_metadata_body_text SEPARATOR 
                     | metadata
                     | org_tree
+                    | SEPARATOR
                     | empty'''
         if len(p) == 5:
             p[0] = (p[1], p[2], p[4])
@@ -83,14 +84,18 @@ class Parser:
 
     def p_title(self, p):
         """title : TEXT 
-                | title SPACE TEXT
-                | title SPACE"""
-        p[0] = reduce(add, p[1:]).strip()
+                 | TODO
+                 | title SPACE TEXT
+                 | title SPACE TODO
+                 | title SPACE
+                 | empty"""
+        none_to_empty = [x if x else "" for x in p[1:]]
+        p[0] = reduce(add, none_to_empty, "").strip()
 
     def p_cookie(self, p):
         '''cookie : COOKIE SPACE
-                | COOKIE
-                | empty'''
+                  | COOKIE
+                  | empty'''
         p[0] = p[1] if len(p) > 1 else None
 
     def p_tags(self, p):
@@ -196,3 +201,4 @@ class Parser:
     def p_error(self, p):
         if p is not None:
             print(f'Syntax error: {p}')
+            raise ValueError("Parser error!")
