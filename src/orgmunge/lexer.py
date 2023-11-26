@@ -94,7 +94,7 @@ class Lexer:
             return t
 
         def t_SPACE(t):
-            r'\s+'
+            r'[^\S\r\n]+'
             return t
 
         def t_TEXT(t):
