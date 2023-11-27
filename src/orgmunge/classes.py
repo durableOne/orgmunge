@@ -260,16 +260,16 @@ class TimeStamp:
         self._active = True if is_active else False
         match = is_active if self._active else is_inactive
         date, day_of_week, start_time, end_time, repeater, deadline_warn = match.groups()
-        self._start_time = self.to_datetime([date, day_of_week, start_time])
+        self._start_time = self._to_datetime([date, day_of_week, start_time])
         if end_time:
             end_time = re.sub(r'^-', '', end_time)
-            self._end_time = self.to_datetime([date, day_of_week, end_time]) 
+            self._end_time = self._to_datetime([date, day_of_week, end_time]) 
         else:
             self._end_time = None
         self._repeater = repeater
         self._deadline_warn = deadline_warn
 
-    def to_datetime(self, date_components: List[str]) -> dt:
+    def _to_datetime(self, date_components: List[str]) -> dt:
         if date_components[-1] is None:
             dt_format = ORG_TIME_FORMAT_NO_TIME
             date_components = date_components[:-1]
