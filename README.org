@@ -295,6 +295,16 @@ ignored if =exact= is =True=.
 Uses =filter_headings= under the hood so will return a generator of
 matching headings.
 
+*** Search for Headings by Path
+Use =Org.get_heading_by_path= to search for a heading with the given path:
+#+begin_src python
+  Org.get_heading_by_path(path, exact=False, re_flags=0)
+#+end_src
+=path= is a list of heading titles. Each member is interpreted the same
+way the =search_string= argument of =get_headings_by_title= is
+interpreted. This function returns the first heading of the tree that
+matches the given path or =None= if no such heading is found.
+
 * License
 #+INCLUDE: ./LICENSE
 

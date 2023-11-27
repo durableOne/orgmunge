@@ -7,7 +7,7 @@ import platform
 from .parser import Parser
 from .lexer import Lexer
 from .classes import *
-from typing import List, Dict, Optional, Generator, Callable
+from typing import List, Dict, Optional, Generator, Callable, Iterable
 
 class Org:
     def _parse_todos(self, inp: str) -> Optional[Dict[str, Dict[str, str]]]:
@@ -164,6 +164,25 @@ class Org:
             condition = lambda h: bool(re.search(fr'{search_string}', h.title, flags=re_flags))
         return self.filter_headings(condition)
 
+    def get_heading_by_path(self, path: List[str], exact: bool = False, re_flags: int = 0) -> Optional[Heading]:
+        """Return a heading by its given path. If exact is True, interpret the given path
+        as strings to match node titles exactly; otherwise, interpret them as regexes. If
+        no heading matches the given path, return None"""
+        if exact:
+            condition = lambda heading: heading.title == path[-1]
+        else:
+            condition = lambda heading: bool(re.search(fr'{path[-1]}', heading.title, flags=re_flags))
+        if not path:
+            return self.root
+        else:
+            headings_at_this_level = self.filter_headings(lambda h: h.level == len(path) and condition(h))  
+            candidates = (h for h in headings_at_this_level
+                          if h.parent is self.get_heading_by_path(path[:-1], exact=exact, re_flags=re_flags))
+            try:
+                return next(candidates)
+            except StopIteration:
+                return None
+        
     def __repr__(self):
         result = ''
         for keyword in self.metadata:
