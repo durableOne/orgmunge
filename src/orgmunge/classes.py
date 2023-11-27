@@ -593,7 +593,6 @@ class Heading():
             for key in val:
                 self._properties[key] = val[key]
 
-
     def clocking(self, include_children: bool = False) -> List[Clocking]:
         "Return the clocking information of the given headline and possibly its children."
         own_clocking = self._get_clocking_info()
@@ -601,6 +600,13 @@ class Heading():
             return own_clocking + reduce(add, [c.clocking(include_children=True) for c in self.children])
         else:
             return own_clocking
+
+    def get_drawer_by_name(self, name: str) -> Optional[Drawer]:
+        "Return the named drawer if it exists, or None if it doesn't"
+        try:
+            return next(d for d in self.drawers if d.name == name)
+        except StopIteration:
+            return None
 
     @property
     def headline(self):
