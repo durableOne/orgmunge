@@ -50,7 +50,7 @@ def test_roundtrip(text, todo_and_done_states):
 
 
 def test_roundtrip_after_adding_child(todo_and_done_states):
-    parent_note = Org("* N1\n", from_file=False)
-    child_note = Org("* N2\n", from_file=False)
+    parent_note = Org("* N1\n", from_file=False, todos=todo_and_done_states)
+    child_note = Org("* N2\n", from_file=False, todos=todo_and_done_states)
     parent_note.root.children[0].add_child(child_note.root)
     assert "* N1\n* N2\n" == str(parent_note)
