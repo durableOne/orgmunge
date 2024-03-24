@@ -13,6 +13,7 @@ class Parser:
     def p_org_file(self, p):
         '''org_file : metadata org_tree
                     | non_metadata_body_text SEPARATOR org_tree
+                    | non_metadata_body_text SEPARATOR
                     | metadata non_metadata_body_text SEPARATOR org_tree
                     | metadata non_metadata_body_text SEPARATOR 
                     | metadata
@@ -22,12 +23,15 @@ class Parser:
         if len(p) == 5:
             p[0] = (p[1], p[2], p[4])
         elif len(p) == 4:
-            if p[3] != '\n': 
+            if type(p[3]) is not str: 
                 p[0] = ('', p[1], p[3])
             else:
                 p[0] = (p[1], p[2], None)
         elif len(p) == 3:
-            p[0] = (p[1], '', p[2])
+            if p[1].startswith('#+'):
+                p[0] = (p[1], '', p[2])
+            else:
+                p[0] = ('', p[1], None)
         else:
             if type(p[1]) is str:
                 p[0] = (p[1], '', None)

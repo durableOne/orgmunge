@@ -52,4 +52,7 @@ CLOCK: [2023-07-23 Sun 10:00]--[2023-07-23 Sun 12:00] => 2:00
     assert main_heading.todo is None
     assert main_heading.title == main_heading.headline.title
     
-
+def test_preface_only():
+    input_string = 'Just a preface\n\n'
+    parsed = Org(input_string, from_file=False, todos=todos)
+    assert parsed.initial_body.strip() == input_string.strip()
