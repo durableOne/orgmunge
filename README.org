@@ -120,21 +120,25 @@ compromising your information. See [[https://github.com/durableOne/redactOrg][re
      values. The properties are parsed from the =PROPERTIES= drawer if
      it exists. This attribute can also be set by the user (the value
      supplied must be a dict).
-  2. =headline= returns the heading's headline. This attribute can also
+  2. =inherited_properties=. Same format as the =properties= dict but
+     contains only properties inherited from ancestors.
+  3. =tags= returns a list of all tags (those explicitly defined for
+     this heading and those inherited)
+  4. =headline= returns the heading's headline. This attribute can also
      be set by a user (the value must be a [[*Headline Objects][Headline]] instance).
-  3. =scheduling= is a [[*Scheduling Objects][Scheduling]] object containing information about
+  5. =scheduling= is a [[*Scheduling Objects][Scheduling]] object containing information about
      =SCHEDULED/DEADLINE/CLOSED= timestamps of the heading, if any. Can
      also be set by the user (the value must be a Scheduling instance).
-  4. =drawers= is a list of [[*Drawer Objects][Drawer]] objects containing the drawers
+  6. =drawers= is a list of [[*Drawer Objects][Drawer]] objects containing the drawers
      associated with this heading. When you update the heading's
      =properties= attribute, the =PROPERTIES= drawer is updated the next
      time you access it.
-  5. =children= returns a list of Heading objects that are the direct
+  7. =children= returns a list of Heading objects that are the direct
      children of this heading.
-  6. =parent= returns the parent heading of the current one. If the
+  8. =parent= returns the parent heading of the current one. If the
      current heading is a top-level heading, the root heading will be
      returned.
-  7. =sibling= returns the sibling heading of the current one that comes
+  9. =sibling= returns the sibling heading of the current one that comes
      before it in the tree, if any. The reason this is the sibling
      heading that is formally tracked is because it's the one that
      would adopt the current heading whenever the current heading is
@@ -143,34 +147,37 @@ compromising your information. See [[https://github.com/durableOne/redactOrg][re
      #+begin_src python
        siblings = [c for c in current_heading.parent.children if c is not current_heading]
      #+end_src
-  8. =level= is the heading's level, with 1 being the top level and each
-     sub-level after that being incremented by 1 (the heading's level
-     is the number of "stars" before its headline).
+  10. =level= is the heading's level, with 1 being the top level and each
+      sub-level after that being incremented by 1 (the heading's level
+      is the number of "stars" before its headline).
 - Important methods:
   1. =clocking=. This returns a list of [[*Clocking Objects][Clocking]] objects, parsed
      from the heading's =LOGBOOK= drawer, if any. You can also pass the
      optional boolean parameter =include_children=, which, when True,
      includes clocking information of this heading's children as well.
-  2. =add_child= accepts a Heading object to add as a child to the
+  2. =get_all_properties=. This returns a dict of all properties of the
+     heading, whether directly defined or inherited from the heading's
+     ancestors. The latest-defined value of a property wins over. 
+  3. =add_child= accepts a Heading object to add as a child to the
      current heading. The optional boolean parameter =new= should be set
      to =True= when this is a new heading that was created and needs to
      be assigned a parent. It should be set to =False= (default) when
      the addition of a child is due to a promotion/demotion operation.
-  3. =remove_child= accepts a heading object and deletes it from the
+  4. =remove_child= accepts a heading object and deletes it from the
      current heading's children if it's a child of the current
      heading.
-  4. =promote= promotes the current heading one level. If the heading has
+  5. =promote= promotes the current heading one level. If the heading has
      children, they would be orphaned so this raises a
      =ValueError=. Technically, Org allows you to have, say, level 3
      headings under a level 1 heading, but =orgmunge= does not allow
      this to make parsing the tree easier.
-  5. =promote_tree= promotes the current heading and all its
+  6. =promote_tree= promotes the current heading and all its
      descendants. Use this if the heading you want to promote has
      children.
-  6. =demote= demotes the current heading one level. If the current
+  7. =demote= demotes the current heading one level. If the current
      heading has no sibling to adopt it, the demotion attempt fails
      and raises a =ValueError=.
-  7. =demote_tree= is the equivalent of =promote_tree= for demotion.
+  8. =demote_tree= is the equivalent of =promote_tree= for demotion.
 *** Headline Objects
 - Important attributes:
   1. =done= is a boolean attribute that determines whether the headline

@@ -135,7 +135,6 @@ class Priority:
             return False
         else:
             return str(self) == str(other)
-
 class Headline:
     def __init__(self, todos, level: str, comment: bool = False,
                todo: Optional[str] = None, priority: Optional[str] = None,
@@ -159,10 +158,10 @@ class Headline:
         raise AttributeError("Can't set the 'done' attribute")
 
     def _is_done(self):
-        if self.todo in self._done_states:
-            return True
-        elif self.todo is None or self.todo in self._todo_states:
+        if self.todo is None or self.todo in self._todo_states:
             return False
+        elif self.todo in self._done_states:
+            return True
         else:
             raise ValueError(f"Uncategorized todo state {self.todo}")
 
@@ -252,7 +251,6 @@ class Headline:
             return False
         else:
             return str(self) == str(other)
-
 class TimeStamp:
     def __init__(self, timestamp_str: str):
         is_active = re.search(Lexer.ATIMESTAMP, timestamp_str)
@@ -376,7 +374,6 @@ class TimeStamp:
             return False
         else:
             return str(self) == str(other)
-
 class Scheduling:
     _closed = None
     _scheduled = None
@@ -442,7 +439,6 @@ class Scheduling:
             return False
         else:
             return str(self) == str(other)
-
 class Drawer:
     def __init__(self, drawer_string: str):
         self.name = re.sub(r':', '', drawer_string.split('\n')[0])
@@ -458,7 +454,6 @@ class Drawer:
             return False
         else:
             return str(self) == str(other)
-        
 class Clocking:
     def __init__(self, start_time: str, end_time: Optional[str] = None):
         self._start_time = dt.strptime(start_time, ORG_TIME_FORMAT)
@@ -526,7 +521,6 @@ class Clocking:
             return False
         else:
             return str(self) == str(other)
-
 class Heading():
     def __init__(self, headline: Headline, contents: Tuple[Scheduling, List[Drawer], str]):
         self._headline = headline
@@ -534,6 +528,7 @@ class Heading():
         self._children = []
         self._parent = None
         self._sibling = None
+        self._inherited_properties = dict()
         if self.body:
             self.timestamps = [TimeStamp(t[0]) for t in re.findall(fr'({Lexer.ATIMESTAMP}|{Lexer.ITIMESTAMP})', self.body)]
         if self._drawers:
@@ -581,6 +576,27 @@ class Heading():
         return "\n".join([f":{k}:{' '*7}{v}" for k, v in self.properties.items()])
 
     @property
+    def inherited_properties(self):
+        if not self._inherited_properties:
+            if self.parent:
+                self._inherited_properties = {**self.parent.inherited_properties, **self.parent.properties}
+        return self._inherited_properties
+
+    @inherited_properties.setter
+    def inherited_properties(self, _):
+        raise AttributeError("Can't set the inherited properties of a heading")
+    
+    @property
+    def tags(self):
+        self_tags = self.headline.tags or []
+        parent_tags = (self.parent.tags if self.parent else None) or []
+        return list(set(self_tags + parent_tags))
+
+    @tags.setter
+    def tags(self, _):
+        raise AttributeError("Can't set the tags of a heading, use headline instead.")
+    
+    @property
     def properties(self):
         return self._properties
 
@@ -592,6 +608,9 @@ class Heading():
             self._properties = dict()
             for key in val:
                 self._properties[key] = val[key]
+
+    def get_all_properties(self) -> Dict[str, str]:
+        return {**self.inherited_properties, **self.properties}
 
     def clocking(self, include_children: bool = False) -> List[Clocking]:
         "Return the clocking information of the given headline and possibly its children."
