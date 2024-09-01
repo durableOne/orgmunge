@@ -521,7 +521,10 @@ class Clocking:
             return False
         else:
             return str(self) == str(other)
-class Heading():
+
+    def __lt__(self, other):
+        return 
+class Heading:
     def __init__(self, headline: Headline, contents: Tuple[Scheduling, List[Drawer], str]):
         self._headline = headline
         self._scheduling, self._drawers, self.body = contents
@@ -803,6 +806,13 @@ class Heading():
         if children:
             for child in children:
                 child.demote_tree()
+
+    def get_path(self):
+        "Returns the full path of the current heading as a list of headings"
+        if self.parent.title == 'ROOT':
+            return [self]
+        else:
+            return  self.parent.get_path() + [self]
 
     def __repr__(self):
         scheduling = str(self.scheduling) + "\n" if self.scheduling else ""
