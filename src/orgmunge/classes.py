@@ -510,6 +510,17 @@ class Clocking:
     def duration(self, _):
         raise TypeError("Can't set the duration for a clocking object! Set the start and/or end time instead.")
 
+    @property
+    def duration_seconds(self):
+        if self.end_time is None:
+            return (dt.now() - self.start_time).seconds
+        else:
+            return (self.end_time - self.start_time).seconds
+
+    @duration_seconds.setter
+    def duration_seconds(self, _):
+        raise TypeError("Can't set the duration for a clocking object! Set the start and/or end time instead.")
+
     def __repr__(self):
         if self.end_time is None:
             return f'[{self.start_time.strftime(ORG_TIME_FORMAT)}]'
