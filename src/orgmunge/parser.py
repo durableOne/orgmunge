@@ -89,6 +89,8 @@ class Parser:
     def p_title(self, p):
         """title : TEXT 
                  | TODO
+                 | title TODO
+                 | title TEXT
                  | title SPACE TEXT
                  | title SPACE TODO
                  | title SPACE
