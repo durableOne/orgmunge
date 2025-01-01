@@ -637,7 +637,7 @@ class Heading:
     def get_drawer_by_name(self, name: str) -> Optional[Drawer]:
         "Return the named drawer if it exists, or None if it doesn't"
         try:
-            return next(d for d in self.drawers if d.name == name)
+            return next(d for d in (self.drawers or []) if d.name == name)
         except StopIteration:
             return None
 
