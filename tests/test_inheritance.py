@@ -18,7 +18,7 @@ def test_tag_inheritance():
                 [['Node 1', 'Subnode 2'],
                  ['Node 3', 'Subnode 1', 'Subnode 2']]]
     for subnode in subnodes:
-        assert 'parent' in subnode.tags
+        assert 'parent' in subnode.all_tags
 
 def test_property_inheritance():
     test_file = '''* Node 1

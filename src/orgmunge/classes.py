@@ -603,11 +603,19 @@ class Heading:
     @property
     def tags(self):
         self_tags = self.headline.tags or []
-        parent_tags = (self.parent.tags if self.parent else None) or []
-        return list(set(self_tags + parent_tags))
+        return list(set(self_tags))
 
     @tags.setter
     def tags(self, _):
+        raise AttributeError("Can't set the tags of a heading, use headline instead.")
+
+    @property
+    def all_tags(self):
+        parent_tags = (self.parent.all_tags if self.parent else None) or []
+        return list(set(self.tags + parent_tags))
+
+    @all_tags.setter
+    def all_tags(self, _):
         raise AttributeError("Can't set the tags of a heading, use headline instead.")
     
     @property
