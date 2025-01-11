@@ -582,7 +582,8 @@ class Heading:
         else:
             return []
 
-    def _get_properties_dict(self, contents: List[str]) -> Dict[str, str]:
+    @classmethod
+    def _get_properties_dict(cls, contents: List[str]) -> Dict[str, str]:
         return {k: v for (k, v) in [re.search(r':([^:]+):\s+(.*)', line).groups()
                                     for line in contents]} 
 

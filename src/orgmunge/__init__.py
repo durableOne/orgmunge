@@ -4,6 +4,7 @@ import re
 import json
 import os
 import platform
+from itertools import takewhile
 from .parser import Parser
 from .lexer import Lexer
 from .classes import *
@@ -73,7 +74,11 @@ class Org:
         lexer = Lexer(self.todos)
         parser = Parser(lexer)
         metadata, initial_body, headings = parser.parser.parse(string, debug=debug)
-        self.metadata = self._read_metadata(metadata)
+        self.top_drawer, self.metadata = self._read_metadata(metadata)
+        if self.top_drawer.name == 'PROPERTIES':
+            self.properties = Heading._get_properties_dict(self.top_drawer.contents)
+        else:
+            self.properties = dict()
         self.initial_body = initial_body
         self.root = self._classify_headings(headings)
 
@@ -110,7 +115,7 @@ class Org:
                         elem1.parent.add_child(elem2, new=True)
         return ROOT
 
-    def _read_metadata(self, metadata: str) -> Dict[str, List[str]]:
+    def _read_metadata(self, metadata: str) -> Tuple[Drawer, Dict[str, List[str]]]:
         """Reads the metadata string into a dictionary mapping
         each metadata keyword to a list of values assigned to it.
         This allows for cumulative metadata assignments (e.g. multiple
@@ -118,6 +123,13 @@ class Org:
         lower case and that's how they will be written out to file.
         """
         metadata_lines = [l for l in metadata.split('\n') if l != '']
+        if metadata_lines and ':PROPERTIES:' in metadata_lines[0]:
+            drawer_lines = list(takewhile(lambda l: not re.search(r'^:END:', l),
+                                          metadata_lines)) + [':END:']
+            metadata_lines = metadata_lines[len(drawer_lines):]
+            drawer = Drawer('\n'.join(drawer_lines))
+        else:
+            drawer = Drawer('')
         result = dict()
         for line in metadata_lines:
             keyword, value = re.search(r'^\#\+([^:]+):\s*(.*)', line).groups()
@@ -125,7 +137,7 @@ class Org:
                 result[keyword.lower()].append(value)
             else:
                 result[keyword.lower()] = [value]
-        return result
+        return (drawer, result)
 
     def _metadata_values_to_string(self, keyword: str) -> str:
         return "\n".join([f"#+{keyword}: {v}" for v in self.metadata[keyword]]) + '\n'
@@ -185,6 +197,8 @@ class Org:
         
     def __repr__(self):
         result = ''
+        if self.top_drawer.name != '':
+            result += str(self.top_drawer)
         for keyword in self.metadata:
             result += self._metadata_values_to_string(keyword)
         if self.metadata:

@@ -14,119 +14,120 @@ Rule 8     org_file -> SEPARATOR
 Rule 9     org_file -> empty
 Rule 10    metadata -> METADATA SEPARATOR
 Rule 11    metadata -> METADATA NEWLINE
-Rule 12    org_tree -> heading
-Rule 13    org_tree -> heading SEPARATOR
-Rule 14    org_tree -> org_tree heading SEPARATOR
-Rule 15    org_tree -> org_tree heading
-Rule 16    heading -> headline NEWLINE contents
-Rule 17    heading -> headline SEPARATOR
-Rule 18    headline -> STARS SPACE comment todo priority title cookie tags
-Rule 19    comment -> COMMENT SPACE
-Rule 20    comment -> empty
-Rule 21    todo -> TODO SPACE
-Rule 22    todo -> empty
-Rule 23    priority -> PRIORITY SPACE
-Rule 24    priority -> empty
-Rule 25    title -> TEXT
-Rule 26    title -> TODO
-Rule 27    title -> title TODO
-Rule 28    title -> title TEXT
-Rule 29    title -> title SPACE TEXT
-Rule 30    title -> title SPACE TODO
-Rule 31    title -> title SPACE
-Rule 32    title -> empty
-Rule 33    cookie -> COOKIE SPACE
-Rule 34    cookie -> COOKIE
-Rule 35    cookie -> empty
-Rule 36    tags -> TAGS
-Rule 37    tags -> empty
-Rule 38    contents -> scheduling drawers body
-Rule 39    scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE
-Rule 40    scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR
-Rule 41    scheduling_data -> SCHEDULING SPACE any_timestamp SPACE
-Rule 42    scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE
-Rule 43    scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR
-Rule 44    scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE
-Rule 45    scheduling -> scheduling_data
-Rule 46    scheduling -> empty
-Rule 47    any_timestamp -> ATIMESTAMP
-Rule 48    any_timestamp -> ITIMESTAMP
-Rule 49    drawer_data -> DRAWER NEWLINE
-Rule 50    drawer_data -> DRAWER SEPARATOR
-Rule 51    drawer_data -> drawer_data DRAWER NEWLINE
-Rule 52    drawer_data -> drawer_data DRAWER SEPARATOR
-Rule 53    drawers -> drawer_data
-Rule 54    drawers -> empty
-Rule 55    body -> body_text
-Rule 56    body -> empty
-Rule 57    non_metadata_body_text -> TEXT
-Rule 58    non_metadata_body_text -> SPACE
-Rule 59    non_metadata_body_text -> any_timestamp
-Rule 60    non_metadata_body_text -> non_metadata_body_text TEXT
-Rule 61    non_metadata_body_text -> non_metadata_body_text SPACE
-Rule 62    non_metadata_body_text -> non_metadata_body_text special_token
-Rule 63    non_metadata_body_text -> non_metadata_body_text NEWLINE
-Rule 64    special_token -> SCHEDULING
-Rule 65    special_token -> COOKIE
-Rule 66    special_token -> PRIORITY
-Rule 67    special_token -> TODO
-Rule 68    special_token -> any_timestamp
-Rule 69    special_token -> COMMENT
-Rule 70    special_token -> TAGS
-Rule 71    body_text -> TEXT
-Rule 72    body_text -> SPACE
-Rule 73    body_text -> METADATA
-Rule 74    body_text -> special_token
-Rule 75    body_text -> body_text TEXT
-Rule 76    body_text -> body_text SPACE
-Rule 77    body_text -> body_text special_token
-Rule 78    body_text -> body_text METADATA
-Rule 79    body_text -> body_text NEWLINE
-Rule 80    empty -> <empty>
+Rule 12    metadata -> DRAWER NEWLINE metadata
+Rule 13    org_tree -> heading
+Rule 14    org_tree -> heading SEPARATOR
+Rule 15    org_tree -> org_tree heading SEPARATOR
+Rule 16    org_tree -> org_tree heading
+Rule 17    heading -> headline NEWLINE contents
+Rule 18    heading -> headline SEPARATOR
+Rule 19    headline -> STARS SPACE comment todo priority title cookie tags
+Rule 20    comment -> COMMENT SPACE
+Rule 21    comment -> empty
+Rule 22    todo -> TODO SPACE
+Rule 23    todo -> empty
+Rule 24    priority -> PRIORITY SPACE
+Rule 25    priority -> empty
+Rule 26    title -> TEXT
+Rule 27    title -> TODO
+Rule 28    title -> title TODO
+Rule 29    title -> title TEXT
+Rule 30    title -> title SPACE TEXT
+Rule 31    title -> title SPACE TODO
+Rule 32    title -> title SPACE
+Rule 33    title -> empty
+Rule 34    cookie -> COOKIE SPACE
+Rule 35    cookie -> COOKIE
+Rule 36    cookie -> empty
+Rule 37    tags -> TAGS
+Rule 38    tags -> empty
+Rule 39    contents -> scheduling drawers body
+Rule 40    scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE
+Rule 41    scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR
+Rule 42    scheduling_data -> SCHEDULING SPACE any_timestamp SPACE
+Rule 43    scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE
+Rule 44    scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR
+Rule 45    scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE
+Rule 46    scheduling -> scheduling_data
+Rule 47    scheduling -> empty
+Rule 48    any_timestamp -> ATIMESTAMP
+Rule 49    any_timestamp -> ITIMESTAMP
+Rule 50    drawer_data -> DRAWER NEWLINE
+Rule 51    drawer_data -> DRAWER SEPARATOR
+Rule 52    drawer_data -> drawer_data DRAWER NEWLINE
+Rule 53    drawer_data -> drawer_data DRAWER SEPARATOR
+Rule 54    drawers -> drawer_data
+Rule 55    drawers -> empty
+Rule 56    body -> body_text
+Rule 57    body -> empty
+Rule 58    non_metadata_body_text -> TEXT
+Rule 59    non_metadata_body_text -> SPACE
+Rule 60    non_metadata_body_text -> any_timestamp
+Rule 61    non_metadata_body_text -> non_metadata_body_text TEXT
+Rule 62    non_metadata_body_text -> non_metadata_body_text SPACE
+Rule 63    non_metadata_body_text -> non_metadata_body_text special_token
+Rule 64    non_metadata_body_text -> non_metadata_body_text NEWLINE
+Rule 65    special_token -> SCHEDULING
+Rule 66    special_token -> COOKIE
+Rule 67    special_token -> PRIORITY
+Rule 68    special_token -> TODO
+Rule 69    special_token -> any_timestamp
+Rule 70    special_token -> COMMENT
+Rule 71    special_token -> TAGS
+Rule 72    body_text -> TEXT
+Rule 73    body_text -> SPACE
+Rule 74    body_text -> METADATA
+Rule 75    body_text -> special_token
+Rule 76    body_text -> body_text TEXT
+Rule 77    body_text -> body_text SPACE
+Rule 78    body_text -> body_text special_token
+Rule 79    body_text -> body_text METADATA
+Rule 80    body_text -> body_text NEWLINE
+Rule 81    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ATIMESTAMP           : 47
-COMMENT              : 19 69
-COOKIE               : 33 34 65
-DRAWER               : 49 50 51 52
-ITIMESTAMP           : 48
-METADATA             : 10 11 73 78
-NEWLINE              : 11 16 39 42 49 51 63 79
-PRIORITY             : 23 66
-SCHEDULING           : 39 40 41 42 43 44 64
-SEPARATOR            : 2 3 4 5 8 10 13 14 17 40 43 50 52
-SPACE                : 18 19 21 23 29 30 31 33 39 40 41 41 42 43 44 44 58 61 72 76
-STARS                : 18
-TAGS                 : 36 70
-TEXT                 : 25 28 29 57 60 71 75
-TODO                 : 21 26 27 30 67
+ATIMESTAMP           : 48
+COMMENT              : 20 70
+COOKIE               : 34 35 66
+DRAWER               : 12 50 51 52 53
+ITIMESTAMP           : 49
+METADATA             : 10 11 74 79
+NEWLINE              : 11 12 17 40 43 50 52 64 80
+PRIORITY             : 24 67
+SCHEDULING           : 40 41 42 43 44 45 65
+SEPARATOR            : 2 3 4 5 8 10 14 15 18 41 44 51 53
+SPACE                : 19 20 22 24 30 31 32 34 40 41 42 42 43 44 45 45 59 62 73 77
+STARS                : 19
+TAGS                 : 37 71
+TEXT                 : 26 29 30 58 61 72 76
+TODO                 : 22 27 28 31 68
 error                : 
 
 Nonterminals, with rules where they appear
 
-any_timestamp        : 39 40 41 42 43 44 59 68
-body                 : 38
-body_text            : 55 75 76 77 78 79
-comment              : 18
-contents             : 16
-cookie               : 18
-drawer_data          : 51 52 53
-drawers              : 38
-empty                : 9 20 22 24 32 35 37 46 54 56
-heading              : 12 13 14 15
-headline             : 16 17
-metadata             : 1 4 5 6
-non_metadata_body_text : 2 3 4 5 60 61 62 63
+any_timestamp        : 40 41 42 43 44 45 60 69
+body                 : 39
+body_text            : 56 76 77 78 79 80
+comment              : 19
+contents             : 17
+cookie               : 19
+drawer_data          : 52 53 54
+drawers              : 39
+empty                : 9 21 23 25 33 36 38 47 55 57
+heading              : 13 14 15 16
+headline             : 17 18
+metadata             : 1 4 5 6 12
+non_metadata_body_text : 2 3 4 5 61 62 63 64
 org_file             : 0
-org_tree             : 1 2 4 7 14 15
-priority             : 18
-scheduling           : 38
-scheduling_data      : 42 43 44 45
-special_token        : 62 74 77
-tags                 : 18
-title                : 18 27 28 29 30 31
-todo                 : 18
+org_tree             : 1 2 4 7 15 16
+priority             : 19
+scheduling           : 39
+scheduling_data      : 43 44 45 46
+special_token        : 63 75 78
+tags                 : 19
+title                : 19 28 29 30 31 32
+todo                 : 19
 
 Parsing method: LALR
 
@@ -144,41 +145,43 @@ state 0
     (9) org_file -> . empty
     (10) metadata -> . METADATA SEPARATOR
     (11) metadata -> . METADATA NEWLINE
-    (57) non_metadata_body_text -> . TEXT
-    (58) non_metadata_body_text -> . SPACE
-    (59) non_metadata_body_text -> . any_timestamp
-    (60) non_metadata_body_text -> . non_metadata_body_text TEXT
-    (61) non_metadata_body_text -> . non_metadata_body_text SPACE
-    (62) non_metadata_body_text -> . non_metadata_body_text special_token
-    (63) non_metadata_body_text -> . non_metadata_body_text NEWLINE
-    (12) org_tree -> . heading
-    (13) org_tree -> . heading SEPARATOR
-    (14) org_tree -> . org_tree heading SEPARATOR
-    (15) org_tree -> . org_tree heading
-    (80) empty -> .
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (12) metadata -> . DRAWER NEWLINE metadata
+    (58) non_metadata_body_text -> . TEXT
+    (59) non_metadata_body_text -> . SPACE
+    (60) non_metadata_body_text -> . any_timestamp
+    (61) non_metadata_body_text -> . non_metadata_body_text TEXT
+    (62) non_metadata_body_text -> . non_metadata_body_text SPACE
+    (63) non_metadata_body_text -> . non_metadata_body_text special_token
+    (64) non_metadata_body_text -> . non_metadata_body_text NEWLINE
+    (13) org_tree -> . heading
+    (14) org_tree -> . heading SEPARATOR
+    (15) org_tree -> . org_tree heading SEPARATOR
+    (16) org_tree -> . org_tree heading
+    (81) empty -> .
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
     SEPARATOR       shift and go to state 5
     METADATA        shift and go to state 7
-    TEXT            shift and go to state 8
-    SPACE           shift and go to state 9
-    $end            reduce using rule 80 (empty -> .)
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
-    STARS           shift and go to state 15
+    DRAWER          shift and go to state 8
+    TEXT            shift and go to state 9
+    SPACE           shift and go to state 10
+    $end            reduce using rule 81 (empty -> .)
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
+    STARS           shift and go to state 16
 
     org_file                       shift and go to state 1
     metadata                       shift and go to state 2
     org_tree                       shift and go to state 3
     non_metadata_body_text         shift and go to state 4
     empty                          shift and go to state 6
-    any_timestamp                  shift and go to state 10
-    heading                        shift and go to state 11
-    headline                       shift and go to state 14
+    any_timestamp                  shift and go to state 11
+    heading                        shift and go to state 12
+    headline                       shift and go to state 15
 
 state 1
 
@@ -192,84 +195,84 @@ state 2
     (4) org_file -> metadata . non_metadata_body_text SEPARATOR org_tree
     (5) org_file -> metadata . non_metadata_body_text SEPARATOR
     (6) org_file -> metadata .
-    (12) org_tree -> . heading
-    (13) org_tree -> . heading SEPARATOR
-    (14) org_tree -> . org_tree heading SEPARATOR
-    (15) org_tree -> . org_tree heading
-    (57) non_metadata_body_text -> . TEXT
-    (58) non_metadata_body_text -> . SPACE
-    (59) non_metadata_body_text -> . any_timestamp
-    (60) non_metadata_body_text -> . non_metadata_body_text TEXT
-    (61) non_metadata_body_text -> . non_metadata_body_text SPACE
-    (62) non_metadata_body_text -> . non_metadata_body_text special_token
-    (63) non_metadata_body_text -> . non_metadata_body_text NEWLINE
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (13) org_tree -> . heading
+    (14) org_tree -> . heading SEPARATOR
+    (15) org_tree -> . org_tree heading SEPARATOR
+    (16) org_tree -> . org_tree heading
+    (58) non_metadata_body_text -> . TEXT
+    (59) non_metadata_body_text -> . SPACE
+    (60) non_metadata_body_text -> . any_timestamp
+    (61) non_metadata_body_text -> . non_metadata_body_text TEXT
+    (62) non_metadata_body_text -> . non_metadata_body_text SPACE
+    (63) non_metadata_body_text -> . non_metadata_body_text special_token
+    (64) non_metadata_body_text -> . non_metadata_body_text NEWLINE
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
     $end            reduce using rule 6 (org_file -> metadata .)
-    TEXT            shift and go to state 8
-    SPACE           shift and go to state 9
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
-    STARS           shift and go to state 15
+    TEXT            shift and go to state 9
+    SPACE           shift and go to state 10
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
+    STARS           shift and go to state 16
 
-    org_tree                       shift and go to state 16
-    non_metadata_body_text         shift and go to state 17
-    heading                        shift and go to state 11
-    any_timestamp                  shift and go to state 10
-    headline                       shift and go to state 14
+    org_tree                       shift and go to state 17
+    non_metadata_body_text         shift and go to state 18
+    heading                        shift and go to state 12
+    any_timestamp                  shift and go to state 11
+    headline                       shift and go to state 15
 
 state 3
 
     (7) org_file -> org_tree .
-    (14) org_tree -> org_tree . heading SEPARATOR
-    (15) org_tree -> org_tree . heading
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (15) org_tree -> org_tree . heading SEPARATOR
+    (16) org_tree -> org_tree . heading
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
     $end            reduce using rule 7 (org_file -> org_tree .)
-    STARS           shift and go to state 15
+    STARS           shift and go to state 16
 
-    heading                        shift and go to state 18
-    headline                       shift and go to state 14
+    heading                        shift and go to state 19
+    headline                       shift and go to state 15
 
 state 4
 
     (2) org_file -> non_metadata_body_text . SEPARATOR org_tree
     (3) org_file -> non_metadata_body_text . SEPARATOR
-    (60) non_metadata_body_text -> non_metadata_body_text . TEXT
-    (61) non_metadata_body_text -> non_metadata_body_text . SPACE
-    (62) non_metadata_body_text -> non_metadata_body_text . special_token
-    (63) non_metadata_body_text -> non_metadata_body_text . NEWLINE
-    (64) special_token -> . SCHEDULING
-    (65) special_token -> . COOKIE
-    (66) special_token -> . PRIORITY
-    (67) special_token -> . TODO
-    (68) special_token -> . any_timestamp
-    (69) special_token -> . COMMENT
-    (70) special_token -> . TAGS
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
+    (61) non_metadata_body_text -> non_metadata_body_text . TEXT
+    (62) non_metadata_body_text -> non_metadata_body_text . SPACE
+    (63) non_metadata_body_text -> non_metadata_body_text . special_token
+    (64) non_metadata_body_text -> non_metadata_body_text . NEWLINE
+    (65) special_token -> . SCHEDULING
+    (66) special_token -> . COOKIE
+    (67) special_token -> . PRIORITY
+    (68) special_token -> . TODO
+    (69) special_token -> . any_timestamp
+    (70) special_token -> . COMMENT
+    (71) special_token -> . TAGS
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
 
-    SEPARATOR       shift and go to state 19
-    TEXT            shift and go to state 20
-    SPACE           shift and go to state 21
-    NEWLINE         shift and go to state 23
-    SCHEDULING      shift and go to state 24
-    COOKIE          shift and go to state 25
-    PRIORITY        shift and go to state 26
-    TODO            shift and go to state 27
-    COMMENT         shift and go to state 29
-    TAGS            shift and go to state 30
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
+    SEPARATOR       shift and go to state 20
+    TEXT            shift and go to state 21
+    SPACE           shift and go to state 22
+    NEWLINE         shift and go to state 24
+    SCHEDULING      shift and go to state 25
+    COOKIE          shift and go to state 26
+    PRIORITY        shift and go to state 27
+    TODO            shift and go to state 28
+    COMMENT         shift and go to state 30
+    TAGS            shift and go to state 31
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
 
-    special_token                  shift and go to state 22
-    any_timestamp                  shift and go to state 28
+    special_token                  shift and go to state 23
+    any_timestamp                  shift and go to state 29
 
 state 5
 
@@ -290,430 +293,437 @@ state 7
     (10) metadata -> METADATA . SEPARATOR
     (11) metadata -> METADATA . NEWLINE
 
-    SEPARATOR       shift and go to state 31
-    NEWLINE         shift and go to state 32
+    SEPARATOR       shift and go to state 32
+    NEWLINE         shift and go to state 33
 
 
 state 8
 
-    (57) non_metadata_body_text -> TEXT .
+    (12) metadata -> DRAWER . NEWLINE metadata
 
-    SEPARATOR       reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    TEXT            reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    SPACE           reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    NEWLINE         reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    SCHEDULING      reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    COOKIE          reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    PRIORITY        reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    TODO            reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    COMMENT         reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    TAGS            reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    ATIMESTAMP      reduce using rule 57 (non_metadata_body_text -> TEXT .)
-    ITIMESTAMP      reduce using rule 57 (non_metadata_body_text -> TEXT .)
+    NEWLINE         shift and go to state 34
 
 
 state 9
 
-    (58) non_metadata_body_text -> SPACE .
+    (58) non_metadata_body_text -> TEXT .
 
-    SEPARATOR       reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    TEXT            reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    SPACE           reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    NEWLINE         reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    SCHEDULING      reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    COOKIE          reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    PRIORITY        reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    TODO            reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    COMMENT         reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    TAGS            reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    ATIMESTAMP      reduce using rule 58 (non_metadata_body_text -> SPACE .)
-    ITIMESTAMP      reduce using rule 58 (non_metadata_body_text -> SPACE .)
+    SEPARATOR       reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    TEXT            reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    SPACE           reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    NEWLINE         reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    SCHEDULING      reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    COOKIE          reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    PRIORITY        reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    TODO            reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    COMMENT         reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    TAGS            reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    ATIMESTAMP      reduce using rule 58 (non_metadata_body_text -> TEXT .)
+    ITIMESTAMP      reduce using rule 58 (non_metadata_body_text -> TEXT .)
 
 
 state 10
 
-    (59) non_metadata_body_text -> any_timestamp .
+    (59) non_metadata_body_text -> SPACE .
 
-    SEPARATOR       reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    TEXT            reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    SPACE           reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    NEWLINE         reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    SCHEDULING      reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    COOKIE          reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    PRIORITY        reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    TODO            reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    COMMENT         reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    TAGS            reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    ATIMESTAMP      reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
-    ITIMESTAMP      reduce using rule 59 (non_metadata_body_text -> any_timestamp .)
+    SEPARATOR       reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    TEXT            reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    SPACE           reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    NEWLINE         reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    SCHEDULING      reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    COOKIE          reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    PRIORITY        reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    TODO            reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    COMMENT         reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    TAGS            reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    ATIMESTAMP      reduce using rule 59 (non_metadata_body_text -> SPACE .)
+    ITIMESTAMP      reduce using rule 59 (non_metadata_body_text -> SPACE .)
 
 
 state 11
 
-    (12) org_tree -> heading .
-    (13) org_tree -> heading . SEPARATOR
+    (60) non_metadata_body_text -> any_timestamp .
 
-    STARS           reduce using rule 12 (org_tree -> heading .)
-    $end            reduce using rule 12 (org_tree -> heading .)
-    SEPARATOR       shift and go to state 33
+    SEPARATOR       reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    TEXT            reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    SPACE           reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    NEWLINE         reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    SCHEDULING      reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    COOKIE          reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    PRIORITY        reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    TODO            reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    COMMENT         reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    TAGS            reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    ATIMESTAMP      reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
+    ITIMESTAMP      reduce using rule 60 (non_metadata_body_text -> any_timestamp .)
 
 
 state 12
 
-    (47) any_timestamp -> ATIMESTAMP .
+    (13) org_tree -> heading .
+    (14) org_tree -> heading . SEPARATOR
 
-    SEPARATOR       reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    TEXT            reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    SPACE           reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    NEWLINE         reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    SCHEDULING      reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    COOKIE          reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    PRIORITY        reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    TODO            reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    COMMENT         reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    TAGS            reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    ATIMESTAMP      reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    ITIMESTAMP      reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    METADATA        reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    STARS           reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
-    $end            reduce using rule 47 (any_timestamp -> ATIMESTAMP .)
+    STARS           reduce using rule 13 (org_tree -> heading .)
+    $end            reduce using rule 13 (org_tree -> heading .)
+    SEPARATOR       shift and go to state 35
 
 
 state 13
 
-    (48) any_timestamp -> ITIMESTAMP .
+    (48) any_timestamp -> ATIMESTAMP .
 
-    SEPARATOR       reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    TEXT            reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    SPACE           reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    NEWLINE         reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    SCHEDULING      reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    COOKIE          reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    PRIORITY        reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    TODO            reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    COMMENT         reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    TAGS            reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    ATIMESTAMP      reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    ITIMESTAMP      reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    METADATA        reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    STARS           reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
-    $end            reduce using rule 48 (any_timestamp -> ITIMESTAMP .)
+    SEPARATOR       reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    TEXT            reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    SPACE           reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    NEWLINE         reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    SCHEDULING      reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    COOKIE          reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    PRIORITY        reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    TODO            reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    COMMENT         reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    TAGS            reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    ATIMESTAMP      reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    ITIMESTAMP      reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    METADATA        reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    STARS           reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
+    $end            reduce using rule 48 (any_timestamp -> ATIMESTAMP .)
 
 
 state 14
 
-    (16) heading -> headline . NEWLINE contents
-    (17) heading -> headline . SEPARATOR
+    (49) any_timestamp -> ITIMESTAMP .
 
-    NEWLINE         shift and go to state 34
-    SEPARATOR       shift and go to state 35
+    SEPARATOR       reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    TEXT            reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    SPACE           reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    NEWLINE         reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    SCHEDULING      reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    COOKIE          reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    PRIORITY        reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    TODO            reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    COMMENT         reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    TAGS            reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    ATIMESTAMP      reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    ITIMESTAMP      reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    METADATA        reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    STARS           reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
+    $end            reduce using rule 49 (any_timestamp -> ITIMESTAMP .)
 
 
 state 15
 
-    (18) headline -> STARS . SPACE comment todo priority title cookie tags
+    (17) heading -> headline . NEWLINE contents
+    (18) heading -> headline . SEPARATOR
 
-    SPACE           shift and go to state 36
+    NEWLINE         shift and go to state 36
+    SEPARATOR       shift and go to state 37
 
 
 state 16
 
-    (1) org_file -> metadata org_tree .
-    (14) org_tree -> org_tree . heading SEPARATOR
-    (15) org_tree -> org_tree . heading
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (19) headline -> STARS . SPACE comment todo priority title cookie tags
 
-    $end            reduce using rule 1 (org_file -> metadata org_tree .)
-    STARS           shift and go to state 15
+    SPACE           shift and go to state 38
 
-    heading                        shift and go to state 18
-    headline                       shift and go to state 14
 
 state 17
 
-    (4) org_file -> metadata non_metadata_body_text . SEPARATOR org_tree
-    (5) org_file -> metadata non_metadata_body_text . SEPARATOR
-    (60) non_metadata_body_text -> non_metadata_body_text . TEXT
-    (61) non_metadata_body_text -> non_metadata_body_text . SPACE
-    (62) non_metadata_body_text -> non_metadata_body_text . special_token
-    (63) non_metadata_body_text -> non_metadata_body_text . NEWLINE
-    (64) special_token -> . SCHEDULING
-    (65) special_token -> . COOKIE
-    (66) special_token -> . PRIORITY
-    (67) special_token -> . TODO
-    (68) special_token -> . any_timestamp
-    (69) special_token -> . COMMENT
-    (70) special_token -> . TAGS
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
+    (1) org_file -> metadata org_tree .
+    (15) org_tree -> org_tree . heading SEPARATOR
+    (16) org_tree -> org_tree . heading
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
-    SEPARATOR       shift and go to state 37
-    TEXT            shift and go to state 20
-    SPACE           shift and go to state 21
-    NEWLINE         shift and go to state 23
-    SCHEDULING      shift and go to state 24
-    COOKIE          shift and go to state 25
-    PRIORITY        shift and go to state 26
-    TODO            shift and go to state 27
-    COMMENT         shift and go to state 29
-    TAGS            shift and go to state 30
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
+    $end            reduce using rule 1 (org_file -> metadata org_tree .)
+    STARS           shift and go to state 16
 
-    special_token                  shift and go to state 22
-    any_timestamp                  shift and go to state 28
+    heading                        shift and go to state 19
+    headline                       shift and go to state 15
 
 state 18
 
-    (14) org_tree -> org_tree heading . SEPARATOR
-    (15) org_tree -> org_tree heading .
+    (4) org_file -> metadata non_metadata_body_text . SEPARATOR org_tree
+    (5) org_file -> metadata non_metadata_body_text . SEPARATOR
+    (61) non_metadata_body_text -> non_metadata_body_text . TEXT
+    (62) non_metadata_body_text -> non_metadata_body_text . SPACE
+    (63) non_metadata_body_text -> non_metadata_body_text . special_token
+    (64) non_metadata_body_text -> non_metadata_body_text . NEWLINE
+    (65) special_token -> . SCHEDULING
+    (66) special_token -> . COOKIE
+    (67) special_token -> . PRIORITY
+    (68) special_token -> . TODO
+    (69) special_token -> . any_timestamp
+    (70) special_token -> . COMMENT
+    (71) special_token -> . TAGS
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
 
-    SEPARATOR       shift and go to state 38
-    STARS           reduce using rule 15 (org_tree -> org_tree heading .)
-    $end            reduce using rule 15 (org_tree -> org_tree heading .)
+    SEPARATOR       shift and go to state 39
+    TEXT            shift and go to state 21
+    SPACE           shift and go to state 22
+    NEWLINE         shift and go to state 24
+    SCHEDULING      shift and go to state 25
+    COOKIE          shift and go to state 26
+    PRIORITY        shift and go to state 27
+    TODO            shift and go to state 28
+    COMMENT         shift and go to state 30
+    TAGS            shift and go to state 31
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
 
+    special_token                  shift and go to state 23
+    any_timestamp                  shift and go to state 29
 
 state 19
 
-    (2) org_file -> non_metadata_body_text SEPARATOR . org_tree
-    (3) org_file -> non_metadata_body_text SEPARATOR .
-    (12) org_tree -> . heading
-    (13) org_tree -> . heading SEPARATOR
-    (14) org_tree -> . org_tree heading SEPARATOR
-    (15) org_tree -> . org_tree heading
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (15) org_tree -> org_tree heading . SEPARATOR
+    (16) org_tree -> org_tree heading .
 
-    $end            reduce using rule 3 (org_file -> non_metadata_body_text SEPARATOR .)
-    STARS           shift and go to state 15
+    SEPARATOR       shift and go to state 40
+    STARS           reduce using rule 16 (org_tree -> org_tree heading .)
+    $end            reduce using rule 16 (org_tree -> org_tree heading .)
 
-    org_tree                       shift and go to state 39
-    heading                        shift and go to state 11
-    headline                       shift and go to state 14
 
 state 20
 
-    (60) non_metadata_body_text -> non_metadata_body_text TEXT .
+    (2) org_file -> non_metadata_body_text SEPARATOR . org_tree
+    (3) org_file -> non_metadata_body_text SEPARATOR .
+    (13) org_tree -> . heading
+    (14) org_tree -> . heading SEPARATOR
+    (15) org_tree -> . org_tree heading SEPARATOR
+    (16) org_tree -> . org_tree heading
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
-    SEPARATOR       reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    TEXT            reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    SPACE           reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    NEWLINE         reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    SCHEDULING      reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    COOKIE          reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    PRIORITY        reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    TODO            reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    COMMENT         reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    TAGS            reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    ATIMESTAMP      reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
-    ITIMESTAMP      reduce using rule 60 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    $end            reduce using rule 3 (org_file -> non_metadata_body_text SEPARATOR .)
+    STARS           shift and go to state 16
 
+    org_tree                       shift and go to state 41
+    heading                        shift and go to state 12
+    headline                       shift and go to state 15
 
 state 21
 
-    (61) non_metadata_body_text -> non_metadata_body_text SPACE .
+    (61) non_metadata_body_text -> non_metadata_body_text TEXT .
 
-    SEPARATOR       reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    TEXT            reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    SPACE           reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    NEWLINE         reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    SCHEDULING      reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    COOKIE          reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    PRIORITY        reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    TODO            reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    COMMENT         reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    TAGS            reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    ATIMESTAMP      reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
-    ITIMESTAMP      reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    SEPARATOR       reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    TEXT            reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    SPACE           reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    NEWLINE         reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    SCHEDULING      reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    COOKIE          reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    PRIORITY        reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    TODO            reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    COMMENT         reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    TAGS            reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    ATIMESTAMP      reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
+    ITIMESTAMP      reduce using rule 61 (non_metadata_body_text -> non_metadata_body_text TEXT .)
 
 
 state 22
 
-    (62) non_metadata_body_text -> non_metadata_body_text special_token .
+    (62) non_metadata_body_text -> non_metadata_body_text SPACE .
 
-    SEPARATOR       reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    TEXT            reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    SPACE           reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    NEWLINE         reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    SCHEDULING      reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    COOKIE          reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    PRIORITY        reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    TODO            reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    COMMENT         reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    TAGS            reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    ATIMESTAMP      reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
-    ITIMESTAMP      reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    SEPARATOR       reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    TEXT            reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    SPACE           reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    NEWLINE         reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    SCHEDULING      reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    COOKIE          reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    PRIORITY        reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    TODO            reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    COMMENT         reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    TAGS            reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    ATIMESTAMP      reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
+    ITIMESTAMP      reduce using rule 62 (non_metadata_body_text -> non_metadata_body_text SPACE .)
 
 
 state 23
 
-    (63) non_metadata_body_text -> non_metadata_body_text NEWLINE .
+    (63) non_metadata_body_text -> non_metadata_body_text special_token .
 
-    SEPARATOR       reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    TEXT            reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    SPACE           reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    NEWLINE         reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    SCHEDULING      reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    COOKIE          reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    PRIORITY        reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    TODO            reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    COMMENT         reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    TAGS            reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    ATIMESTAMP      reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
-    ITIMESTAMP      reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    SEPARATOR       reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    TEXT            reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    SPACE           reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    NEWLINE         reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    SCHEDULING      reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    COOKIE          reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    PRIORITY        reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    TODO            reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    COMMENT         reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    TAGS            reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    ATIMESTAMP      reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
+    ITIMESTAMP      reduce using rule 63 (non_metadata_body_text -> non_metadata_body_text special_token .)
 
 
 state 24
 
-    (64) special_token -> SCHEDULING .
+    (64) non_metadata_body_text -> non_metadata_body_text NEWLINE .
 
-    SEPARATOR       reduce using rule 64 (special_token -> SCHEDULING .)
-    TEXT            reduce using rule 64 (special_token -> SCHEDULING .)
-    SPACE           reduce using rule 64 (special_token -> SCHEDULING .)
-    NEWLINE         reduce using rule 64 (special_token -> SCHEDULING .)
-    SCHEDULING      reduce using rule 64 (special_token -> SCHEDULING .)
-    COOKIE          reduce using rule 64 (special_token -> SCHEDULING .)
-    PRIORITY        reduce using rule 64 (special_token -> SCHEDULING .)
-    TODO            reduce using rule 64 (special_token -> SCHEDULING .)
-    COMMENT         reduce using rule 64 (special_token -> SCHEDULING .)
-    TAGS            reduce using rule 64 (special_token -> SCHEDULING .)
-    ATIMESTAMP      reduce using rule 64 (special_token -> SCHEDULING .)
-    ITIMESTAMP      reduce using rule 64 (special_token -> SCHEDULING .)
-    METADATA        reduce using rule 64 (special_token -> SCHEDULING .)
-    STARS           reduce using rule 64 (special_token -> SCHEDULING .)
-    $end            reduce using rule 64 (special_token -> SCHEDULING .)
+    SEPARATOR       reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    TEXT            reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    SPACE           reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    NEWLINE         reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    SCHEDULING      reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    COOKIE          reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    PRIORITY        reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    TODO            reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    COMMENT         reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    TAGS            reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    ATIMESTAMP      reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
+    ITIMESTAMP      reduce using rule 64 (non_metadata_body_text -> non_metadata_body_text NEWLINE .)
 
 
 state 25
 
-    (65) special_token -> COOKIE .
+    (65) special_token -> SCHEDULING .
 
-    SEPARATOR       reduce using rule 65 (special_token -> COOKIE .)
-    TEXT            reduce using rule 65 (special_token -> COOKIE .)
-    SPACE           reduce using rule 65 (special_token -> COOKIE .)
-    NEWLINE         reduce using rule 65 (special_token -> COOKIE .)
-    SCHEDULING      reduce using rule 65 (special_token -> COOKIE .)
-    COOKIE          reduce using rule 65 (special_token -> COOKIE .)
-    PRIORITY        reduce using rule 65 (special_token -> COOKIE .)
-    TODO            reduce using rule 65 (special_token -> COOKIE .)
-    COMMENT         reduce using rule 65 (special_token -> COOKIE .)
-    TAGS            reduce using rule 65 (special_token -> COOKIE .)
-    ATIMESTAMP      reduce using rule 65 (special_token -> COOKIE .)
-    ITIMESTAMP      reduce using rule 65 (special_token -> COOKIE .)
-    METADATA        reduce using rule 65 (special_token -> COOKIE .)
-    STARS           reduce using rule 65 (special_token -> COOKIE .)
-    $end            reduce using rule 65 (special_token -> COOKIE .)
+    SEPARATOR       reduce using rule 65 (special_token -> SCHEDULING .)
+    TEXT            reduce using rule 65 (special_token -> SCHEDULING .)
+    SPACE           reduce using rule 65 (special_token -> SCHEDULING .)
+    NEWLINE         reduce using rule 65 (special_token -> SCHEDULING .)
+    SCHEDULING      reduce using rule 65 (special_token -> SCHEDULING .)
+    COOKIE          reduce using rule 65 (special_token -> SCHEDULING .)
+    PRIORITY        reduce using rule 65 (special_token -> SCHEDULING .)
+    TODO            reduce using rule 65 (special_token -> SCHEDULING .)
+    COMMENT         reduce using rule 65 (special_token -> SCHEDULING .)
+    TAGS            reduce using rule 65 (special_token -> SCHEDULING .)
+    ATIMESTAMP      reduce using rule 65 (special_token -> SCHEDULING .)
+    ITIMESTAMP      reduce using rule 65 (special_token -> SCHEDULING .)
+    METADATA        reduce using rule 65 (special_token -> SCHEDULING .)
+    STARS           reduce using rule 65 (special_token -> SCHEDULING .)
+    $end            reduce using rule 65 (special_token -> SCHEDULING .)
 
 
 state 26
 
-    (66) special_token -> PRIORITY .
+    (66) special_token -> COOKIE .
 
-    SEPARATOR       reduce using rule 66 (special_token -> PRIORITY .)
-    TEXT            reduce using rule 66 (special_token -> PRIORITY .)
-    SPACE           reduce using rule 66 (special_token -> PRIORITY .)
-    NEWLINE         reduce using rule 66 (special_token -> PRIORITY .)
-    SCHEDULING      reduce using rule 66 (special_token -> PRIORITY .)
-    COOKIE          reduce using rule 66 (special_token -> PRIORITY .)
-    PRIORITY        reduce using rule 66 (special_token -> PRIORITY .)
-    TODO            reduce using rule 66 (special_token -> PRIORITY .)
-    COMMENT         reduce using rule 66 (special_token -> PRIORITY .)
-    TAGS            reduce using rule 66 (special_token -> PRIORITY .)
-    ATIMESTAMP      reduce using rule 66 (special_token -> PRIORITY .)
-    ITIMESTAMP      reduce using rule 66 (special_token -> PRIORITY .)
-    METADATA        reduce using rule 66 (special_token -> PRIORITY .)
-    STARS           reduce using rule 66 (special_token -> PRIORITY .)
-    $end            reduce using rule 66 (special_token -> PRIORITY .)
+    SEPARATOR       reduce using rule 66 (special_token -> COOKIE .)
+    TEXT            reduce using rule 66 (special_token -> COOKIE .)
+    SPACE           reduce using rule 66 (special_token -> COOKIE .)
+    NEWLINE         reduce using rule 66 (special_token -> COOKIE .)
+    SCHEDULING      reduce using rule 66 (special_token -> COOKIE .)
+    COOKIE          reduce using rule 66 (special_token -> COOKIE .)
+    PRIORITY        reduce using rule 66 (special_token -> COOKIE .)
+    TODO            reduce using rule 66 (special_token -> COOKIE .)
+    COMMENT         reduce using rule 66 (special_token -> COOKIE .)
+    TAGS            reduce using rule 66 (special_token -> COOKIE .)
+    ATIMESTAMP      reduce using rule 66 (special_token -> COOKIE .)
+    ITIMESTAMP      reduce using rule 66 (special_token -> COOKIE .)
+    METADATA        reduce using rule 66 (special_token -> COOKIE .)
+    STARS           reduce using rule 66 (special_token -> COOKIE .)
+    $end            reduce using rule 66 (special_token -> COOKIE .)
 
 
 state 27
 
-    (67) special_token -> TODO .
+    (67) special_token -> PRIORITY .
 
-    SEPARATOR       reduce using rule 67 (special_token -> TODO .)
-    TEXT            reduce using rule 67 (special_token -> TODO .)
-    SPACE           reduce using rule 67 (special_token -> TODO .)
-    NEWLINE         reduce using rule 67 (special_token -> TODO .)
-    SCHEDULING      reduce using rule 67 (special_token -> TODO .)
-    COOKIE          reduce using rule 67 (special_token -> TODO .)
-    PRIORITY        reduce using rule 67 (special_token -> TODO .)
-    TODO            reduce using rule 67 (special_token -> TODO .)
-    COMMENT         reduce using rule 67 (special_token -> TODO .)
-    TAGS            reduce using rule 67 (special_token -> TODO .)
-    ATIMESTAMP      reduce using rule 67 (special_token -> TODO .)
-    ITIMESTAMP      reduce using rule 67 (special_token -> TODO .)
-    METADATA        reduce using rule 67 (special_token -> TODO .)
-    STARS           reduce using rule 67 (special_token -> TODO .)
-    $end            reduce using rule 67 (special_token -> TODO .)
+    SEPARATOR       reduce using rule 67 (special_token -> PRIORITY .)
+    TEXT            reduce using rule 67 (special_token -> PRIORITY .)
+    SPACE           reduce using rule 67 (special_token -> PRIORITY .)
+    NEWLINE         reduce using rule 67 (special_token -> PRIORITY .)
+    SCHEDULING      reduce using rule 67 (special_token -> PRIORITY .)
+    COOKIE          reduce using rule 67 (special_token -> PRIORITY .)
+    PRIORITY        reduce using rule 67 (special_token -> PRIORITY .)
+    TODO            reduce using rule 67 (special_token -> PRIORITY .)
+    COMMENT         reduce using rule 67 (special_token -> PRIORITY .)
+    TAGS            reduce using rule 67 (special_token -> PRIORITY .)
+    ATIMESTAMP      reduce using rule 67 (special_token -> PRIORITY .)
+    ITIMESTAMP      reduce using rule 67 (special_token -> PRIORITY .)
+    METADATA        reduce using rule 67 (special_token -> PRIORITY .)
+    STARS           reduce using rule 67 (special_token -> PRIORITY .)
+    $end            reduce using rule 67 (special_token -> PRIORITY .)
 
 
 state 28
 
-    (68) special_token -> any_timestamp .
+    (68) special_token -> TODO .
 
-    SEPARATOR       reduce using rule 68 (special_token -> any_timestamp .)
-    TEXT            reduce using rule 68 (special_token -> any_timestamp .)
-    SPACE           reduce using rule 68 (special_token -> any_timestamp .)
-    NEWLINE         reduce using rule 68 (special_token -> any_timestamp .)
-    SCHEDULING      reduce using rule 68 (special_token -> any_timestamp .)
-    COOKIE          reduce using rule 68 (special_token -> any_timestamp .)
-    PRIORITY        reduce using rule 68 (special_token -> any_timestamp .)
-    TODO            reduce using rule 68 (special_token -> any_timestamp .)
-    COMMENT         reduce using rule 68 (special_token -> any_timestamp .)
-    TAGS            reduce using rule 68 (special_token -> any_timestamp .)
-    ATIMESTAMP      reduce using rule 68 (special_token -> any_timestamp .)
-    ITIMESTAMP      reduce using rule 68 (special_token -> any_timestamp .)
-    METADATA        reduce using rule 68 (special_token -> any_timestamp .)
-    STARS           reduce using rule 68 (special_token -> any_timestamp .)
-    $end            reduce using rule 68 (special_token -> any_timestamp .)
+    SEPARATOR       reduce using rule 68 (special_token -> TODO .)
+    TEXT            reduce using rule 68 (special_token -> TODO .)
+    SPACE           reduce using rule 68 (special_token -> TODO .)
+    NEWLINE         reduce using rule 68 (special_token -> TODO .)
+    SCHEDULING      reduce using rule 68 (special_token -> TODO .)
+    COOKIE          reduce using rule 68 (special_token -> TODO .)
+    PRIORITY        reduce using rule 68 (special_token -> TODO .)
+    TODO            reduce using rule 68 (special_token -> TODO .)
+    COMMENT         reduce using rule 68 (special_token -> TODO .)
+    TAGS            reduce using rule 68 (special_token -> TODO .)
+    ATIMESTAMP      reduce using rule 68 (special_token -> TODO .)
+    ITIMESTAMP      reduce using rule 68 (special_token -> TODO .)
+    METADATA        reduce using rule 68 (special_token -> TODO .)
+    STARS           reduce using rule 68 (special_token -> TODO .)
+    $end            reduce using rule 68 (special_token -> TODO .)
 
 
 state 29
 
-    (69) special_token -> COMMENT .
+    (69) special_token -> any_timestamp .
 
-    SEPARATOR       reduce using rule 69 (special_token -> COMMENT .)
-    TEXT            reduce using rule 69 (special_token -> COMMENT .)
-    SPACE           reduce using rule 69 (special_token -> COMMENT .)
-    NEWLINE         reduce using rule 69 (special_token -> COMMENT .)
-    SCHEDULING      reduce using rule 69 (special_token -> COMMENT .)
-    COOKIE          reduce using rule 69 (special_token -> COMMENT .)
-    PRIORITY        reduce using rule 69 (special_token -> COMMENT .)
-    TODO            reduce using rule 69 (special_token -> COMMENT .)
-    COMMENT         reduce using rule 69 (special_token -> COMMENT .)
-    TAGS            reduce using rule 69 (special_token -> COMMENT .)
-    ATIMESTAMP      reduce using rule 69 (special_token -> COMMENT .)
-    ITIMESTAMP      reduce using rule 69 (special_token -> COMMENT .)
-    METADATA        reduce using rule 69 (special_token -> COMMENT .)
-    STARS           reduce using rule 69 (special_token -> COMMENT .)
-    $end            reduce using rule 69 (special_token -> COMMENT .)
+    SEPARATOR       reduce using rule 69 (special_token -> any_timestamp .)
+    TEXT            reduce using rule 69 (special_token -> any_timestamp .)
+    SPACE           reduce using rule 69 (special_token -> any_timestamp .)
+    NEWLINE         reduce using rule 69 (special_token -> any_timestamp .)
+    SCHEDULING      reduce using rule 69 (special_token -> any_timestamp .)
+    COOKIE          reduce using rule 69 (special_token -> any_timestamp .)
+    PRIORITY        reduce using rule 69 (special_token -> any_timestamp .)
+    TODO            reduce using rule 69 (special_token -> any_timestamp .)
+    COMMENT         reduce using rule 69 (special_token -> any_timestamp .)
+    TAGS            reduce using rule 69 (special_token -> any_timestamp .)
+    ATIMESTAMP      reduce using rule 69 (special_token -> any_timestamp .)
+    ITIMESTAMP      reduce using rule 69 (special_token -> any_timestamp .)
+    METADATA        reduce using rule 69 (special_token -> any_timestamp .)
+    STARS           reduce using rule 69 (special_token -> any_timestamp .)
+    $end            reduce using rule 69 (special_token -> any_timestamp .)
 
 
 state 30
 
-    (70) special_token -> TAGS .
+    (70) special_token -> COMMENT .
 
-    SEPARATOR       reduce using rule 70 (special_token -> TAGS .)
-    TEXT            reduce using rule 70 (special_token -> TAGS .)
-    SPACE           reduce using rule 70 (special_token -> TAGS .)
-    NEWLINE         reduce using rule 70 (special_token -> TAGS .)
-    SCHEDULING      reduce using rule 70 (special_token -> TAGS .)
-    COOKIE          reduce using rule 70 (special_token -> TAGS .)
-    PRIORITY        reduce using rule 70 (special_token -> TAGS .)
-    TODO            reduce using rule 70 (special_token -> TAGS .)
-    COMMENT         reduce using rule 70 (special_token -> TAGS .)
-    TAGS            reduce using rule 70 (special_token -> TAGS .)
-    ATIMESTAMP      reduce using rule 70 (special_token -> TAGS .)
-    ITIMESTAMP      reduce using rule 70 (special_token -> TAGS .)
-    METADATA        reduce using rule 70 (special_token -> TAGS .)
-    STARS           reduce using rule 70 (special_token -> TAGS .)
-    $end            reduce using rule 70 (special_token -> TAGS .)
+    SEPARATOR       reduce using rule 70 (special_token -> COMMENT .)
+    TEXT            reduce using rule 70 (special_token -> COMMENT .)
+    SPACE           reduce using rule 70 (special_token -> COMMENT .)
+    NEWLINE         reduce using rule 70 (special_token -> COMMENT .)
+    SCHEDULING      reduce using rule 70 (special_token -> COMMENT .)
+    COOKIE          reduce using rule 70 (special_token -> COMMENT .)
+    PRIORITY        reduce using rule 70 (special_token -> COMMENT .)
+    TODO            reduce using rule 70 (special_token -> COMMENT .)
+    COMMENT         reduce using rule 70 (special_token -> COMMENT .)
+    TAGS            reduce using rule 70 (special_token -> COMMENT .)
+    ATIMESTAMP      reduce using rule 70 (special_token -> COMMENT .)
+    ITIMESTAMP      reduce using rule 70 (special_token -> COMMENT .)
+    METADATA        reduce using rule 70 (special_token -> COMMENT .)
+    STARS           reduce using rule 70 (special_token -> COMMENT .)
+    $end            reduce using rule 70 (special_token -> COMMENT .)
 
 
 state 31
+
+    (71) special_token -> TAGS .
+
+    SEPARATOR       reduce using rule 71 (special_token -> TAGS .)
+    TEXT            reduce using rule 71 (special_token -> TAGS .)
+    SPACE           reduce using rule 71 (special_token -> TAGS .)
+    NEWLINE         reduce using rule 71 (special_token -> TAGS .)
+    SCHEDULING      reduce using rule 71 (special_token -> TAGS .)
+    COOKIE          reduce using rule 71 (special_token -> TAGS .)
+    PRIORITY        reduce using rule 71 (special_token -> TAGS .)
+    TODO            reduce using rule 71 (special_token -> TAGS .)
+    COMMENT         reduce using rule 71 (special_token -> TAGS .)
+    TAGS            reduce using rule 71 (special_token -> TAGS .)
+    ATIMESTAMP      reduce using rule 71 (special_token -> TAGS .)
+    ITIMESTAMP      reduce using rule 71 (special_token -> TAGS .)
+    METADATA        reduce using rule 71 (special_token -> TAGS .)
+    STARS           reduce using rule 71 (special_token -> TAGS .)
+    $end            reduce using rule 71 (special_token -> TAGS .)
+
+
+state 32
 
     (10) metadata -> METADATA SEPARATOR .
 
@@ -725,7 +735,7 @@ state 31
     $end            reduce using rule 10 (metadata -> METADATA SEPARATOR .)
 
 
-state 32
+state 33
 
     (11) metadata -> METADATA NEWLINE .
 
@@ -737,1234 +747,1258 @@ state 32
     $end            reduce using rule 11 (metadata -> METADATA NEWLINE .)
 
 
-state 33
-
-    (13) org_tree -> heading SEPARATOR .
-
-    STARS           reduce using rule 13 (org_tree -> heading SEPARATOR .)
-    $end            reduce using rule 13 (org_tree -> heading SEPARATOR .)
-
-
 state 34
 
-    (16) heading -> headline NEWLINE . contents
-    (38) contents -> . scheduling drawers body
-    (45) scheduling -> . scheduling_data
-    (46) scheduling -> . empty
-    (39) scheduling_data -> . SCHEDULING SPACE any_timestamp NEWLINE
-    (40) scheduling_data -> . SCHEDULING SPACE any_timestamp SEPARATOR
-    (41) scheduling_data -> . SCHEDULING SPACE any_timestamp SPACE
-    (42) scheduling_data -> . scheduling_data SCHEDULING SPACE any_timestamp NEWLINE
-    (43) scheduling_data -> . scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR
-    (44) scheduling_data -> . scheduling_data SCHEDULING SPACE any_timestamp SPACE
-    (80) empty -> .
+    (12) metadata -> DRAWER NEWLINE . metadata
+    (10) metadata -> . METADATA SEPARATOR
+    (11) metadata -> . METADATA NEWLINE
+    (12) metadata -> . DRAWER NEWLINE metadata
 
-  ! shift/reduce conflict for SCHEDULING resolved as shift
-    SCHEDULING      shift and go to state 44
-    DRAWER          reduce using rule 80 (empty -> .)
-    TEXT            reduce using rule 80 (empty -> .)
-    SPACE           reduce using rule 80 (empty -> .)
-    METADATA        reduce using rule 80 (empty -> .)
-    COOKIE          reduce using rule 80 (empty -> .)
-    PRIORITY        reduce using rule 80 (empty -> .)
-    TODO            reduce using rule 80 (empty -> .)
-    COMMENT         reduce using rule 80 (empty -> .)
-    TAGS            reduce using rule 80 (empty -> .)
-    ATIMESTAMP      reduce using rule 80 (empty -> .)
-    ITIMESTAMP      reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
-    STARS           reduce using rule 80 (empty -> .)
-    $end            reduce using rule 80 (empty -> .)
+    METADATA        shift and go to state 7
+    DRAWER          shift and go to state 8
 
-  ! SCHEDULING      [ reduce using rule 80 (empty -> .) ]
-
-    contents                       shift and go to state 40
-    scheduling                     shift and go to state 41
-    scheduling_data                shift and go to state 42
-    empty                          shift and go to state 43
+    metadata                       shift and go to state 42
 
 state 35
 
-    (17) heading -> headline SEPARATOR .
+    (14) org_tree -> heading SEPARATOR .
 
-    SEPARATOR       reduce using rule 17 (heading -> headline SEPARATOR .)
-    STARS           reduce using rule 17 (heading -> headline SEPARATOR .)
-    $end            reduce using rule 17 (heading -> headline SEPARATOR .)
+    STARS           reduce using rule 14 (org_tree -> heading SEPARATOR .)
+    $end            reduce using rule 14 (org_tree -> heading SEPARATOR .)
 
 
 state 36
 
-    (18) headline -> STARS SPACE . comment todo priority title cookie tags
-    (19) comment -> . COMMENT SPACE
-    (20) comment -> . empty
-    (80) empty -> .
+    (17) heading -> headline NEWLINE . contents
+    (39) contents -> . scheduling drawers body
+    (46) scheduling -> . scheduling_data
+    (47) scheduling -> . empty
+    (40) scheduling_data -> . SCHEDULING SPACE any_timestamp NEWLINE
+    (41) scheduling_data -> . SCHEDULING SPACE any_timestamp SEPARATOR
+    (42) scheduling_data -> . SCHEDULING SPACE any_timestamp SPACE
+    (43) scheduling_data -> . scheduling_data SCHEDULING SPACE any_timestamp NEWLINE
+    (44) scheduling_data -> . scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR
+    (45) scheduling_data -> . scheduling_data SCHEDULING SPACE any_timestamp SPACE
+    (81) empty -> .
 
-    COMMENT         shift and go to state 46
-    TODO            reduce using rule 80 (empty -> .)
-    PRIORITY        reduce using rule 80 (empty -> .)
-    TEXT            reduce using rule 80 (empty -> .)
-    SPACE           reduce using rule 80 (empty -> .)
-    COOKIE          reduce using rule 80 (empty -> .)
-    TAGS            reduce using rule 80 (empty -> .)
-    NEWLINE         reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
+  ! shift/reduce conflict for SCHEDULING resolved as shift
+    SCHEDULING      shift and go to state 47
+    DRAWER          reduce using rule 81 (empty -> .)
+    TEXT            reduce using rule 81 (empty -> .)
+    SPACE           reduce using rule 81 (empty -> .)
+    METADATA        reduce using rule 81 (empty -> .)
+    COOKIE          reduce using rule 81 (empty -> .)
+    PRIORITY        reduce using rule 81 (empty -> .)
+    TODO            reduce using rule 81 (empty -> .)
+    COMMENT         reduce using rule 81 (empty -> .)
+    TAGS            reduce using rule 81 (empty -> .)
+    ATIMESTAMP      reduce using rule 81 (empty -> .)
+    ITIMESTAMP      reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
+    STARS           reduce using rule 81 (empty -> .)
+    $end            reduce using rule 81 (empty -> .)
 
-    comment                        shift and go to state 45
-    empty                          shift and go to state 47
+  ! SCHEDULING      [ reduce using rule 81 (empty -> .) ]
+
+    contents                       shift and go to state 43
+    scheduling                     shift and go to state 44
+    scheduling_data                shift and go to state 45
+    empty                          shift and go to state 46
 
 state 37
 
-    (4) org_file -> metadata non_metadata_body_text SEPARATOR . org_tree
-    (5) org_file -> metadata non_metadata_body_text SEPARATOR .
-    (12) org_tree -> . heading
-    (13) org_tree -> . heading SEPARATOR
-    (14) org_tree -> . org_tree heading SEPARATOR
-    (15) org_tree -> . org_tree heading
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (18) heading -> headline SEPARATOR .
 
-    $end            reduce using rule 5 (org_file -> metadata non_metadata_body_text SEPARATOR .)
-    STARS           shift and go to state 15
+    SEPARATOR       reduce using rule 18 (heading -> headline SEPARATOR .)
+    STARS           reduce using rule 18 (heading -> headline SEPARATOR .)
+    $end            reduce using rule 18 (heading -> headline SEPARATOR .)
 
-    org_tree                       shift and go to state 48
-    heading                        shift and go to state 11
-    headline                       shift and go to state 14
 
 state 38
 
-    (14) org_tree -> org_tree heading SEPARATOR .
+    (19) headline -> STARS SPACE . comment todo priority title cookie tags
+    (20) comment -> . COMMENT SPACE
+    (21) comment -> . empty
+    (81) empty -> .
 
-    STARS           reduce using rule 14 (org_tree -> org_tree heading SEPARATOR .)
-    $end            reduce using rule 14 (org_tree -> org_tree heading SEPARATOR .)
+    COMMENT         shift and go to state 49
+    TODO            reduce using rule 81 (empty -> .)
+    PRIORITY        reduce using rule 81 (empty -> .)
+    TEXT            reduce using rule 81 (empty -> .)
+    SPACE           reduce using rule 81 (empty -> .)
+    COOKIE          reduce using rule 81 (empty -> .)
+    TAGS            reduce using rule 81 (empty -> .)
+    NEWLINE         reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
 
+    comment                        shift and go to state 48
+    empty                          shift and go to state 50
 
 state 39
 
-    (2) org_file -> non_metadata_body_text SEPARATOR org_tree .
-    (14) org_tree -> org_tree . heading SEPARATOR
-    (15) org_tree -> org_tree . heading
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (4) org_file -> metadata non_metadata_body_text SEPARATOR . org_tree
+    (5) org_file -> metadata non_metadata_body_text SEPARATOR .
+    (13) org_tree -> . heading
+    (14) org_tree -> . heading SEPARATOR
+    (15) org_tree -> . org_tree heading SEPARATOR
+    (16) org_tree -> . org_tree heading
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
-    $end            reduce using rule 2 (org_file -> non_metadata_body_text SEPARATOR org_tree .)
-    STARS           shift and go to state 15
+    $end            reduce using rule 5 (org_file -> metadata non_metadata_body_text SEPARATOR .)
+    STARS           shift and go to state 16
 
-    heading                        shift and go to state 18
-    headline                       shift and go to state 14
+    org_tree                       shift and go to state 51
+    heading                        shift and go to state 12
+    headline                       shift and go to state 15
 
 state 40
 
-    (16) heading -> headline NEWLINE contents .
+    (15) org_tree -> org_tree heading SEPARATOR .
 
-    SEPARATOR       reduce using rule 16 (heading -> headline NEWLINE contents .)
-    STARS           reduce using rule 16 (heading -> headline NEWLINE contents .)
-    $end            reduce using rule 16 (heading -> headline NEWLINE contents .)
+    STARS           reduce using rule 15 (org_tree -> org_tree heading SEPARATOR .)
+    $end            reduce using rule 15 (org_tree -> org_tree heading SEPARATOR .)
 
 
 state 41
 
-    (38) contents -> scheduling . drawers body
-    (53) drawers -> . drawer_data
-    (54) drawers -> . empty
-    (49) drawer_data -> . DRAWER NEWLINE
-    (50) drawer_data -> . DRAWER SEPARATOR
-    (51) drawer_data -> . drawer_data DRAWER NEWLINE
-    (52) drawer_data -> . drawer_data DRAWER SEPARATOR
-    (80) empty -> .
+    (2) org_file -> non_metadata_body_text SEPARATOR org_tree .
+    (15) org_tree -> org_tree . heading SEPARATOR
+    (16) org_tree -> org_tree . heading
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
-    DRAWER          shift and go to state 52
-    TEXT            reduce using rule 80 (empty -> .)
-    SPACE           reduce using rule 80 (empty -> .)
-    METADATA        reduce using rule 80 (empty -> .)
-    SCHEDULING      reduce using rule 80 (empty -> .)
-    COOKIE          reduce using rule 80 (empty -> .)
-    PRIORITY        reduce using rule 80 (empty -> .)
-    TODO            reduce using rule 80 (empty -> .)
-    COMMENT         reduce using rule 80 (empty -> .)
-    TAGS            reduce using rule 80 (empty -> .)
-    ATIMESTAMP      reduce using rule 80 (empty -> .)
-    ITIMESTAMP      reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
-    STARS           reduce using rule 80 (empty -> .)
-    $end            reduce using rule 80 (empty -> .)
+    $end            reduce using rule 2 (org_file -> non_metadata_body_text SEPARATOR org_tree .)
+    STARS           shift and go to state 16
 
-    drawers                        shift and go to state 49
-    drawer_data                    shift and go to state 50
-    empty                          shift and go to state 51
+    heading                        shift and go to state 19
+    headline                       shift and go to state 15
 
 state 42
 
-    (45) scheduling -> scheduling_data .
-    (42) scheduling_data -> scheduling_data . SCHEDULING SPACE any_timestamp NEWLINE
-    (43) scheduling_data -> scheduling_data . SCHEDULING SPACE any_timestamp SEPARATOR
-    (44) scheduling_data -> scheduling_data . SCHEDULING SPACE any_timestamp SPACE
+    (12) metadata -> DRAWER NEWLINE metadata .
 
-  ! shift/reduce conflict for SCHEDULING resolved as shift
-    DRAWER          reduce using rule 45 (scheduling -> scheduling_data .)
-    TEXT            reduce using rule 45 (scheduling -> scheduling_data .)
-    SPACE           reduce using rule 45 (scheduling -> scheduling_data .)
-    METADATA        reduce using rule 45 (scheduling -> scheduling_data .)
-    COOKIE          reduce using rule 45 (scheduling -> scheduling_data .)
-    PRIORITY        reduce using rule 45 (scheduling -> scheduling_data .)
-    TODO            reduce using rule 45 (scheduling -> scheduling_data .)
-    COMMENT         reduce using rule 45 (scheduling -> scheduling_data .)
-    TAGS            reduce using rule 45 (scheduling -> scheduling_data .)
-    ATIMESTAMP      reduce using rule 45 (scheduling -> scheduling_data .)
-    ITIMESTAMP      reduce using rule 45 (scheduling -> scheduling_data .)
-    SEPARATOR       reduce using rule 45 (scheduling -> scheduling_data .)
-    STARS           reduce using rule 45 (scheduling -> scheduling_data .)
-    $end            reduce using rule 45 (scheduling -> scheduling_data .)
-    SCHEDULING      shift and go to state 53
-
-  ! SCHEDULING      [ reduce using rule 45 (scheduling -> scheduling_data .) ]
+    TEXT            reduce using rule 12 (metadata -> DRAWER NEWLINE metadata .)
+    SPACE           reduce using rule 12 (metadata -> DRAWER NEWLINE metadata .)
+    ATIMESTAMP      reduce using rule 12 (metadata -> DRAWER NEWLINE metadata .)
+    ITIMESTAMP      reduce using rule 12 (metadata -> DRAWER NEWLINE metadata .)
+    STARS           reduce using rule 12 (metadata -> DRAWER NEWLINE metadata .)
+    $end            reduce using rule 12 (metadata -> DRAWER NEWLINE metadata .)
 
 
 state 43
 
-    (46) scheduling -> empty .
+    (17) heading -> headline NEWLINE contents .
 
-    DRAWER          reduce using rule 46 (scheduling -> empty .)
-    TEXT            reduce using rule 46 (scheduling -> empty .)
-    SPACE           reduce using rule 46 (scheduling -> empty .)
-    METADATA        reduce using rule 46 (scheduling -> empty .)
-    SCHEDULING      reduce using rule 46 (scheduling -> empty .)
-    COOKIE          reduce using rule 46 (scheduling -> empty .)
-    PRIORITY        reduce using rule 46 (scheduling -> empty .)
-    TODO            reduce using rule 46 (scheduling -> empty .)
-    COMMENT         reduce using rule 46 (scheduling -> empty .)
-    TAGS            reduce using rule 46 (scheduling -> empty .)
-    ATIMESTAMP      reduce using rule 46 (scheduling -> empty .)
-    ITIMESTAMP      reduce using rule 46 (scheduling -> empty .)
-    SEPARATOR       reduce using rule 46 (scheduling -> empty .)
-    STARS           reduce using rule 46 (scheduling -> empty .)
-    $end            reduce using rule 46 (scheduling -> empty .)
+    SEPARATOR       reduce using rule 17 (heading -> headline NEWLINE contents .)
+    STARS           reduce using rule 17 (heading -> headline NEWLINE contents .)
+    $end            reduce using rule 17 (heading -> headline NEWLINE contents .)
 
 
 state 44
 
-    (39) scheduling_data -> SCHEDULING . SPACE any_timestamp NEWLINE
-    (40) scheduling_data -> SCHEDULING . SPACE any_timestamp SEPARATOR
-    (41) scheduling_data -> SCHEDULING . SPACE any_timestamp SPACE
+    (39) contents -> scheduling . drawers body
+    (54) drawers -> . drawer_data
+    (55) drawers -> . empty
+    (50) drawer_data -> . DRAWER NEWLINE
+    (51) drawer_data -> . DRAWER SEPARATOR
+    (52) drawer_data -> . drawer_data DRAWER NEWLINE
+    (53) drawer_data -> . drawer_data DRAWER SEPARATOR
+    (81) empty -> .
 
-    SPACE           shift and go to state 54
+    DRAWER          shift and go to state 55
+    TEXT            reduce using rule 81 (empty -> .)
+    SPACE           reduce using rule 81 (empty -> .)
+    METADATA        reduce using rule 81 (empty -> .)
+    SCHEDULING      reduce using rule 81 (empty -> .)
+    COOKIE          reduce using rule 81 (empty -> .)
+    PRIORITY        reduce using rule 81 (empty -> .)
+    TODO            reduce using rule 81 (empty -> .)
+    COMMENT         reduce using rule 81 (empty -> .)
+    TAGS            reduce using rule 81 (empty -> .)
+    ATIMESTAMP      reduce using rule 81 (empty -> .)
+    ITIMESTAMP      reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
+    STARS           reduce using rule 81 (empty -> .)
+    $end            reduce using rule 81 (empty -> .)
 
+    drawers                        shift and go to state 52
+    drawer_data                    shift and go to state 53
+    empty                          shift and go to state 54
 
 state 45
 
-    (18) headline -> STARS SPACE comment . todo priority title cookie tags
-    (21) todo -> . TODO SPACE
-    (22) todo -> . empty
-    (80) empty -> .
+    (46) scheduling -> scheduling_data .
+    (43) scheduling_data -> scheduling_data . SCHEDULING SPACE any_timestamp NEWLINE
+    (44) scheduling_data -> scheduling_data . SCHEDULING SPACE any_timestamp SEPARATOR
+    (45) scheduling_data -> scheduling_data . SCHEDULING SPACE any_timestamp SPACE
 
-  ! shift/reduce conflict for TODO resolved as shift
-    TODO            shift and go to state 56
-    PRIORITY        reduce using rule 80 (empty -> .)
-    TEXT            reduce using rule 80 (empty -> .)
-    SPACE           reduce using rule 80 (empty -> .)
-    COOKIE          reduce using rule 80 (empty -> .)
-    TAGS            reduce using rule 80 (empty -> .)
-    NEWLINE         reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
+  ! shift/reduce conflict for SCHEDULING resolved as shift
+    DRAWER          reduce using rule 46 (scheduling -> scheduling_data .)
+    TEXT            reduce using rule 46 (scheduling -> scheduling_data .)
+    SPACE           reduce using rule 46 (scheduling -> scheduling_data .)
+    METADATA        reduce using rule 46 (scheduling -> scheduling_data .)
+    COOKIE          reduce using rule 46 (scheduling -> scheduling_data .)
+    PRIORITY        reduce using rule 46 (scheduling -> scheduling_data .)
+    TODO            reduce using rule 46 (scheduling -> scheduling_data .)
+    COMMENT         reduce using rule 46 (scheduling -> scheduling_data .)
+    TAGS            reduce using rule 46 (scheduling -> scheduling_data .)
+    ATIMESTAMP      reduce using rule 46 (scheduling -> scheduling_data .)
+    ITIMESTAMP      reduce using rule 46 (scheduling -> scheduling_data .)
+    SEPARATOR       reduce using rule 46 (scheduling -> scheduling_data .)
+    STARS           reduce using rule 46 (scheduling -> scheduling_data .)
+    $end            reduce using rule 46 (scheduling -> scheduling_data .)
+    SCHEDULING      shift and go to state 56
 
-  ! TODO            [ reduce using rule 80 (empty -> .) ]
+  ! SCHEDULING      [ reduce using rule 46 (scheduling -> scheduling_data .) ]
 
-    todo                           shift and go to state 55
-    empty                          shift and go to state 57
 
 state 46
 
-    (19) comment -> COMMENT . SPACE
+    (47) scheduling -> empty .
 
-    SPACE           shift and go to state 58
+    DRAWER          reduce using rule 47 (scheduling -> empty .)
+    TEXT            reduce using rule 47 (scheduling -> empty .)
+    SPACE           reduce using rule 47 (scheduling -> empty .)
+    METADATA        reduce using rule 47 (scheduling -> empty .)
+    SCHEDULING      reduce using rule 47 (scheduling -> empty .)
+    COOKIE          reduce using rule 47 (scheduling -> empty .)
+    PRIORITY        reduce using rule 47 (scheduling -> empty .)
+    TODO            reduce using rule 47 (scheduling -> empty .)
+    COMMENT         reduce using rule 47 (scheduling -> empty .)
+    TAGS            reduce using rule 47 (scheduling -> empty .)
+    ATIMESTAMP      reduce using rule 47 (scheduling -> empty .)
+    ITIMESTAMP      reduce using rule 47 (scheduling -> empty .)
+    SEPARATOR       reduce using rule 47 (scheduling -> empty .)
+    STARS           reduce using rule 47 (scheduling -> empty .)
+    $end            reduce using rule 47 (scheduling -> empty .)
 
 
 state 47
 
-    (20) comment -> empty .
+    (40) scheduling_data -> SCHEDULING . SPACE any_timestamp NEWLINE
+    (41) scheduling_data -> SCHEDULING . SPACE any_timestamp SEPARATOR
+    (42) scheduling_data -> SCHEDULING . SPACE any_timestamp SPACE
 
-    TODO            reduce using rule 20 (comment -> empty .)
-    PRIORITY        reduce using rule 20 (comment -> empty .)
-    TEXT            reduce using rule 20 (comment -> empty .)
-    SPACE           reduce using rule 20 (comment -> empty .)
-    COOKIE          reduce using rule 20 (comment -> empty .)
-    TAGS            reduce using rule 20 (comment -> empty .)
-    NEWLINE         reduce using rule 20 (comment -> empty .)
-    SEPARATOR       reduce using rule 20 (comment -> empty .)
+    SPACE           shift and go to state 57
 
 
 state 48
 
-    (4) org_file -> metadata non_metadata_body_text SEPARATOR org_tree .
-    (14) org_tree -> org_tree . heading SEPARATOR
-    (15) org_tree -> org_tree . heading
-    (16) heading -> . headline NEWLINE contents
-    (17) heading -> . headline SEPARATOR
-    (18) headline -> . STARS SPACE comment todo priority title cookie tags
+    (19) headline -> STARS SPACE comment . todo priority title cookie tags
+    (22) todo -> . TODO SPACE
+    (23) todo -> . empty
+    (81) empty -> .
 
-    $end            reduce using rule 4 (org_file -> metadata non_metadata_body_text SEPARATOR org_tree .)
-    STARS           shift and go to state 15
+  ! shift/reduce conflict for TODO resolved as shift
+    TODO            shift and go to state 59
+    PRIORITY        reduce using rule 81 (empty -> .)
+    TEXT            reduce using rule 81 (empty -> .)
+    SPACE           reduce using rule 81 (empty -> .)
+    COOKIE          reduce using rule 81 (empty -> .)
+    TAGS            reduce using rule 81 (empty -> .)
+    NEWLINE         reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
 
-    heading                        shift and go to state 18
-    headline                       shift and go to state 14
+  ! TODO            [ reduce using rule 81 (empty -> .) ]
+
+    todo                           shift and go to state 58
+    empty                          shift and go to state 60
 
 state 49
 
-    (38) contents -> scheduling drawers . body
-    (55) body -> . body_text
-    (56) body -> . empty
-    (71) body_text -> . TEXT
-    (72) body_text -> . SPACE
-    (73) body_text -> . METADATA
-    (74) body_text -> . special_token
-    (75) body_text -> . body_text TEXT
-    (76) body_text -> . body_text SPACE
-    (77) body_text -> . body_text special_token
-    (78) body_text -> . body_text METADATA
-    (79) body_text -> . body_text NEWLINE
-    (80) empty -> .
-    (64) special_token -> . SCHEDULING
-    (65) special_token -> . COOKIE
-    (66) special_token -> . PRIORITY
-    (67) special_token -> . TODO
-    (68) special_token -> . any_timestamp
-    (69) special_token -> . COMMENT
-    (70) special_token -> . TAGS
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
+    (20) comment -> COMMENT . SPACE
 
-    TEXT            shift and go to state 62
-    SPACE           shift and go to state 63
-    METADATA        shift and go to state 64
-    SEPARATOR       reduce using rule 80 (empty -> .)
-    STARS           reduce using rule 80 (empty -> .)
-    $end            reduce using rule 80 (empty -> .)
-    SCHEDULING      shift and go to state 24
-    COOKIE          shift and go to state 25
-    PRIORITY        shift and go to state 26
-    TODO            shift and go to state 27
-    COMMENT         shift and go to state 29
-    TAGS            shift and go to state 30
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
+    SPACE           shift and go to state 61
 
-    body                           shift and go to state 59
-    body_text                      shift and go to state 60
-    empty                          shift and go to state 61
-    special_token                  shift and go to state 65
-    any_timestamp                  shift and go to state 28
 
 state 50
 
-    (53) drawers -> drawer_data .
-    (51) drawer_data -> drawer_data . DRAWER NEWLINE
-    (52) drawer_data -> drawer_data . DRAWER SEPARATOR
+    (21) comment -> empty .
 
-    TEXT            reduce using rule 53 (drawers -> drawer_data .)
-    SPACE           reduce using rule 53 (drawers -> drawer_data .)
-    METADATA        reduce using rule 53 (drawers -> drawer_data .)
-    SCHEDULING      reduce using rule 53 (drawers -> drawer_data .)
-    COOKIE          reduce using rule 53 (drawers -> drawer_data .)
-    PRIORITY        reduce using rule 53 (drawers -> drawer_data .)
-    TODO            reduce using rule 53 (drawers -> drawer_data .)
-    COMMENT         reduce using rule 53 (drawers -> drawer_data .)
-    TAGS            reduce using rule 53 (drawers -> drawer_data .)
-    ATIMESTAMP      reduce using rule 53 (drawers -> drawer_data .)
-    ITIMESTAMP      reduce using rule 53 (drawers -> drawer_data .)
-    SEPARATOR       reduce using rule 53 (drawers -> drawer_data .)
-    STARS           reduce using rule 53 (drawers -> drawer_data .)
-    $end            reduce using rule 53 (drawers -> drawer_data .)
-    DRAWER          shift and go to state 66
+    TODO            reduce using rule 21 (comment -> empty .)
+    PRIORITY        reduce using rule 21 (comment -> empty .)
+    TEXT            reduce using rule 21 (comment -> empty .)
+    SPACE           reduce using rule 21 (comment -> empty .)
+    COOKIE          reduce using rule 21 (comment -> empty .)
+    TAGS            reduce using rule 21 (comment -> empty .)
+    NEWLINE         reduce using rule 21 (comment -> empty .)
+    SEPARATOR       reduce using rule 21 (comment -> empty .)
 
 
 state 51
 
-    (54) drawers -> empty .
+    (4) org_file -> metadata non_metadata_body_text SEPARATOR org_tree .
+    (15) org_tree -> org_tree . heading SEPARATOR
+    (16) org_tree -> org_tree . heading
+    (17) heading -> . headline NEWLINE contents
+    (18) heading -> . headline SEPARATOR
+    (19) headline -> . STARS SPACE comment todo priority title cookie tags
 
-    TEXT            reduce using rule 54 (drawers -> empty .)
-    SPACE           reduce using rule 54 (drawers -> empty .)
-    METADATA        reduce using rule 54 (drawers -> empty .)
-    SCHEDULING      reduce using rule 54 (drawers -> empty .)
-    COOKIE          reduce using rule 54 (drawers -> empty .)
-    PRIORITY        reduce using rule 54 (drawers -> empty .)
-    TODO            reduce using rule 54 (drawers -> empty .)
-    COMMENT         reduce using rule 54 (drawers -> empty .)
-    TAGS            reduce using rule 54 (drawers -> empty .)
-    ATIMESTAMP      reduce using rule 54 (drawers -> empty .)
-    ITIMESTAMP      reduce using rule 54 (drawers -> empty .)
-    SEPARATOR       reduce using rule 54 (drawers -> empty .)
-    STARS           reduce using rule 54 (drawers -> empty .)
-    $end            reduce using rule 54 (drawers -> empty .)
+    $end            reduce using rule 4 (org_file -> metadata non_metadata_body_text SEPARATOR org_tree .)
+    STARS           shift and go to state 16
 
+    heading                        shift and go to state 19
+    headline                       shift and go to state 15
 
 state 52
 
-    (49) drawer_data -> DRAWER . NEWLINE
-    (50) drawer_data -> DRAWER . SEPARATOR
+    (39) contents -> scheduling drawers . body
+    (56) body -> . body_text
+    (57) body -> . empty
+    (72) body_text -> . TEXT
+    (73) body_text -> . SPACE
+    (74) body_text -> . METADATA
+    (75) body_text -> . special_token
+    (76) body_text -> . body_text TEXT
+    (77) body_text -> . body_text SPACE
+    (78) body_text -> . body_text special_token
+    (79) body_text -> . body_text METADATA
+    (80) body_text -> . body_text NEWLINE
+    (81) empty -> .
+    (65) special_token -> . SCHEDULING
+    (66) special_token -> . COOKIE
+    (67) special_token -> . PRIORITY
+    (68) special_token -> . TODO
+    (69) special_token -> . any_timestamp
+    (70) special_token -> . COMMENT
+    (71) special_token -> . TAGS
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
 
-    NEWLINE         shift and go to state 67
-    SEPARATOR       shift and go to state 68
+    TEXT            shift and go to state 65
+    SPACE           shift and go to state 66
+    METADATA        shift and go to state 67
+    SEPARATOR       reduce using rule 81 (empty -> .)
+    STARS           reduce using rule 81 (empty -> .)
+    $end            reduce using rule 81 (empty -> .)
+    SCHEDULING      shift and go to state 25
+    COOKIE          shift and go to state 26
+    PRIORITY        shift and go to state 27
+    TODO            shift and go to state 28
+    COMMENT         shift and go to state 30
+    TAGS            shift and go to state 31
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
 
+    body                           shift and go to state 62
+    body_text                      shift and go to state 63
+    empty                          shift and go to state 64
+    special_token                  shift and go to state 68
+    any_timestamp                  shift and go to state 29
 
 state 53
 
-    (42) scheduling_data -> scheduling_data SCHEDULING . SPACE any_timestamp NEWLINE
-    (43) scheduling_data -> scheduling_data SCHEDULING . SPACE any_timestamp SEPARATOR
-    (44) scheduling_data -> scheduling_data SCHEDULING . SPACE any_timestamp SPACE
+    (54) drawers -> drawer_data .
+    (52) drawer_data -> drawer_data . DRAWER NEWLINE
+    (53) drawer_data -> drawer_data . DRAWER SEPARATOR
 
-    SPACE           shift and go to state 69
+    TEXT            reduce using rule 54 (drawers -> drawer_data .)
+    SPACE           reduce using rule 54 (drawers -> drawer_data .)
+    METADATA        reduce using rule 54 (drawers -> drawer_data .)
+    SCHEDULING      reduce using rule 54 (drawers -> drawer_data .)
+    COOKIE          reduce using rule 54 (drawers -> drawer_data .)
+    PRIORITY        reduce using rule 54 (drawers -> drawer_data .)
+    TODO            reduce using rule 54 (drawers -> drawer_data .)
+    COMMENT         reduce using rule 54 (drawers -> drawer_data .)
+    TAGS            reduce using rule 54 (drawers -> drawer_data .)
+    ATIMESTAMP      reduce using rule 54 (drawers -> drawer_data .)
+    ITIMESTAMP      reduce using rule 54 (drawers -> drawer_data .)
+    SEPARATOR       reduce using rule 54 (drawers -> drawer_data .)
+    STARS           reduce using rule 54 (drawers -> drawer_data .)
+    $end            reduce using rule 54 (drawers -> drawer_data .)
+    DRAWER          shift and go to state 69
 
 
 state 54
 
-    (39) scheduling_data -> SCHEDULING SPACE . any_timestamp NEWLINE
-    (40) scheduling_data -> SCHEDULING SPACE . any_timestamp SEPARATOR
-    (41) scheduling_data -> SCHEDULING SPACE . any_timestamp SPACE
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
+    (55) drawers -> empty .
 
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
+    TEXT            reduce using rule 55 (drawers -> empty .)
+    SPACE           reduce using rule 55 (drawers -> empty .)
+    METADATA        reduce using rule 55 (drawers -> empty .)
+    SCHEDULING      reduce using rule 55 (drawers -> empty .)
+    COOKIE          reduce using rule 55 (drawers -> empty .)
+    PRIORITY        reduce using rule 55 (drawers -> empty .)
+    TODO            reduce using rule 55 (drawers -> empty .)
+    COMMENT         reduce using rule 55 (drawers -> empty .)
+    TAGS            reduce using rule 55 (drawers -> empty .)
+    ATIMESTAMP      reduce using rule 55 (drawers -> empty .)
+    ITIMESTAMP      reduce using rule 55 (drawers -> empty .)
+    SEPARATOR       reduce using rule 55 (drawers -> empty .)
+    STARS           reduce using rule 55 (drawers -> empty .)
+    $end            reduce using rule 55 (drawers -> empty .)
 
-    any_timestamp                  shift and go to state 70
 
 state 55
 
-    (18) headline -> STARS SPACE comment todo . priority title cookie tags
-    (23) priority -> . PRIORITY SPACE
-    (24) priority -> . empty
-    (80) empty -> .
+    (50) drawer_data -> DRAWER . NEWLINE
+    (51) drawer_data -> DRAWER . SEPARATOR
 
-    PRIORITY        shift and go to state 72
-    TEXT            reduce using rule 80 (empty -> .)
-    TODO            reduce using rule 80 (empty -> .)
-    SPACE           reduce using rule 80 (empty -> .)
-    COOKIE          reduce using rule 80 (empty -> .)
-    TAGS            reduce using rule 80 (empty -> .)
-    NEWLINE         reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
+    NEWLINE         shift and go to state 70
+    SEPARATOR       shift and go to state 71
 
-    priority                       shift and go to state 71
-    empty                          shift and go to state 73
 
 state 56
 
-    (21) todo -> TODO . SPACE
+    (43) scheduling_data -> scheduling_data SCHEDULING . SPACE any_timestamp NEWLINE
+    (44) scheduling_data -> scheduling_data SCHEDULING . SPACE any_timestamp SEPARATOR
+    (45) scheduling_data -> scheduling_data SCHEDULING . SPACE any_timestamp SPACE
 
-    SPACE           shift and go to state 74
+    SPACE           shift and go to state 72
 
 
 state 57
 
-    (22) todo -> empty .
+    (40) scheduling_data -> SCHEDULING SPACE . any_timestamp NEWLINE
+    (41) scheduling_data -> SCHEDULING SPACE . any_timestamp SEPARATOR
+    (42) scheduling_data -> SCHEDULING SPACE . any_timestamp SPACE
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
 
-    PRIORITY        reduce using rule 22 (todo -> empty .)
-    TEXT            reduce using rule 22 (todo -> empty .)
-    TODO            reduce using rule 22 (todo -> empty .)
-    SPACE           reduce using rule 22 (todo -> empty .)
-    COOKIE          reduce using rule 22 (todo -> empty .)
-    TAGS            reduce using rule 22 (todo -> empty .)
-    NEWLINE         reduce using rule 22 (todo -> empty .)
-    SEPARATOR       reduce using rule 22 (todo -> empty .)
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
 
+    any_timestamp                  shift and go to state 73
 
 state 58
 
-    (19) comment -> COMMENT SPACE .
+    (19) headline -> STARS SPACE comment todo . priority title cookie tags
+    (24) priority -> . PRIORITY SPACE
+    (25) priority -> . empty
+    (81) empty -> .
 
-    TODO            reduce using rule 19 (comment -> COMMENT SPACE .)
-    PRIORITY        reduce using rule 19 (comment -> COMMENT SPACE .)
-    TEXT            reduce using rule 19 (comment -> COMMENT SPACE .)
-    SPACE           reduce using rule 19 (comment -> COMMENT SPACE .)
-    COOKIE          reduce using rule 19 (comment -> COMMENT SPACE .)
-    TAGS            reduce using rule 19 (comment -> COMMENT SPACE .)
-    NEWLINE         reduce using rule 19 (comment -> COMMENT SPACE .)
-    SEPARATOR       reduce using rule 19 (comment -> COMMENT SPACE .)
+    PRIORITY        shift and go to state 75
+    TEXT            reduce using rule 81 (empty -> .)
+    TODO            reduce using rule 81 (empty -> .)
+    SPACE           reduce using rule 81 (empty -> .)
+    COOKIE          reduce using rule 81 (empty -> .)
+    TAGS            reduce using rule 81 (empty -> .)
+    NEWLINE         reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
 
+    priority                       shift and go to state 74
+    empty                          shift and go to state 76
 
 state 59
 
-    (38) contents -> scheduling drawers body .
+    (22) todo -> TODO . SPACE
 
-    SEPARATOR       reduce using rule 38 (contents -> scheduling drawers body .)
-    STARS           reduce using rule 38 (contents -> scheduling drawers body .)
-    $end            reduce using rule 38 (contents -> scheduling drawers body .)
+    SPACE           shift and go to state 77
 
 
 state 60
 
-    (55) body -> body_text .
-    (75) body_text -> body_text . TEXT
-    (76) body_text -> body_text . SPACE
-    (77) body_text -> body_text . special_token
-    (78) body_text -> body_text . METADATA
-    (79) body_text -> body_text . NEWLINE
-    (64) special_token -> . SCHEDULING
-    (65) special_token -> . COOKIE
-    (66) special_token -> . PRIORITY
-    (67) special_token -> . TODO
-    (68) special_token -> . any_timestamp
-    (69) special_token -> . COMMENT
-    (70) special_token -> . TAGS
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
+    (23) todo -> empty .
 
-    SEPARATOR       reduce using rule 55 (body -> body_text .)
-    STARS           reduce using rule 55 (body -> body_text .)
-    $end            reduce using rule 55 (body -> body_text .)
-    TEXT            shift and go to state 75
-    SPACE           shift and go to state 76
-    METADATA        shift and go to state 78
-    NEWLINE         shift and go to state 79
-    SCHEDULING      shift and go to state 24
-    COOKIE          shift and go to state 25
-    PRIORITY        shift and go to state 26
-    TODO            shift and go to state 27
-    COMMENT         shift and go to state 29
-    TAGS            shift and go to state 30
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
+    PRIORITY        reduce using rule 23 (todo -> empty .)
+    TEXT            reduce using rule 23 (todo -> empty .)
+    TODO            reduce using rule 23 (todo -> empty .)
+    SPACE           reduce using rule 23 (todo -> empty .)
+    COOKIE          reduce using rule 23 (todo -> empty .)
+    TAGS            reduce using rule 23 (todo -> empty .)
+    NEWLINE         reduce using rule 23 (todo -> empty .)
+    SEPARATOR       reduce using rule 23 (todo -> empty .)
 
-    special_token                  shift and go to state 77
-    any_timestamp                  shift and go to state 28
 
 state 61
 
-    (56) body -> empty .
+    (20) comment -> COMMENT SPACE .
 
-    SEPARATOR       reduce using rule 56 (body -> empty .)
-    STARS           reduce using rule 56 (body -> empty .)
-    $end            reduce using rule 56 (body -> empty .)
+    TODO            reduce using rule 20 (comment -> COMMENT SPACE .)
+    PRIORITY        reduce using rule 20 (comment -> COMMENT SPACE .)
+    TEXT            reduce using rule 20 (comment -> COMMENT SPACE .)
+    SPACE           reduce using rule 20 (comment -> COMMENT SPACE .)
+    COOKIE          reduce using rule 20 (comment -> COMMENT SPACE .)
+    TAGS            reduce using rule 20 (comment -> COMMENT SPACE .)
+    NEWLINE         reduce using rule 20 (comment -> COMMENT SPACE .)
+    SEPARATOR       reduce using rule 20 (comment -> COMMENT SPACE .)
 
 
 state 62
 
-    (71) body_text -> TEXT .
+    (39) contents -> scheduling drawers body .
 
-    TEXT            reduce using rule 71 (body_text -> TEXT .)
-    SPACE           reduce using rule 71 (body_text -> TEXT .)
-    METADATA        reduce using rule 71 (body_text -> TEXT .)
-    NEWLINE         reduce using rule 71 (body_text -> TEXT .)
-    SCHEDULING      reduce using rule 71 (body_text -> TEXT .)
-    COOKIE          reduce using rule 71 (body_text -> TEXT .)
-    PRIORITY        reduce using rule 71 (body_text -> TEXT .)
-    TODO            reduce using rule 71 (body_text -> TEXT .)
-    COMMENT         reduce using rule 71 (body_text -> TEXT .)
-    TAGS            reduce using rule 71 (body_text -> TEXT .)
-    ATIMESTAMP      reduce using rule 71 (body_text -> TEXT .)
-    ITIMESTAMP      reduce using rule 71 (body_text -> TEXT .)
-    SEPARATOR       reduce using rule 71 (body_text -> TEXT .)
-    STARS           reduce using rule 71 (body_text -> TEXT .)
-    $end            reduce using rule 71 (body_text -> TEXT .)
+    SEPARATOR       reduce using rule 39 (contents -> scheduling drawers body .)
+    STARS           reduce using rule 39 (contents -> scheduling drawers body .)
+    $end            reduce using rule 39 (contents -> scheduling drawers body .)
 
 
 state 63
 
-    (72) body_text -> SPACE .
+    (56) body -> body_text .
+    (76) body_text -> body_text . TEXT
+    (77) body_text -> body_text . SPACE
+    (78) body_text -> body_text . special_token
+    (79) body_text -> body_text . METADATA
+    (80) body_text -> body_text . NEWLINE
+    (65) special_token -> . SCHEDULING
+    (66) special_token -> . COOKIE
+    (67) special_token -> . PRIORITY
+    (68) special_token -> . TODO
+    (69) special_token -> . any_timestamp
+    (70) special_token -> . COMMENT
+    (71) special_token -> . TAGS
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
 
-    TEXT            reduce using rule 72 (body_text -> SPACE .)
-    SPACE           reduce using rule 72 (body_text -> SPACE .)
-    METADATA        reduce using rule 72 (body_text -> SPACE .)
-    NEWLINE         reduce using rule 72 (body_text -> SPACE .)
-    SCHEDULING      reduce using rule 72 (body_text -> SPACE .)
-    COOKIE          reduce using rule 72 (body_text -> SPACE .)
-    PRIORITY        reduce using rule 72 (body_text -> SPACE .)
-    TODO            reduce using rule 72 (body_text -> SPACE .)
-    COMMENT         reduce using rule 72 (body_text -> SPACE .)
-    TAGS            reduce using rule 72 (body_text -> SPACE .)
-    ATIMESTAMP      reduce using rule 72 (body_text -> SPACE .)
-    ITIMESTAMP      reduce using rule 72 (body_text -> SPACE .)
-    SEPARATOR       reduce using rule 72 (body_text -> SPACE .)
-    STARS           reduce using rule 72 (body_text -> SPACE .)
-    $end            reduce using rule 72 (body_text -> SPACE .)
+    SEPARATOR       reduce using rule 56 (body -> body_text .)
+    STARS           reduce using rule 56 (body -> body_text .)
+    $end            reduce using rule 56 (body -> body_text .)
+    TEXT            shift and go to state 78
+    SPACE           shift and go to state 79
+    METADATA        shift and go to state 81
+    NEWLINE         shift and go to state 82
+    SCHEDULING      shift and go to state 25
+    COOKIE          shift and go to state 26
+    PRIORITY        shift and go to state 27
+    TODO            shift and go to state 28
+    COMMENT         shift and go to state 30
+    TAGS            shift and go to state 31
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
 
+    special_token                  shift and go to state 80
+    any_timestamp                  shift and go to state 29
 
 state 64
 
-    (73) body_text -> METADATA .
+    (57) body -> empty .
 
-    TEXT            reduce using rule 73 (body_text -> METADATA .)
-    SPACE           reduce using rule 73 (body_text -> METADATA .)
-    METADATA        reduce using rule 73 (body_text -> METADATA .)
-    NEWLINE         reduce using rule 73 (body_text -> METADATA .)
-    SCHEDULING      reduce using rule 73 (body_text -> METADATA .)
-    COOKIE          reduce using rule 73 (body_text -> METADATA .)
-    PRIORITY        reduce using rule 73 (body_text -> METADATA .)
-    TODO            reduce using rule 73 (body_text -> METADATA .)
-    COMMENT         reduce using rule 73 (body_text -> METADATA .)
-    TAGS            reduce using rule 73 (body_text -> METADATA .)
-    ATIMESTAMP      reduce using rule 73 (body_text -> METADATA .)
-    ITIMESTAMP      reduce using rule 73 (body_text -> METADATA .)
-    SEPARATOR       reduce using rule 73 (body_text -> METADATA .)
-    STARS           reduce using rule 73 (body_text -> METADATA .)
-    $end            reduce using rule 73 (body_text -> METADATA .)
+    SEPARATOR       reduce using rule 57 (body -> empty .)
+    STARS           reduce using rule 57 (body -> empty .)
+    $end            reduce using rule 57 (body -> empty .)
 
 
 state 65
 
-    (74) body_text -> special_token .
+    (72) body_text -> TEXT .
 
-    TEXT            reduce using rule 74 (body_text -> special_token .)
-    SPACE           reduce using rule 74 (body_text -> special_token .)
-    METADATA        reduce using rule 74 (body_text -> special_token .)
-    NEWLINE         reduce using rule 74 (body_text -> special_token .)
-    SCHEDULING      reduce using rule 74 (body_text -> special_token .)
-    COOKIE          reduce using rule 74 (body_text -> special_token .)
-    PRIORITY        reduce using rule 74 (body_text -> special_token .)
-    TODO            reduce using rule 74 (body_text -> special_token .)
-    COMMENT         reduce using rule 74 (body_text -> special_token .)
-    TAGS            reduce using rule 74 (body_text -> special_token .)
-    ATIMESTAMP      reduce using rule 74 (body_text -> special_token .)
-    ITIMESTAMP      reduce using rule 74 (body_text -> special_token .)
-    SEPARATOR       reduce using rule 74 (body_text -> special_token .)
-    STARS           reduce using rule 74 (body_text -> special_token .)
-    $end            reduce using rule 74 (body_text -> special_token .)
+    TEXT            reduce using rule 72 (body_text -> TEXT .)
+    SPACE           reduce using rule 72 (body_text -> TEXT .)
+    METADATA        reduce using rule 72 (body_text -> TEXT .)
+    NEWLINE         reduce using rule 72 (body_text -> TEXT .)
+    SCHEDULING      reduce using rule 72 (body_text -> TEXT .)
+    COOKIE          reduce using rule 72 (body_text -> TEXT .)
+    PRIORITY        reduce using rule 72 (body_text -> TEXT .)
+    TODO            reduce using rule 72 (body_text -> TEXT .)
+    COMMENT         reduce using rule 72 (body_text -> TEXT .)
+    TAGS            reduce using rule 72 (body_text -> TEXT .)
+    ATIMESTAMP      reduce using rule 72 (body_text -> TEXT .)
+    ITIMESTAMP      reduce using rule 72 (body_text -> TEXT .)
+    SEPARATOR       reduce using rule 72 (body_text -> TEXT .)
+    STARS           reduce using rule 72 (body_text -> TEXT .)
+    $end            reduce using rule 72 (body_text -> TEXT .)
 
 
 state 66
 
-    (51) drawer_data -> drawer_data DRAWER . NEWLINE
-    (52) drawer_data -> drawer_data DRAWER . SEPARATOR
+    (73) body_text -> SPACE .
 
-    NEWLINE         shift and go to state 80
-    SEPARATOR       shift and go to state 81
+    TEXT            reduce using rule 73 (body_text -> SPACE .)
+    SPACE           reduce using rule 73 (body_text -> SPACE .)
+    METADATA        reduce using rule 73 (body_text -> SPACE .)
+    NEWLINE         reduce using rule 73 (body_text -> SPACE .)
+    SCHEDULING      reduce using rule 73 (body_text -> SPACE .)
+    COOKIE          reduce using rule 73 (body_text -> SPACE .)
+    PRIORITY        reduce using rule 73 (body_text -> SPACE .)
+    TODO            reduce using rule 73 (body_text -> SPACE .)
+    COMMENT         reduce using rule 73 (body_text -> SPACE .)
+    TAGS            reduce using rule 73 (body_text -> SPACE .)
+    ATIMESTAMP      reduce using rule 73 (body_text -> SPACE .)
+    ITIMESTAMP      reduce using rule 73 (body_text -> SPACE .)
+    SEPARATOR       reduce using rule 73 (body_text -> SPACE .)
+    STARS           reduce using rule 73 (body_text -> SPACE .)
+    $end            reduce using rule 73 (body_text -> SPACE .)
 
 
 state 67
 
-    (49) drawer_data -> DRAWER NEWLINE .
+    (74) body_text -> METADATA .
 
-    DRAWER          reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    TEXT            reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    SPACE           reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    METADATA        reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    SCHEDULING      reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    COOKIE          reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    PRIORITY        reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    TODO            reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    COMMENT         reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    TAGS            reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    ATIMESTAMP      reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    ITIMESTAMP      reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    SEPARATOR       reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    STARS           reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
-    $end            reduce using rule 49 (drawer_data -> DRAWER NEWLINE .)
+    TEXT            reduce using rule 74 (body_text -> METADATA .)
+    SPACE           reduce using rule 74 (body_text -> METADATA .)
+    METADATA        reduce using rule 74 (body_text -> METADATA .)
+    NEWLINE         reduce using rule 74 (body_text -> METADATA .)
+    SCHEDULING      reduce using rule 74 (body_text -> METADATA .)
+    COOKIE          reduce using rule 74 (body_text -> METADATA .)
+    PRIORITY        reduce using rule 74 (body_text -> METADATA .)
+    TODO            reduce using rule 74 (body_text -> METADATA .)
+    COMMENT         reduce using rule 74 (body_text -> METADATA .)
+    TAGS            reduce using rule 74 (body_text -> METADATA .)
+    ATIMESTAMP      reduce using rule 74 (body_text -> METADATA .)
+    ITIMESTAMP      reduce using rule 74 (body_text -> METADATA .)
+    SEPARATOR       reduce using rule 74 (body_text -> METADATA .)
+    STARS           reduce using rule 74 (body_text -> METADATA .)
+    $end            reduce using rule 74 (body_text -> METADATA .)
 
 
 state 68
 
-    (50) drawer_data -> DRAWER SEPARATOR .
+    (75) body_text -> special_token .
 
-    DRAWER          reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    TEXT            reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    SPACE           reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    METADATA        reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    SCHEDULING      reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    COOKIE          reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    PRIORITY        reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    TODO            reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    COMMENT         reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    TAGS            reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    ATIMESTAMP      reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    ITIMESTAMP      reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    SEPARATOR       reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    STARS           reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
-    $end            reduce using rule 50 (drawer_data -> DRAWER SEPARATOR .)
+    TEXT            reduce using rule 75 (body_text -> special_token .)
+    SPACE           reduce using rule 75 (body_text -> special_token .)
+    METADATA        reduce using rule 75 (body_text -> special_token .)
+    NEWLINE         reduce using rule 75 (body_text -> special_token .)
+    SCHEDULING      reduce using rule 75 (body_text -> special_token .)
+    COOKIE          reduce using rule 75 (body_text -> special_token .)
+    PRIORITY        reduce using rule 75 (body_text -> special_token .)
+    TODO            reduce using rule 75 (body_text -> special_token .)
+    COMMENT         reduce using rule 75 (body_text -> special_token .)
+    TAGS            reduce using rule 75 (body_text -> special_token .)
+    ATIMESTAMP      reduce using rule 75 (body_text -> special_token .)
+    ITIMESTAMP      reduce using rule 75 (body_text -> special_token .)
+    SEPARATOR       reduce using rule 75 (body_text -> special_token .)
+    STARS           reduce using rule 75 (body_text -> special_token .)
+    $end            reduce using rule 75 (body_text -> special_token .)
 
 
 state 69
 
-    (42) scheduling_data -> scheduling_data SCHEDULING SPACE . any_timestamp NEWLINE
-    (43) scheduling_data -> scheduling_data SCHEDULING SPACE . any_timestamp SEPARATOR
-    (44) scheduling_data -> scheduling_data SCHEDULING SPACE . any_timestamp SPACE
-    (47) any_timestamp -> . ATIMESTAMP
-    (48) any_timestamp -> . ITIMESTAMP
+    (52) drawer_data -> drawer_data DRAWER . NEWLINE
+    (53) drawer_data -> drawer_data DRAWER . SEPARATOR
 
-    ATIMESTAMP      shift and go to state 12
-    ITIMESTAMP      shift and go to state 13
+    NEWLINE         shift and go to state 83
+    SEPARATOR       shift and go to state 84
 
-    any_timestamp                  shift and go to state 82
 
 state 70
 
-    (39) scheduling_data -> SCHEDULING SPACE any_timestamp . NEWLINE
-    (40) scheduling_data -> SCHEDULING SPACE any_timestamp . SEPARATOR
-    (41) scheduling_data -> SCHEDULING SPACE any_timestamp . SPACE
+    (50) drawer_data -> DRAWER NEWLINE .
 
-    NEWLINE         shift and go to state 84
-    SEPARATOR       shift and go to state 85
-    SPACE           shift and go to state 83
+    DRAWER          reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    TEXT            reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    SPACE           reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    METADATA        reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    SCHEDULING      reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    COOKIE          reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    PRIORITY        reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    TODO            reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    COMMENT         reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    TAGS            reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    ATIMESTAMP      reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    ITIMESTAMP      reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    SEPARATOR       reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    STARS           reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
+    $end            reduce using rule 50 (drawer_data -> DRAWER NEWLINE .)
 
 
 state 71
 
-    (18) headline -> STARS SPACE comment todo priority . title cookie tags
-    (25) title -> . TEXT
-    (26) title -> . TODO
-    (27) title -> . title TODO
-    (28) title -> . title TEXT
-    (29) title -> . title SPACE TEXT
-    (30) title -> . title SPACE TODO
-    (31) title -> . title SPACE
-    (32) title -> . empty
-    (80) empty -> .
+    (51) drawer_data -> DRAWER SEPARATOR .
 
-  ! shift/reduce conflict for TODO resolved as shift
-  ! shift/reduce conflict for TEXT resolved as shift
-    TEXT            shift and go to state 87
-    TODO            shift and go to state 88
-    SPACE           reduce using rule 80 (empty -> .)
-    COOKIE          reduce using rule 80 (empty -> .)
-    TAGS            reduce using rule 80 (empty -> .)
-    NEWLINE         reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
+    DRAWER          reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    TEXT            reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    SPACE           reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    METADATA        reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    SCHEDULING      reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    COOKIE          reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    PRIORITY        reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    TODO            reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    COMMENT         reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    TAGS            reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    ATIMESTAMP      reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    ITIMESTAMP      reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    SEPARATOR       reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    STARS           reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
+    $end            reduce using rule 51 (drawer_data -> DRAWER SEPARATOR .)
 
-  ! TODO            [ reduce using rule 80 (empty -> .) ]
-  ! TEXT            [ reduce using rule 80 (empty -> .) ]
-
-    title                          shift and go to state 86
-    empty                          shift and go to state 89
 
 state 72
 
-    (23) priority -> PRIORITY . SPACE
+    (43) scheduling_data -> scheduling_data SCHEDULING SPACE . any_timestamp NEWLINE
+    (44) scheduling_data -> scheduling_data SCHEDULING SPACE . any_timestamp SEPARATOR
+    (45) scheduling_data -> scheduling_data SCHEDULING SPACE . any_timestamp SPACE
+    (48) any_timestamp -> . ATIMESTAMP
+    (49) any_timestamp -> . ITIMESTAMP
 
-    SPACE           shift and go to state 90
+    ATIMESTAMP      shift and go to state 13
+    ITIMESTAMP      shift and go to state 14
 
+    any_timestamp                  shift and go to state 85
 
 state 73
 
-    (24) priority -> empty .
+    (40) scheduling_data -> SCHEDULING SPACE any_timestamp . NEWLINE
+    (41) scheduling_data -> SCHEDULING SPACE any_timestamp . SEPARATOR
+    (42) scheduling_data -> SCHEDULING SPACE any_timestamp . SPACE
 
-    TEXT            reduce using rule 24 (priority -> empty .)
-    TODO            reduce using rule 24 (priority -> empty .)
-    SPACE           reduce using rule 24 (priority -> empty .)
-    COOKIE          reduce using rule 24 (priority -> empty .)
-    TAGS            reduce using rule 24 (priority -> empty .)
-    NEWLINE         reduce using rule 24 (priority -> empty .)
-    SEPARATOR       reduce using rule 24 (priority -> empty .)
+    NEWLINE         shift and go to state 87
+    SEPARATOR       shift and go to state 88
+    SPACE           shift and go to state 86
 
 
 state 74
 
-    (21) todo -> TODO SPACE .
+    (19) headline -> STARS SPACE comment todo priority . title cookie tags
+    (26) title -> . TEXT
+    (27) title -> . TODO
+    (28) title -> . title TODO
+    (29) title -> . title TEXT
+    (30) title -> . title SPACE TEXT
+    (31) title -> . title SPACE TODO
+    (32) title -> . title SPACE
+    (33) title -> . empty
+    (81) empty -> .
 
-    PRIORITY        reduce using rule 21 (todo -> TODO SPACE .)
-    TEXT            reduce using rule 21 (todo -> TODO SPACE .)
-    TODO            reduce using rule 21 (todo -> TODO SPACE .)
-    SPACE           reduce using rule 21 (todo -> TODO SPACE .)
-    COOKIE          reduce using rule 21 (todo -> TODO SPACE .)
-    TAGS            reduce using rule 21 (todo -> TODO SPACE .)
-    NEWLINE         reduce using rule 21 (todo -> TODO SPACE .)
-    SEPARATOR       reduce using rule 21 (todo -> TODO SPACE .)
+  ! shift/reduce conflict for TODO resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+    TEXT            shift and go to state 90
+    TODO            shift and go to state 91
+    SPACE           reduce using rule 81 (empty -> .)
+    COOKIE          reduce using rule 81 (empty -> .)
+    TAGS            reduce using rule 81 (empty -> .)
+    NEWLINE         reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
 
+  ! TODO            [ reduce using rule 81 (empty -> .) ]
+  ! TEXT            [ reduce using rule 81 (empty -> .) ]
+
+    title                          shift and go to state 89
+    empty                          shift and go to state 92
 
 state 75
 
-    (75) body_text -> body_text TEXT .
+    (24) priority -> PRIORITY . SPACE
 
-    TEXT            reduce using rule 75 (body_text -> body_text TEXT .)
-    SPACE           reduce using rule 75 (body_text -> body_text TEXT .)
-    METADATA        reduce using rule 75 (body_text -> body_text TEXT .)
-    NEWLINE         reduce using rule 75 (body_text -> body_text TEXT .)
-    SCHEDULING      reduce using rule 75 (body_text -> body_text TEXT .)
-    COOKIE          reduce using rule 75 (body_text -> body_text TEXT .)
-    PRIORITY        reduce using rule 75 (body_text -> body_text TEXT .)
-    TODO            reduce using rule 75 (body_text -> body_text TEXT .)
-    COMMENT         reduce using rule 75 (body_text -> body_text TEXT .)
-    TAGS            reduce using rule 75 (body_text -> body_text TEXT .)
-    ATIMESTAMP      reduce using rule 75 (body_text -> body_text TEXT .)
-    ITIMESTAMP      reduce using rule 75 (body_text -> body_text TEXT .)
-    SEPARATOR       reduce using rule 75 (body_text -> body_text TEXT .)
-    STARS           reduce using rule 75 (body_text -> body_text TEXT .)
-    $end            reduce using rule 75 (body_text -> body_text TEXT .)
+    SPACE           shift and go to state 93
 
 
 state 76
 
-    (76) body_text -> body_text SPACE .
+    (25) priority -> empty .
 
-    TEXT            reduce using rule 76 (body_text -> body_text SPACE .)
-    SPACE           reduce using rule 76 (body_text -> body_text SPACE .)
-    METADATA        reduce using rule 76 (body_text -> body_text SPACE .)
-    NEWLINE         reduce using rule 76 (body_text -> body_text SPACE .)
-    SCHEDULING      reduce using rule 76 (body_text -> body_text SPACE .)
-    COOKIE          reduce using rule 76 (body_text -> body_text SPACE .)
-    PRIORITY        reduce using rule 76 (body_text -> body_text SPACE .)
-    TODO            reduce using rule 76 (body_text -> body_text SPACE .)
-    COMMENT         reduce using rule 76 (body_text -> body_text SPACE .)
-    TAGS            reduce using rule 76 (body_text -> body_text SPACE .)
-    ATIMESTAMP      reduce using rule 76 (body_text -> body_text SPACE .)
-    ITIMESTAMP      reduce using rule 76 (body_text -> body_text SPACE .)
-    SEPARATOR       reduce using rule 76 (body_text -> body_text SPACE .)
-    STARS           reduce using rule 76 (body_text -> body_text SPACE .)
-    $end            reduce using rule 76 (body_text -> body_text SPACE .)
+    TEXT            reduce using rule 25 (priority -> empty .)
+    TODO            reduce using rule 25 (priority -> empty .)
+    SPACE           reduce using rule 25 (priority -> empty .)
+    COOKIE          reduce using rule 25 (priority -> empty .)
+    TAGS            reduce using rule 25 (priority -> empty .)
+    NEWLINE         reduce using rule 25 (priority -> empty .)
+    SEPARATOR       reduce using rule 25 (priority -> empty .)
 
 
 state 77
 
-    (77) body_text -> body_text special_token .
+    (22) todo -> TODO SPACE .
 
-    TEXT            reduce using rule 77 (body_text -> body_text special_token .)
-    SPACE           reduce using rule 77 (body_text -> body_text special_token .)
-    METADATA        reduce using rule 77 (body_text -> body_text special_token .)
-    NEWLINE         reduce using rule 77 (body_text -> body_text special_token .)
-    SCHEDULING      reduce using rule 77 (body_text -> body_text special_token .)
-    COOKIE          reduce using rule 77 (body_text -> body_text special_token .)
-    PRIORITY        reduce using rule 77 (body_text -> body_text special_token .)
-    TODO            reduce using rule 77 (body_text -> body_text special_token .)
-    COMMENT         reduce using rule 77 (body_text -> body_text special_token .)
-    TAGS            reduce using rule 77 (body_text -> body_text special_token .)
-    ATIMESTAMP      reduce using rule 77 (body_text -> body_text special_token .)
-    ITIMESTAMP      reduce using rule 77 (body_text -> body_text special_token .)
-    SEPARATOR       reduce using rule 77 (body_text -> body_text special_token .)
-    STARS           reduce using rule 77 (body_text -> body_text special_token .)
-    $end            reduce using rule 77 (body_text -> body_text special_token .)
+    PRIORITY        reduce using rule 22 (todo -> TODO SPACE .)
+    TEXT            reduce using rule 22 (todo -> TODO SPACE .)
+    TODO            reduce using rule 22 (todo -> TODO SPACE .)
+    SPACE           reduce using rule 22 (todo -> TODO SPACE .)
+    COOKIE          reduce using rule 22 (todo -> TODO SPACE .)
+    TAGS            reduce using rule 22 (todo -> TODO SPACE .)
+    NEWLINE         reduce using rule 22 (todo -> TODO SPACE .)
+    SEPARATOR       reduce using rule 22 (todo -> TODO SPACE .)
 
 
 state 78
 
-    (78) body_text -> body_text METADATA .
+    (76) body_text -> body_text TEXT .
 
-    TEXT            reduce using rule 78 (body_text -> body_text METADATA .)
-    SPACE           reduce using rule 78 (body_text -> body_text METADATA .)
-    METADATA        reduce using rule 78 (body_text -> body_text METADATA .)
-    NEWLINE         reduce using rule 78 (body_text -> body_text METADATA .)
-    SCHEDULING      reduce using rule 78 (body_text -> body_text METADATA .)
-    COOKIE          reduce using rule 78 (body_text -> body_text METADATA .)
-    PRIORITY        reduce using rule 78 (body_text -> body_text METADATA .)
-    TODO            reduce using rule 78 (body_text -> body_text METADATA .)
-    COMMENT         reduce using rule 78 (body_text -> body_text METADATA .)
-    TAGS            reduce using rule 78 (body_text -> body_text METADATA .)
-    ATIMESTAMP      reduce using rule 78 (body_text -> body_text METADATA .)
-    ITIMESTAMP      reduce using rule 78 (body_text -> body_text METADATA .)
-    SEPARATOR       reduce using rule 78 (body_text -> body_text METADATA .)
-    STARS           reduce using rule 78 (body_text -> body_text METADATA .)
-    $end            reduce using rule 78 (body_text -> body_text METADATA .)
+    TEXT            reduce using rule 76 (body_text -> body_text TEXT .)
+    SPACE           reduce using rule 76 (body_text -> body_text TEXT .)
+    METADATA        reduce using rule 76 (body_text -> body_text TEXT .)
+    NEWLINE         reduce using rule 76 (body_text -> body_text TEXT .)
+    SCHEDULING      reduce using rule 76 (body_text -> body_text TEXT .)
+    COOKIE          reduce using rule 76 (body_text -> body_text TEXT .)
+    PRIORITY        reduce using rule 76 (body_text -> body_text TEXT .)
+    TODO            reduce using rule 76 (body_text -> body_text TEXT .)
+    COMMENT         reduce using rule 76 (body_text -> body_text TEXT .)
+    TAGS            reduce using rule 76 (body_text -> body_text TEXT .)
+    ATIMESTAMP      reduce using rule 76 (body_text -> body_text TEXT .)
+    ITIMESTAMP      reduce using rule 76 (body_text -> body_text TEXT .)
+    SEPARATOR       reduce using rule 76 (body_text -> body_text TEXT .)
+    STARS           reduce using rule 76 (body_text -> body_text TEXT .)
+    $end            reduce using rule 76 (body_text -> body_text TEXT .)
 
 
 state 79
 
-    (79) body_text -> body_text NEWLINE .
+    (77) body_text -> body_text SPACE .
 
-    TEXT            reduce using rule 79 (body_text -> body_text NEWLINE .)
-    SPACE           reduce using rule 79 (body_text -> body_text NEWLINE .)
-    METADATA        reduce using rule 79 (body_text -> body_text NEWLINE .)
-    NEWLINE         reduce using rule 79 (body_text -> body_text NEWLINE .)
-    SCHEDULING      reduce using rule 79 (body_text -> body_text NEWLINE .)
-    COOKIE          reduce using rule 79 (body_text -> body_text NEWLINE .)
-    PRIORITY        reduce using rule 79 (body_text -> body_text NEWLINE .)
-    TODO            reduce using rule 79 (body_text -> body_text NEWLINE .)
-    COMMENT         reduce using rule 79 (body_text -> body_text NEWLINE .)
-    TAGS            reduce using rule 79 (body_text -> body_text NEWLINE .)
-    ATIMESTAMP      reduce using rule 79 (body_text -> body_text NEWLINE .)
-    ITIMESTAMP      reduce using rule 79 (body_text -> body_text NEWLINE .)
-    SEPARATOR       reduce using rule 79 (body_text -> body_text NEWLINE .)
-    STARS           reduce using rule 79 (body_text -> body_text NEWLINE .)
-    $end            reduce using rule 79 (body_text -> body_text NEWLINE .)
+    TEXT            reduce using rule 77 (body_text -> body_text SPACE .)
+    SPACE           reduce using rule 77 (body_text -> body_text SPACE .)
+    METADATA        reduce using rule 77 (body_text -> body_text SPACE .)
+    NEWLINE         reduce using rule 77 (body_text -> body_text SPACE .)
+    SCHEDULING      reduce using rule 77 (body_text -> body_text SPACE .)
+    COOKIE          reduce using rule 77 (body_text -> body_text SPACE .)
+    PRIORITY        reduce using rule 77 (body_text -> body_text SPACE .)
+    TODO            reduce using rule 77 (body_text -> body_text SPACE .)
+    COMMENT         reduce using rule 77 (body_text -> body_text SPACE .)
+    TAGS            reduce using rule 77 (body_text -> body_text SPACE .)
+    ATIMESTAMP      reduce using rule 77 (body_text -> body_text SPACE .)
+    ITIMESTAMP      reduce using rule 77 (body_text -> body_text SPACE .)
+    SEPARATOR       reduce using rule 77 (body_text -> body_text SPACE .)
+    STARS           reduce using rule 77 (body_text -> body_text SPACE .)
+    $end            reduce using rule 77 (body_text -> body_text SPACE .)
 
 
 state 80
 
-    (51) drawer_data -> drawer_data DRAWER NEWLINE .
+    (78) body_text -> body_text special_token .
 
-    DRAWER          reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    TEXT            reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    SPACE           reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    METADATA        reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    SCHEDULING      reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    COOKIE          reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    PRIORITY        reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    TODO            reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    COMMENT         reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    TAGS            reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    ATIMESTAMP      reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    ITIMESTAMP      reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    SEPARATOR       reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    STARS           reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
-    $end            reduce using rule 51 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    TEXT            reduce using rule 78 (body_text -> body_text special_token .)
+    SPACE           reduce using rule 78 (body_text -> body_text special_token .)
+    METADATA        reduce using rule 78 (body_text -> body_text special_token .)
+    NEWLINE         reduce using rule 78 (body_text -> body_text special_token .)
+    SCHEDULING      reduce using rule 78 (body_text -> body_text special_token .)
+    COOKIE          reduce using rule 78 (body_text -> body_text special_token .)
+    PRIORITY        reduce using rule 78 (body_text -> body_text special_token .)
+    TODO            reduce using rule 78 (body_text -> body_text special_token .)
+    COMMENT         reduce using rule 78 (body_text -> body_text special_token .)
+    TAGS            reduce using rule 78 (body_text -> body_text special_token .)
+    ATIMESTAMP      reduce using rule 78 (body_text -> body_text special_token .)
+    ITIMESTAMP      reduce using rule 78 (body_text -> body_text special_token .)
+    SEPARATOR       reduce using rule 78 (body_text -> body_text special_token .)
+    STARS           reduce using rule 78 (body_text -> body_text special_token .)
+    $end            reduce using rule 78 (body_text -> body_text special_token .)
 
 
 state 81
 
-    (52) drawer_data -> drawer_data DRAWER SEPARATOR .
+    (79) body_text -> body_text METADATA .
 
-    DRAWER          reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    TEXT            reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    SPACE           reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    METADATA        reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    SCHEDULING      reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    COOKIE          reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    PRIORITY        reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    TODO            reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    COMMENT         reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    TAGS            reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    ATIMESTAMP      reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    ITIMESTAMP      reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    SEPARATOR       reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    STARS           reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
-    $end            reduce using rule 52 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    TEXT            reduce using rule 79 (body_text -> body_text METADATA .)
+    SPACE           reduce using rule 79 (body_text -> body_text METADATA .)
+    METADATA        reduce using rule 79 (body_text -> body_text METADATA .)
+    NEWLINE         reduce using rule 79 (body_text -> body_text METADATA .)
+    SCHEDULING      reduce using rule 79 (body_text -> body_text METADATA .)
+    COOKIE          reduce using rule 79 (body_text -> body_text METADATA .)
+    PRIORITY        reduce using rule 79 (body_text -> body_text METADATA .)
+    TODO            reduce using rule 79 (body_text -> body_text METADATA .)
+    COMMENT         reduce using rule 79 (body_text -> body_text METADATA .)
+    TAGS            reduce using rule 79 (body_text -> body_text METADATA .)
+    ATIMESTAMP      reduce using rule 79 (body_text -> body_text METADATA .)
+    ITIMESTAMP      reduce using rule 79 (body_text -> body_text METADATA .)
+    SEPARATOR       reduce using rule 79 (body_text -> body_text METADATA .)
+    STARS           reduce using rule 79 (body_text -> body_text METADATA .)
+    $end            reduce using rule 79 (body_text -> body_text METADATA .)
 
 
 state 82
 
-    (42) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp . NEWLINE
-    (43) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp . SEPARATOR
-    (44) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp . SPACE
+    (80) body_text -> body_text NEWLINE .
 
-    NEWLINE         shift and go to state 92
-    SEPARATOR       shift and go to state 93
-    SPACE           shift and go to state 91
+    TEXT            reduce using rule 80 (body_text -> body_text NEWLINE .)
+    SPACE           reduce using rule 80 (body_text -> body_text NEWLINE .)
+    METADATA        reduce using rule 80 (body_text -> body_text NEWLINE .)
+    NEWLINE         reduce using rule 80 (body_text -> body_text NEWLINE .)
+    SCHEDULING      reduce using rule 80 (body_text -> body_text NEWLINE .)
+    COOKIE          reduce using rule 80 (body_text -> body_text NEWLINE .)
+    PRIORITY        reduce using rule 80 (body_text -> body_text NEWLINE .)
+    TODO            reduce using rule 80 (body_text -> body_text NEWLINE .)
+    COMMENT         reduce using rule 80 (body_text -> body_text NEWLINE .)
+    TAGS            reduce using rule 80 (body_text -> body_text NEWLINE .)
+    ATIMESTAMP      reduce using rule 80 (body_text -> body_text NEWLINE .)
+    ITIMESTAMP      reduce using rule 80 (body_text -> body_text NEWLINE .)
+    SEPARATOR       reduce using rule 80 (body_text -> body_text NEWLINE .)
+    STARS           reduce using rule 80 (body_text -> body_text NEWLINE .)
+    $end            reduce using rule 80 (body_text -> body_text NEWLINE .)
 
 
 state 83
 
-    (41) scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .
+    (52) drawer_data -> drawer_data DRAWER NEWLINE .
 
-    SCHEDULING      reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    DRAWER          reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    TEXT            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    SPACE           reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    METADATA        reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    COOKIE          reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    PRIORITY        reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    TODO            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    COMMENT         reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    TAGS            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    ATIMESTAMP      reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    ITIMESTAMP      reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    SEPARATOR       reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    STARS           reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
-    $end            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    DRAWER          reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    TEXT            reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    SPACE           reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    METADATA        reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    SCHEDULING      reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    COOKIE          reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    PRIORITY        reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    TODO            reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    COMMENT         reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    TAGS            reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    ATIMESTAMP      reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    ITIMESTAMP      reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    SEPARATOR       reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    STARS           reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
+    $end            reduce using rule 52 (drawer_data -> drawer_data DRAWER NEWLINE .)
 
 
 state 84
 
-    (39) scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .
+    (53) drawer_data -> drawer_data DRAWER SEPARATOR .
 
-    SCHEDULING      reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    DRAWER          reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    TEXT            reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    SPACE           reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    METADATA        reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    COOKIE          reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    PRIORITY        reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    TODO            reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    COMMENT         reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    TAGS            reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    ATIMESTAMP      reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    ITIMESTAMP      reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    SEPARATOR       reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    STARS           reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
-    $end            reduce using rule 39 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    DRAWER          reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    TEXT            reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    SPACE           reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    METADATA        reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    SCHEDULING      reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    COOKIE          reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    PRIORITY        reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    TODO            reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    COMMENT         reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    TAGS            reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    ATIMESTAMP      reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    ITIMESTAMP      reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    SEPARATOR       reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    STARS           reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
+    $end            reduce using rule 53 (drawer_data -> drawer_data DRAWER SEPARATOR .)
 
 
 state 85
 
-    (40) scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .
+    (43) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp . NEWLINE
+    (44) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp . SEPARATOR
+    (45) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp . SPACE
 
-    SCHEDULING      reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    DRAWER          reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    TEXT            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    SPACE           reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    METADATA        reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    COOKIE          reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    PRIORITY        reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    TODO            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    COMMENT         reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    TAGS            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    ATIMESTAMP      reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    ITIMESTAMP      reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    SEPARATOR       reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    STARS           reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
-    $end            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    NEWLINE         shift and go to state 95
+    SEPARATOR       shift and go to state 96
+    SPACE           shift and go to state 94
 
 
 state 86
 
-    (18) headline -> STARS SPACE comment todo priority title . cookie tags
-    (27) title -> title . TODO
-    (28) title -> title . TEXT
-    (29) title -> title . SPACE TEXT
-    (30) title -> title . SPACE TODO
-    (31) title -> title . SPACE
-    (33) cookie -> . COOKIE SPACE
-    (34) cookie -> . COOKIE
-    (35) cookie -> . empty
-    (80) empty -> .
+    (42) scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .
 
-    TODO            shift and go to state 96
-    TEXT            shift and go to state 97
-    SPACE           shift and go to state 94
-    COOKIE          shift and go to state 98
-    TAGS            reduce using rule 80 (empty -> .)
-    NEWLINE         reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
+    SCHEDULING      reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    DRAWER          reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    TEXT            reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    SPACE           reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    METADATA        reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    COOKIE          reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    PRIORITY        reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    TODO            reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    COMMENT         reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    TAGS            reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    ATIMESTAMP      reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    ITIMESTAMP      reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    SEPARATOR       reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    STARS           reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
+    $end            reduce using rule 42 (scheduling_data -> SCHEDULING SPACE any_timestamp SPACE .)
 
-    cookie                         shift and go to state 95
-    empty                          shift and go to state 99
 
 state 87
 
-    (25) title -> TEXT .
+    (40) scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .
 
-    TODO            reduce using rule 25 (title -> TEXT .)
-    TEXT            reduce using rule 25 (title -> TEXT .)
-    SPACE           reduce using rule 25 (title -> TEXT .)
-    COOKIE          reduce using rule 25 (title -> TEXT .)
-    TAGS            reduce using rule 25 (title -> TEXT .)
-    NEWLINE         reduce using rule 25 (title -> TEXT .)
-    SEPARATOR       reduce using rule 25 (title -> TEXT .)
+    SCHEDULING      reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    DRAWER          reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    TEXT            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    SPACE           reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    METADATA        reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    COOKIE          reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    PRIORITY        reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    TODO            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    COMMENT         reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    TAGS            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    ATIMESTAMP      reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    ITIMESTAMP      reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    SEPARATOR       reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    STARS           reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
+    $end            reduce using rule 40 (scheduling_data -> SCHEDULING SPACE any_timestamp NEWLINE .)
 
 
 state 88
 
-    (26) title -> TODO .
+    (41) scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .
 
-    TODO            reduce using rule 26 (title -> TODO .)
-    TEXT            reduce using rule 26 (title -> TODO .)
-    SPACE           reduce using rule 26 (title -> TODO .)
-    COOKIE          reduce using rule 26 (title -> TODO .)
-    TAGS            reduce using rule 26 (title -> TODO .)
-    NEWLINE         reduce using rule 26 (title -> TODO .)
-    SEPARATOR       reduce using rule 26 (title -> TODO .)
+    SCHEDULING      reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    DRAWER          reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TEXT            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    SPACE           reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    METADATA        reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    COOKIE          reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    PRIORITY        reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TODO            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    COMMENT         reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TAGS            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    ATIMESTAMP      reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    ITIMESTAMP      reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    SEPARATOR       reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    STARS           reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
+    $end            reduce using rule 41 (scheduling_data -> SCHEDULING SPACE any_timestamp SEPARATOR .)
 
 
 state 89
 
-    (32) title -> empty .
+    (19) headline -> STARS SPACE comment todo priority title . cookie tags
+    (28) title -> title . TODO
+    (29) title -> title . TEXT
+    (30) title -> title . SPACE TEXT
+    (31) title -> title . SPACE TODO
+    (32) title -> title . SPACE
+    (34) cookie -> . COOKIE SPACE
+    (35) cookie -> . COOKIE
+    (36) cookie -> . empty
+    (81) empty -> .
 
-    TODO            reduce using rule 32 (title -> empty .)
-    TEXT            reduce using rule 32 (title -> empty .)
-    SPACE           reduce using rule 32 (title -> empty .)
-    COOKIE          reduce using rule 32 (title -> empty .)
-    TAGS            reduce using rule 32 (title -> empty .)
-    NEWLINE         reduce using rule 32 (title -> empty .)
-    SEPARATOR       reduce using rule 32 (title -> empty .)
+    TODO            shift and go to state 99
+    TEXT            shift and go to state 100
+    SPACE           shift and go to state 97
+    COOKIE          shift and go to state 101
+    TAGS            reduce using rule 81 (empty -> .)
+    NEWLINE         reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
 
+    cookie                         shift and go to state 98
+    empty                          shift and go to state 102
 
 state 90
 
-    (23) priority -> PRIORITY SPACE .
+    (26) title -> TEXT .
 
-    TEXT            reduce using rule 23 (priority -> PRIORITY SPACE .)
-    TODO            reduce using rule 23 (priority -> PRIORITY SPACE .)
-    SPACE           reduce using rule 23 (priority -> PRIORITY SPACE .)
-    COOKIE          reduce using rule 23 (priority -> PRIORITY SPACE .)
-    TAGS            reduce using rule 23 (priority -> PRIORITY SPACE .)
-    NEWLINE         reduce using rule 23 (priority -> PRIORITY SPACE .)
-    SEPARATOR       reduce using rule 23 (priority -> PRIORITY SPACE .)
+    TODO            reduce using rule 26 (title -> TEXT .)
+    TEXT            reduce using rule 26 (title -> TEXT .)
+    SPACE           reduce using rule 26 (title -> TEXT .)
+    COOKIE          reduce using rule 26 (title -> TEXT .)
+    TAGS            reduce using rule 26 (title -> TEXT .)
+    NEWLINE         reduce using rule 26 (title -> TEXT .)
+    SEPARATOR       reduce using rule 26 (title -> TEXT .)
 
 
 state 91
 
-    (44) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .
+    (27) title -> TODO .
 
-    SCHEDULING      reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    DRAWER          reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    TEXT            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    SPACE           reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    METADATA        reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    COOKIE          reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    PRIORITY        reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    TODO            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    COMMENT         reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    TAGS            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    ATIMESTAMP      reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    ITIMESTAMP      reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    SEPARATOR       reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    STARS           reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
-    $end            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    TODO            reduce using rule 27 (title -> TODO .)
+    TEXT            reduce using rule 27 (title -> TODO .)
+    SPACE           reduce using rule 27 (title -> TODO .)
+    COOKIE          reduce using rule 27 (title -> TODO .)
+    TAGS            reduce using rule 27 (title -> TODO .)
+    NEWLINE         reduce using rule 27 (title -> TODO .)
+    SEPARATOR       reduce using rule 27 (title -> TODO .)
 
 
 state 92
 
-    (42) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .
+    (33) title -> empty .
 
-    SCHEDULING      reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    DRAWER          reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    TEXT            reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    SPACE           reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    METADATA        reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    COOKIE          reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    PRIORITY        reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    TODO            reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    COMMENT         reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    TAGS            reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    ATIMESTAMP      reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    ITIMESTAMP      reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    SEPARATOR       reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    STARS           reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
-    $end            reduce using rule 42 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    TODO            reduce using rule 33 (title -> empty .)
+    TEXT            reduce using rule 33 (title -> empty .)
+    SPACE           reduce using rule 33 (title -> empty .)
+    COOKIE          reduce using rule 33 (title -> empty .)
+    TAGS            reduce using rule 33 (title -> empty .)
+    NEWLINE         reduce using rule 33 (title -> empty .)
+    SEPARATOR       reduce using rule 33 (title -> empty .)
 
 
 state 93
 
-    (43) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .
+    (24) priority -> PRIORITY SPACE .
 
-    SCHEDULING      reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    DRAWER          reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    TEXT            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    SPACE           reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    METADATA        reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    COOKIE          reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    PRIORITY        reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    TODO            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    COMMENT         reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    TAGS            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    ATIMESTAMP      reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    ITIMESTAMP      reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    SEPARATOR       reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    STARS           reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
-    $end            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TEXT            reduce using rule 24 (priority -> PRIORITY SPACE .)
+    TODO            reduce using rule 24 (priority -> PRIORITY SPACE .)
+    SPACE           reduce using rule 24 (priority -> PRIORITY SPACE .)
+    COOKIE          reduce using rule 24 (priority -> PRIORITY SPACE .)
+    TAGS            reduce using rule 24 (priority -> PRIORITY SPACE .)
+    NEWLINE         reduce using rule 24 (priority -> PRIORITY SPACE .)
+    SEPARATOR       reduce using rule 24 (priority -> PRIORITY SPACE .)
 
 
 state 94
 
-    (29) title -> title SPACE . TEXT
-    (30) title -> title SPACE . TODO
-    (31) title -> title SPACE .
+    (45) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .
 
-  ! shift/reduce conflict for TODO resolved as shift
-  ! shift/reduce conflict for TEXT resolved as shift
-    TEXT            shift and go to state 100
-    TODO            shift and go to state 101
-    SPACE           reduce using rule 31 (title -> title SPACE .)
-    COOKIE          reduce using rule 31 (title -> title SPACE .)
-    TAGS            reduce using rule 31 (title -> title SPACE .)
-    NEWLINE         reduce using rule 31 (title -> title SPACE .)
-    SEPARATOR       reduce using rule 31 (title -> title SPACE .)
-
-  ! TODO            [ reduce using rule 31 (title -> title SPACE .) ]
-  ! TEXT            [ reduce using rule 31 (title -> title SPACE .) ]
+    SCHEDULING      reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    DRAWER          reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    TEXT            reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    SPACE           reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    METADATA        reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    COOKIE          reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    PRIORITY        reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    TODO            reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    COMMENT         reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    TAGS            reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    ATIMESTAMP      reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    ITIMESTAMP      reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    SEPARATOR       reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    STARS           reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
+    $end            reduce using rule 45 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SPACE .)
 
 
 state 95
 
-    (18) headline -> STARS SPACE comment todo priority title cookie . tags
-    (36) tags -> . TAGS
-    (37) tags -> . empty
-    (80) empty -> .
+    (43) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .
 
-    TAGS            shift and go to state 103
-    NEWLINE         reduce using rule 80 (empty -> .)
-    SEPARATOR       reduce using rule 80 (empty -> .)
+    SCHEDULING      reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    DRAWER          reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    TEXT            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    SPACE           reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    METADATA        reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    COOKIE          reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    PRIORITY        reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    TODO            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    COMMENT         reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    TAGS            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    ATIMESTAMP      reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    ITIMESTAMP      reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    SEPARATOR       reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    STARS           reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
+    $end            reduce using rule 43 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp NEWLINE .)
 
-    tags                           shift and go to state 102
-    empty                          shift and go to state 104
 
 state 96
 
-    (27) title -> title TODO .
+    (44) scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .
 
-    TODO            reduce using rule 27 (title -> title TODO .)
-    TEXT            reduce using rule 27 (title -> title TODO .)
-    SPACE           reduce using rule 27 (title -> title TODO .)
-    COOKIE          reduce using rule 27 (title -> title TODO .)
-    TAGS            reduce using rule 27 (title -> title TODO .)
-    NEWLINE         reduce using rule 27 (title -> title TODO .)
-    SEPARATOR       reduce using rule 27 (title -> title TODO .)
+    SCHEDULING      reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    DRAWER          reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TEXT            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    SPACE           reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    METADATA        reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    COOKIE          reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    PRIORITY        reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TODO            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    COMMENT         reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    TAGS            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    ATIMESTAMP      reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    ITIMESTAMP      reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    SEPARATOR       reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    STARS           reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
+    $end            reduce using rule 44 (scheduling_data -> scheduling_data SCHEDULING SPACE any_timestamp SEPARATOR .)
 
 
 state 97
 
-    (28) title -> title TEXT .
+    (30) title -> title SPACE . TEXT
+    (31) title -> title SPACE . TODO
+    (32) title -> title SPACE .
 
-    TODO            reduce using rule 28 (title -> title TEXT .)
-    TEXT            reduce using rule 28 (title -> title TEXT .)
-    SPACE           reduce using rule 28 (title -> title TEXT .)
-    COOKIE          reduce using rule 28 (title -> title TEXT .)
-    TAGS            reduce using rule 28 (title -> title TEXT .)
-    NEWLINE         reduce using rule 28 (title -> title TEXT .)
-    SEPARATOR       reduce using rule 28 (title -> title TEXT .)
+  ! shift/reduce conflict for TODO resolved as shift
+  ! shift/reduce conflict for TEXT resolved as shift
+    TEXT            shift and go to state 103
+    TODO            shift and go to state 104
+    SPACE           reduce using rule 32 (title -> title SPACE .)
+    COOKIE          reduce using rule 32 (title -> title SPACE .)
+    TAGS            reduce using rule 32 (title -> title SPACE .)
+    NEWLINE         reduce using rule 32 (title -> title SPACE .)
+    SEPARATOR       reduce using rule 32 (title -> title SPACE .)
+
+  ! TODO            [ reduce using rule 32 (title -> title SPACE .) ]
+  ! TEXT            [ reduce using rule 32 (title -> title SPACE .) ]
 
 
 state 98
 
-    (33) cookie -> COOKIE . SPACE
-    (34) cookie -> COOKIE .
+    (19) headline -> STARS SPACE comment todo priority title cookie . tags
+    (37) tags -> . TAGS
+    (38) tags -> . empty
+    (81) empty -> .
 
-    SPACE           shift and go to state 105
-    TAGS            reduce using rule 34 (cookie -> COOKIE .)
-    NEWLINE         reduce using rule 34 (cookie -> COOKIE .)
-    SEPARATOR       reduce using rule 34 (cookie -> COOKIE .)
+    TAGS            shift and go to state 106
+    NEWLINE         reduce using rule 81 (empty -> .)
+    SEPARATOR       reduce using rule 81 (empty -> .)
 
+    tags                           shift and go to state 105
+    empty                          shift and go to state 107
 
 state 99
 
-    (35) cookie -> empty .
+    (28) title -> title TODO .
 
-    TAGS            reduce using rule 35 (cookie -> empty .)
-    NEWLINE         reduce using rule 35 (cookie -> empty .)
-    SEPARATOR       reduce using rule 35 (cookie -> empty .)
+    TODO            reduce using rule 28 (title -> title TODO .)
+    TEXT            reduce using rule 28 (title -> title TODO .)
+    SPACE           reduce using rule 28 (title -> title TODO .)
+    COOKIE          reduce using rule 28 (title -> title TODO .)
+    TAGS            reduce using rule 28 (title -> title TODO .)
+    NEWLINE         reduce using rule 28 (title -> title TODO .)
+    SEPARATOR       reduce using rule 28 (title -> title TODO .)
 
 
 state 100
 
-    (29) title -> title SPACE TEXT .
+    (29) title -> title TEXT .
 
-    TODO            reduce using rule 29 (title -> title SPACE TEXT .)
-    TEXT            reduce using rule 29 (title -> title SPACE TEXT .)
-    SPACE           reduce using rule 29 (title -> title SPACE TEXT .)
-    COOKIE          reduce using rule 29 (title -> title SPACE TEXT .)
-    TAGS            reduce using rule 29 (title -> title SPACE TEXT .)
-    NEWLINE         reduce using rule 29 (title -> title SPACE TEXT .)
-    SEPARATOR       reduce using rule 29 (title -> title SPACE TEXT .)
+    TODO            reduce using rule 29 (title -> title TEXT .)
+    TEXT            reduce using rule 29 (title -> title TEXT .)
+    SPACE           reduce using rule 29 (title -> title TEXT .)
+    COOKIE          reduce using rule 29 (title -> title TEXT .)
+    TAGS            reduce using rule 29 (title -> title TEXT .)
+    NEWLINE         reduce using rule 29 (title -> title TEXT .)
+    SEPARATOR       reduce using rule 29 (title -> title TEXT .)
 
 
 state 101
 
-    (30) title -> title SPACE TODO .
+    (34) cookie -> COOKIE . SPACE
+    (35) cookie -> COOKIE .
 
-    TODO            reduce using rule 30 (title -> title SPACE TODO .)
-    TEXT            reduce using rule 30 (title -> title SPACE TODO .)
-    SPACE           reduce using rule 30 (title -> title SPACE TODO .)
-    COOKIE          reduce using rule 30 (title -> title SPACE TODO .)
-    TAGS            reduce using rule 30 (title -> title SPACE TODO .)
-    NEWLINE         reduce using rule 30 (title -> title SPACE TODO .)
-    SEPARATOR       reduce using rule 30 (title -> title SPACE TODO .)
+    SPACE           shift and go to state 108
+    TAGS            reduce using rule 35 (cookie -> COOKIE .)
+    NEWLINE         reduce using rule 35 (cookie -> COOKIE .)
+    SEPARATOR       reduce using rule 35 (cookie -> COOKIE .)
 
 
 state 102
 
-    (18) headline -> STARS SPACE comment todo priority title cookie tags .
+    (36) cookie -> empty .
 
-    NEWLINE         reduce using rule 18 (headline -> STARS SPACE comment todo priority title cookie tags .)
-    SEPARATOR       reduce using rule 18 (headline -> STARS SPACE comment todo priority title cookie tags .)
+    TAGS            reduce using rule 36 (cookie -> empty .)
+    NEWLINE         reduce using rule 36 (cookie -> empty .)
+    SEPARATOR       reduce using rule 36 (cookie -> empty .)
 
 
 state 103
 
-    (36) tags -> TAGS .
+    (30) title -> title SPACE TEXT .
 
-    NEWLINE         reduce using rule 36 (tags -> TAGS .)
-    SEPARATOR       reduce using rule 36 (tags -> TAGS .)
+    TODO            reduce using rule 30 (title -> title SPACE TEXT .)
+    TEXT            reduce using rule 30 (title -> title SPACE TEXT .)
+    SPACE           reduce using rule 30 (title -> title SPACE TEXT .)
+    COOKIE          reduce using rule 30 (title -> title SPACE TEXT .)
+    TAGS            reduce using rule 30 (title -> title SPACE TEXT .)
+    NEWLINE         reduce using rule 30 (title -> title SPACE TEXT .)
+    SEPARATOR       reduce using rule 30 (title -> title SPACE TEXT .)
 
 
 state 104
 
-    (37) tags -> empty .
+    (31) title -> title SPACE TODO .
 
-    NEWLINE         reduce using rule 37 (tags -> empty .)
-    SEPARATOR       reduce using rule 37 (tags -> empty .)
+    TODO            reduce using rule 31 (title -> title SPACE TODO .)
+    TEXT            reduce using rule 31 (title -> title SPACE TODO .)
+    SPACE           reduce using rule 31 (title -> title SPACE TODO .)
+    COOKIE          reduce using rule 31 (title -> title SPACE TODO .)
+    TAGS            reduce using rule 31 (title -> title SPACE TODO .)
+    NEWLINE         reduce using rule 31 (title -> title SPACE TODO .)
+    SEPARATOR       reduce using rule 31 (title -> title SPACE TODO .)
 
 
 state 105
 
-    (33) cookie -> COOKIE SPACE .
+    (19) headline -> STARS SPACE comment todo priority title cookie tags .
 
-    TAGS            reduce using rule 33 (cookie -> COOKIE SPACE .)
-    NEWLINE         reduce using rule 33 (cookie -> COOKIE SPACE .)
-    SEPARATOR       reduce using rule 33 (cookie -> COOKIE SPACE .)
+    NEWLINE         reduce using rule 19 (headline -> STARS SPACE comment todo priority title cookie tags .)
+    SEPARATOR       reduce using rule 19 (headline -> STARS SPACE comment todo priority title cookie tags .)
+
+
+state 106
+
+    (37) tags -> TAGS .
+
+    NEWLINE         reduce using rule 37 (tags -> TAGS .)
+    SEPARATOR       reduce using rule 37 (tags -> TAGS .)
+
+
+state 107
+
+    (38) tags -> empty .
+
+    NEWLINE         reduce using rule 38 (tags -> empty .)
+    SEPARATOR       reduce using rule 38 (tags -> empty .)
+
+
+state 108
+
+    (34) cookie -> COOKIE SPACE .
+
+    TAGS            reduce using rule 34 (cookie -> COOKIE SPACE .)
+    NEWLINE         reduce using rule 34 (cookie -> COOKIE SPACE .)
+    SEPARATOR       reduce using rule 34 (cookie -> COOKIE SPACE .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for SCHEDULING in state 34 resolved as shift
-WARNING: shift/reduce conflict for SCHEDULING in state 42 resolved as shift
-WARNING: shift/reduce conflict for TODO in state 45 resolved as shift
-WARNING: shift/reduce conflict for TODO in state 71 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 71 resolved as shift
-WARNING: shift/reduce conflict for TODO in state 94 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 94 resolved as shift
+WARNING: shift/reduce conflict for SCHEDULING in state 36 resolved as shift
+WARNING: shift/reduce conflict for SCHEDULING in state 45 resolved as shift
+WARNING: shift/reduce conflict for TODO in state 48 resolved as shift
+WARNING: shift/reduce conflict for TODO in state 74 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 74 resolved as shift
+WARNING: shift/reduce conflict for TODO in state 97 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 97 resolved as shift

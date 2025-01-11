@@ -28,7 +28,7 @@ class Parser:
             else:
                 p[0] = (p[1], p[2], None)
         elif len(p) == 3:
-            if p[1].startswith('#+'):
+            if p[1].startswith('#+') or p[1].startswith(':'):
                 p[0] = (p[1], '', p[2])
             else:
                 p[0] = ('', p[1], None)
@@ -40,8 +40,9 @@ class Parser:
 
     def p_metadata(self, p):
         '''metadata : METADATA SEPARATOR
-                    | METADATA NEWLINE'''
-        p[0] = reduce(add, p[1:])
+                    | METADATA NEWLINE
+                    | DRAWER NEWLINE metadata'''
+        p[0] = reduce(add, [str(x) for x in p[1:]])
 
     def p_org_tree(self, p):
         '''org_tree : heading
