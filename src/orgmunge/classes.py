@@ -146,8 +146,8 @@ class Headline:
         self.title = title
         self._cookie = cookie if cookie is None else Cookie(cookie)
         self.tags = tags
-        self._todo_states = list(todos['todo_states'].values())
-        self._done_states = list(todos['done_states'].values())
+        self._todo_states = set(todos['todo_states'].values())
+        self._done_states = set(todos['done_states'].values())
         self._todo_keywords = {**todos['todo_states'], **todos['done_states']}
     @property
     def done(self):
