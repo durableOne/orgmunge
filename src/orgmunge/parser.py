@@ -12,10 +12,10 @@ class Parser:
         self.parser = yacc.yacc(module=self)
     def p_org_file(self, p):
         '''org_file : metadata org_tree
-                    | non_metadata_body_text SEPARATOR org_tree
-                    | non_metadata_body_text SEPARATOR
-                    | metadata non_metadata_body_text SEPARATOR org_tree
-                    | metadata non_metadata_body_text SEPARATOR 
+                    | initial_body_text SEPARATOR org_tree
+                    | initial_body_text SEPARATOR
+                    | metadata initial_body_text SEPARATOR org_tree
+                    | metadata initial_body_text SEPARATOR 
                     | metadata
                     | org_tree
                     | SEPARATOR
@@ -90,13 +90,14 @@ class Parser:
     def p_title(self, p):
         """title : TEXT 
                  | TODO
+                 | any_timestamp
                  | title TODO
                  | title TEXT
                  | title SPACE TEXT
                  | title SPACE TODO
                  | title SPACE
                  | empty"""
-        none_to_empty = [x if x else "" for x in p[1:]]
+        none_to_empty = [str(x) if x else "" for x in p[1:]]
         p[0] = reduce(add, none_to_empty, "").strip()
 
     def p_cookie(self, p):
@@ -169,14 +170,16 @@ class Parser:
                 | empty'''
         p[0] = p[1]
 
-    def p_non_metadata_body_text(self, p):
-        '''non_metadata_body_text : TEXT
+    def p_initial_body_text(self, p):
+        '''initial_body_text : TEXT
                                 | SPACE
                                 | any_timestamp
-                                | non_metadata_body_text TEXT
-                                | non_metadata_body_text SPACE
-                                | non_metadata_body_text special_token
-                                | non_metadata_body_text NEWLINE''' 
+                                | METADATA
+                                | initial_body_text TEXT
+                                | initial_body_text SPACE
+                                | initial_body_text METADATA
+                                | initial_body_text special_token
+                                | initial_body_text NEWLINE''' 
         p[0] = reduce(add, map(str, p[1:]))
 
     def p_special_token(self, p):
@@ -185,6 +188,7 @@ class Parser:
                         | PRIORITY
                         | TODO
                         | any_timestamp
+                        | DRAWER
                         | COMMENT
                         | TAGS'''
         p[0] = p[1]
