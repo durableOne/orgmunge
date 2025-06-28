@@ -34,7 +34,8 @@ class Org:
         return {'todo_states': {t: t for t in todo_states},
                 'done_states': {t: t for t in done_states},}
                    
-    def get_todos(self) -> Dict[str, Dict[str, str]]:
+    @classmethod
+    def get_todos(cls) -> Dict[str, Dict[str, str]]:
 
         # First try the current directory, then the user's home directory
         # to find the todos.json file.
@@ -53,6 +54,7 @@ class Org:
             return {'todo_states':
                     {'todo': 'TODO',
                     'next': 'NEXT',
+                    'block': 'BLOCK',
                     'wait': 'WAIT',},
                     'done_states': 
                     {'cncl': 'CNCL',

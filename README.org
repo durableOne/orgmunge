@@ -32,6 +32,12 @@ treated as text (some heading's content).
 * Use Cases
 If you have built something on top of =orgmunge=, please open an issue
 here and I'm happy to add your project to the use cases.
+** Update an Org file with external data
+Arguably, this is the main motivation behind creating =orgmunge=: using
+the power of Python to fetch external data and "smartly" update an Org
+file with it. I have created three base classes to help with this at
+[[https://github.com/durableOne/orgfetcher][orgfetcher]]. The repo also contains an example file that inherits from
+the base classes to fetch github issues and track them in an Org file.
 ** Redact an Org file
 Replace important information in an Org file with random words in
 order to share the structure of the file with someone without
