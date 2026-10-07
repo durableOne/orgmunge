@@ -521,6 +521,13 @@ class Clocking:
     def duration_seconds(self, _):
         raise TypeError("Can't set the duration for a clocking object! Set the start and/or end time instead.")
 
+    def to_timeclock(self, final_checkout: bool = False) -> Tuple[str, str]:
+        "Convert clock to timeclock.el format for timekeeping with ledger-cli"
+        FMT = '%Y/%m/%d %H:%M:%S'
+        checkin = f'i {self.start_time.strftime(FMT)}'
+        checkout = f'{"O" if final_checkout else "o"} {self.end_time.strftime(FMT)}' if self.end_time else ''
+        return (checkin, checkout)
+
     def __repr__(self):
         if self.end_time is None:
             return f'[{self.start_time.strftime(ORG_TIME_FORMAT)}]'
@@ -535,6 +542,7 @@ class Clocking:
 
     def __lt__(self, other):
         return 
+
 class Heading:
     def __init__(self, headline: Headline, contents: Tuple[Scheduling, List[Drawer], str]):
         self._headline = headline
