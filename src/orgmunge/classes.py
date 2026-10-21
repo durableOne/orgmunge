@@ -569,6 +569,15 @@ class Heading:
         else:
             raise AttributeError(f'Heading class has no attribute {attr}')
 
+    def __setattr__(self, attr, value):
+        # So that things like self.todo = ... and self.title = ..., etc... will work
+        if attr == '_headline':
+            object.__setattr__(self, attr, value)
+        elif hasattr(self, 'headline') and hasattr(self.headline, attr):
+            setattr(self.headline, attr, value)
+        else:
+            object.__setattr__(self, attr, value)
+
     def _parse_clock_line(self, line: str) -> Clocking:
         m = re.search(fr'CLOCK:\s*(?P<start>{Lexer.ITIMESTAMP})(?:--(?P<end>{Lexer.ITIMESTAMP}))?', line)
         if m is not None:
